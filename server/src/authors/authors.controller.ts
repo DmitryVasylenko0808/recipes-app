@@ -1,6 +1,8 @@
-import { Controller, Get, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
 import { AuthorsService } from './authors.service';
-import { GetOneAuthorDto } from './dtos';
+import { GetOneAuthorDto, UpdateAuthorRequestDto, UpdateAuthorResponseDto } from './dtos';
+import { PrivateAuthGuard } from 'src/common/private-auth.guard';
+import { CurrentUser } from 'src/common/current-user.decorator';
 
 @Controller('authors')
 export class AuthorsController {
@@ -13,7 +15,9 @@ export class AuthorsController {
   }
 
   @Patch()
-  async updateAuthor(userId: number) {
-    throw new Error('Not implemented');
+  @UseGuards(PrivateAuthGuard)
+  async updateAuthor(@CurrentUser('id') userId: string, @Body() dto: UpdateAuthorRequestDto) {
+    const author = await this.authorsService.updateAuthor(userId, dto);
+    return new UpdateAuthorResponseDto(author);
   }
 }

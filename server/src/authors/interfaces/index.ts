@@ -8,5 +8,5 @@ export interface IAuthorsRepository {
   findById(id: string): Promise<Author | null>;
   findOneBy<K extends keyof Author, V extends Author[K]>(key: K, value: V): Promise<Author | null>;
   create(data: AuthorCreateData): Promise<Author>;
-  update(data: AuthorUpdateData): Promise<Author>;
+  update(id: string, data: AuthorUpdateData): Promise<Author>;
 }

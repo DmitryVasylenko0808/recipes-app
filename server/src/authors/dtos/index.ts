@@ -1,8 +1,8 @@
 import { Exclude } from 'class-transformer';
-import { IsEmail, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
 import { Author } from 'src/generated/prisma/client';
 
-export class GetOneAuthorDto implements Author {
+export class AuthorDto implements Author {
   id: string;
 
   email: string;
@@ -25,6 +25,8 @@ export class GetOneAuthorDto implements Author {
   }
 }
 
+export class GetOneAuthorDto extends AuthorDto {}
+
 export class CreateAuthorRequestDto {
   @IsEmail({}, { message: 'Invalid email' })
   readonly email: string;
@@ -41,3 +43,20 @@ export class CreateAuthorRequestDto {
   @MinLength(1, { message: 'Secondname must contain at least $contraint1 characters' })
   readonly secondname: string;
 }
+
+export class UpdateAuthorRequestDto {
+  @IsOptional()
+  @IsString({ message: 'Invalid firstname' })
+  @MinLength(1, { message: 'Firstname must contain at least $contraint1 characters' })
+  readonly firstname?: string;
+
+  @IsOptional()
+  @IsString({ message: 'Invalid secondname' })
+  @MinLength(1, { message: 'Secondname must contain at least $contraint1 characters' })
+  readonly secondname?: string;
+
+  @IsOptional()
+  readonly description?: string;
+}
+
+export class UpdateAuthorResponseDto extends AuthorDto {}
