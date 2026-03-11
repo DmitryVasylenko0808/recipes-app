@@ -20,12 +20,12 @@ export class AuthorDto implements Author {
 
   createdAt: Date;
 
-  constructor(partial: Partial<GetOneAuthorDto>) {
+  constructor(partial: Partial<AuthorDto>) {
     Object.assign(this, partial);
   }
 }
 
-export class GetOneAuthorDto extends AuthorDto {}
+export class GetAuthorRequestDto extends AuthorDto {}
 
 export class CreateAuthorRequestDto {
   @IsEmail({}, { message: 'Invalid email' })

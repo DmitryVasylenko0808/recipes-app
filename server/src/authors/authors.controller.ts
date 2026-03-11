@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
 import { AuthorsService } from './authors.service';
-import { GetOneAuthorDto, UpdateAuthorRequestDto, UpdateAuthorResponseDto } from './dtos';
+import { GetAuthorRequestDto, UpdateAuthorRequestDto, UpdateAuthorResponseDto } from './dtos';
 import { PrivateAuthGuard } from 'src/common/private-auth.guard';
 import { CurrentUser } from 'src/common/current-user.decorator';
 
@@ -11,7 +11,7 @@ export class AuthorsController {
   @Get(':id')
   async getAuthorById(@Param('id') id: string) {
     const author = await this.authorsService.getAuthorById(id);
-    return new GetOneAuthorDto(author);
+    return new GetAuthorRequestDto(author);
   }
 
   @Patch()
