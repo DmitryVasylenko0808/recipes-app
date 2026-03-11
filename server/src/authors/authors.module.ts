@@ -8,5 +8,6 @@ import { AuthorsRepository } from './authors.repository';
   imports: [PrismaModule],
   providers: [AuthorsService, AuthorsRepository],
   controllers: [AuthorsController],
+  exports: [AuthorsService],
 })
 export class AuthorsModule {}

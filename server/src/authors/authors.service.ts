@@ -1,6 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { AuthorsRepository } from './authors.repository';
+import { CreateAuthorRequestDto } from './dtos';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthorsService {
@@ -14,6 +15,27 @@ export class AuthorsService {
     return author;
   }
 
-  async createAuthor(data: unknown) {}
+  async getAuthorByEmail(email: string) {
+    const author = await this.authorsRepository.findOneBy('email', email);
+
+    if (!author) throw new NotFoundException("Author with this email doesn't exist");
+
+    return author;
+  }
+
+  async createAuthor(data: CreateAuthorRequestDto) {
+    const authorWithTakenEmail = await this.authorsRepository.findOneBy('email', data.email);
+
+    if (authorWithTakenEmail)
+      throw new ConflictException('Author with this email is already exists');
+
+    const { password, ...authorData } = data;
+
+    return await this.authorsRepository.create({
+      ...authorData,
+      passwordHash: await bcrypt.hash(password, 5),
+    });
+  }
+
   async updateAuthor(data: unknown) {}
 }

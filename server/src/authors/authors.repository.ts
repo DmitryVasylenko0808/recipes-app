@@ -18,11 +18,13 @@ export class AuthorsRepository implements IAuthorsRepository {
     key: K,
     value: V
   ): Promise<Author | null> {
-    throw new Error('Method not implemented.');
+    return await this.prisma.author.findFirst({
+      where: { [key]: value },
+    });
   }
 
   async create(data: AuthorCreateInput): Promise<Author> {
-    throw new Error('Method not implemented.');
+    return await this.prisma.author.create({ data });
   }
 
   async update(data: AuthorUpdateInput): Promise<Author> {

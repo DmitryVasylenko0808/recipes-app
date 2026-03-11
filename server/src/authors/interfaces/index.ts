@@ -1,8 +1,8 @@
 import { Author } from 'src/generated/prisma/client';
 import { AuthorCreateInput, AuthorUpdateInput } from 'src/generated/prisma/models';
 
-type AuthorCreateData = AuthorCreateInput;
-type AuthorUpdateData = AuthorUpdateInput;
+export type AuthorCreateData = AuthorCreateInput;
+export type AuthorUpdateData = AuthorUpdateInput;
 
 export interface IAuthorsRepository {
   findById(id: string): Promise<Author | null>;
