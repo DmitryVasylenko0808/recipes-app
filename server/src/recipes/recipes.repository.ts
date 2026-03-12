@@ -10,7 +10,7 @@ import {
 } from './interfaces';
 import { Recipe } from 'src/generated/prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { GetRecipesQueryDto } from './dtos';
+import { GetAuthorRecipesQueryDto, GetRecipesQueryDto } from './dtos';
 
 @Injectable()
 export class RecipesRepository implements IRecipesRepository {
@@ -104,36 +104,40 @@ export class RecipesRepository implements IRecipesRepository {
       totalPages,
       currentPage: page,
     };
-
-    // return await this.prisma.recipe.findMany({
-    //   where: {
-    //     cookingTime,
-    //     difficulty,
-    //     title: {
-    //       startsWith: search,
-    //     },
-    //     recipeTags: {
-    //       some: {
-    //         tagId: {
-    //           in: tagsId,
-    //         },
-    //       },
-    //     },
-    //   },
-    //   take: page * 10,
-    //   skip: limit,
-    //   include: {
-    //     recipeTags: {
-    //       include: {
-    //         tag: true,
-    //       },
-    //     },
-    //   },
-    // });
   }
 
-  async findManyByAuthorId(authorId: string, options: RecipeFindManyOptions): Promise<Recipe[]> {
-    throw new Error('Method not implemented.');
+  async findManyByAuthorId(
+    authorId: string,
+    options: GetAuthorRecipesQueryDto
+  ): Promise<RecipeFindManyResult> {
+    const { page, limit } = options;
+
+    const [data, totalCount] = await Promise.all([
+      this.prisma.recipe.findMany({
+        where: { authorId },
+        include: {
+          recipeTags: {
+            include: {
+              tag: true,
+            },
+          },
+        },
+        skip: limit * (page - 1),
+        take: limit,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.recipe.count({
+        where: { authorId },
+      }),
+    ]);
+    const totalPages = Math.ceil(totalCount / limit);
+
+    return {
+      data,
+      totalCount,
+      totalPages,
+      currentPage: page,
+    };
   }
 
   async create(data: CreateRecipeData): Promise<Recipe> {

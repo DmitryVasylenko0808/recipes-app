@@ -74,6 +74,18 @@ export class GetRecipesQueryDto {
   readonly difficulties?: Difficulty[];
 }
 
+export class GetAuthorRecipesQueryDto {
+  @IsNumber()
+  @Expose({ name: 'page' })
+  @Type(() => Number)
+  readonly page: number;
+
+  @IsNumber()
+  @Expose({ name: 'limit' })
+  @Type(() => Number)
+  readonly limit: number;
+}
+
 export class RecipePreviewResponseDto implements Recipe {
   id: string;
   title: string;

@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Patch,
+  Query,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -14,10 +15,15 @@ import { PrivateAuthGuard } from 'src/common/private-auth.guard';
 import { CurrentUser } from 'src/common/current-user.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/common/multer.config';
+import { RecipesService } from 'src/recipes/recipes.service';
+import { GetAuthorRecipesQueryDto, GetRecipesResponseDto } from 'src/recipes/dtos';
 
 @Controller('authors')
 export class AuthorsController {
-  constructor(private readonly authorsService: AuthorsService) {}
+  constructor(
+    private readonly authorsService: AuthorsService,
+    private readonly recipesService: RecipesService
+  ) {}
 
   @Get(':id')
   async getAuthorById(@Param('id') id: string) {
@@ -35,5 +41,11 @@ export class AuthorsController {
   ) {
     const author = await this.authorsService.updateAuthor(userId, dto, avatarFile?.filename);
     return new UpdateAuthorResponseDto(author);
+  }
+
+  @Get(':id/recipes')
+  async getRecipesByAuthorId(@Param('id') id: string, @Query() queryDto: GetAuthorRecipesQueryDto) {
+    const recipes = await this.recipesService.getByAuthorId(id, queryDto);
+    return new GetRecipesResponseDto(recipes);
   }
 }

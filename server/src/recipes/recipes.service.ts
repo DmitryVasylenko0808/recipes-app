@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { RecipesRepository } from './recipes.repository';
-import { RecipeFindManyOptions } from './interfaces';
-import { GetRecipesQueryDto } from './dtos';
+import { GetAuthorRecipesQueryDto, GetRecipesQueryDto } from './dtos';
 
 @Injectable()
 export class RecipesService {
@@ -9,6 +8,12 @@ export class RecipesService {
 
   async getAll(options: GetRecipesQueryDto) {
     const recipes = await this.recipesRepository.findMany(options);
+
+    return recipes;
+  }
+
+  async getByAuthorId(authorId: string, options: GetAuthorRecipesQueryDto) {
+    const recipes = await this.recipesRepository.findManyByAuthorId(authorId, options);
 
     return recipes;
   }

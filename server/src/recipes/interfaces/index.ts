@@ -5,7 +5,7 @@ import {
   RecipeTagOmit,
   RecipeUpdateInput,
 } from 'src/generated/prisma/models';
-import { GetRecipesQueryDto } from '../dtos';
+import { GetAuthorRecipesQueryDto, GetRecipesQueryDto } from '../dtos';
 
 export type RecipeFindManyOptions = {
   tagsId?: string[];
@@ -38,7 +38,10 @@ export type RecipeDetails = Recipe & {
 export interface IRecipesRepository {
   findById(id: string): Promise<RecipeDetails | null>;
   findMany(options: GetRecipesQueryDto): Promise<RecipeFindManyResult>;
-  findManyByAuthorId(authorId: string, options: RecipeFindManyOptions): Promise<Recipe[]>;
+  findManyByAuthorId(
+    authorId: string,
+    options: GetAuthorRecipesQueryDto
+  ): Promise<RecipeFindManyResult>;
   create(data: CreateRecipeData): Promise<Recipe>;
   update(data: UpdateRecipeData): Promise<Recipe>;
   delete(id: string): Promise<Recipe>;
