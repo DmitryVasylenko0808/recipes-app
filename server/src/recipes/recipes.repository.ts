@@ -10,7 +10,7 @@ import {
 } from './interfaces';
 import { Recipe } from 'src/generated/prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { GetAuthorRecipesQueryDto, GetRecipesQueryDto } from './dtos';
+import { CreateRecipeDto, GetAuthorRecipesQueryDto, GetRecipesQueryDto } from './dtos';
 
 @Injectable()
 export class RecipesRepository implements IRecipesRepository {
@@ -140,8 +140,18 @@ export class RecipesRepository implements IRecipesRepository {
     };
   }
 
-  async create(data: CreateRecipeData): Promise<Recipe> {
-    throw new Error('Method not implemented.');
+  async create(authorId: string, data: CreateRecipeDto): Promise<Recipe> {
+    const { recipeTagIds, recipeIngredients, ...restData } = data;
+
+    return await this.prisma.recipe.create({
+      data: {
+        ...restData,
+        authorId,
+        previewImage: 'img',
+        recipeTags: { create: recipeTagIds.map((id) => ({ tagId: id })) },
+        recipeIngredients: { create: recipeIngredients },
+      },
+    });
   }
 
   async update(data: UpdateRecipeData): Promise<Recipe> {

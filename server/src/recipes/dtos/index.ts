@@ -7,7 +7,18 @@ import {
   RecipeTagDetails,
 } from '../interfaces';
 import { AuthorPreviewDto } from 'src/authors/dtos';
-import { IsArray, IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  ArrayNotEmpty,
+  IsArray,
+  IsEnum,
+  IsInt,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Min,
+  MinLength,
+  ValidateNested,
+} from 'class-validator';
 
 export class RecipeTagDto implements RecipeTag {
   @Exclude()
@@ -155,3 +166,84 @@ export class RecipeResponseDto implements Recipe {
     this.recipeTags = recipeTags.map((rt) => new RecipeTagDto(rt));
   }
 }
+
+export class RecipeDto implements Recipe {
+  id: string;
+  title: string;
+
+  @Exclude()
+  description: string;
+  previewImage: string;
+
+  @Exclude()
+  content: string;
+  cookingTime: number;
+  difficulty: Difficulty;
+  createdAt: Date;
+  authorId: string;
+
+  constructor(partial: Partial<RecipeDto>) {
+    Object.assign(this, partial);
+  }
+}
+
+export class CreateRecipeDto {
+  @IsString({ message: 'Invalid title' })
+  @MinLength(1, { message: 'Title must contain at least $constraint1 characters' })
+  readonly title: string;
+
+  @IsString({ message: 'Invalid description' })
+  @MinLength(1, { message: 'Description must contain at least $constraint1 characters' })
+  readonly description: string;
+
+  @IsString({ message: 'Invalid content' })
+  @MinLength(1, { message: 'Description must contain at least $constraint1 characters' })
+  readonly content: string;
+
+  @IsInt({ message: 'Invalid cooking time' })
+  @Type(() => Number)
+  readonly cookingTime: number;
+
+  @IsEnum(Difficulty, { message: 'Invalid difficulty' })
+  readonly difficulty: Difficulty;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  readonly recipeTagIds: string[];
+
+  @IsArray()
+  @ArrayNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => CreateRecipeIngredientDto)
+  recipeIngredients: CreateRecipeIngredientDto[];
+}
+
+export class CreateRecipeIngredientDto {
+  @IsString()
+  ingredientId: string;
+
+  @IsInt()
+  @Min(1)
+  amount: number;
+
+  @IsString()
+  unit: string;
+}
+
+// export class CreateAuthorRequestDto {
+//   @IsEmail({}, { message: 'Invalid email' })
+//   readonly email: string;
+
+//   @IsString({ message: 'Invalid password' })
+//   @MinLength(8, { message: 'Password must contain at least $constraint1 characters' })
+//   readonly password: string;
+
+//   @IsString({ message: 'Invalid firstname' })
+//   @MinLength(1, { message: 'Firstname must contain at least $contraint1 characters' })
+//   readonly firstname: string;
+
+//   @IsString({ message: 'Invalid secondname' })
+//   @MinLength(1, { message: 'Secondname must contain at least $contraint1 characters' })
+//   readonly secondname: string;
+// }

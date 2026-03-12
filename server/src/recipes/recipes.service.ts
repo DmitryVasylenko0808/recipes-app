@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { RecipesRepository } from './recipes.repository';
-import { GetAuthorRecipesQueryDto, GetRecipesQueryDto } from './dtos';
+import { CreateRecipeDto, GetAuthorRecipesQueryDto, GetRecipesQueryDto } from './dtos';
 
 @Injectable()
 export class RecipesService {
@@ -24,5 +24,9 @@ export class RecipesService {
     if (!recipe) throw new NotFoundException('Recipe is not found');
 
     return recipe;
+  }
+
+  async create(authorId: string, dto: CreateRecipeDto) {
+    return await this.recipesRepository.create(authorId, dto);
   }
 }
