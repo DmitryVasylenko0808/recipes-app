@@ -1,12 +1,12 @@
-import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
 import {
   CreateRecipeDto,
   GetRecipesQueryDto,
   GetRecipesResponseDto,
   RecipeDto,
-  RecipePreviewResponseDto,
   RecipeResponseDto,
+  UpdateRecipeDto,
 } from './dtos';
 import { PrivateAuthGuard } from 'src/common/private-auth.guard';
 import { CurrentUser } from 'src/common/current-user.decorator';
@@ -31,6 +31,13 @@ export class RecipesController {
   @UseGuards(PrivateAuthGuard)
   async createRecipe(@CurrentUser('id') authorId: string, @Body() dto: CreateRecipeDto) {
     const recipe = await this.recipesService.create(authorId, dto);
+    return new RecipeDto(recipe);
+  }
+
+  @Patch(':id')
+  @UseGuards(PrivateAuthGuard)
+  async updateRecipe(@Param('id') id: string, @Body() dto: UpdateRecipeDto) {
+    const recipe = await this.recipesService.update(id, dto);
     return new RecipeDto(recipe);
   }
 }

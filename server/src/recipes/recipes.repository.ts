@@ -1,16 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import {
-  CreateRecipeData,
-  IRecipesRepository,
-  RecipeDetails,
-  RecipeFindManyOptions,
-  RecipeFindManyResult,
-  RecipePreview,
-  UpdateRecipeData,
-} from './interfaces';
+import { IRecipesRepository, RecipeDetails, RecipeFindManyResult } from './interfaces';
 import { Recipe } from 'src/generated/prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateRecipeDto, GetAuthorRecipesQueryDto, GetRecipesQueryDto } from './dtos';
+import {
+  CreateRecipeDto,
+  GetAuthorRecipesQueryDto,
+  GetRecipesQueryDto,
+  UpdateRecipeDto,
+} from './dtos';
 
 @Injectable()
 export class RecipesRepository implements IRecipesRepository {
@@ -154,8 +151,17 @@ export class RecipesRepository implements IRecipesRepository {
     });
   }
 
-  async update(data: UpdateRecipeData): Promise<Recipe> {
-    throw new Error('Method not implemented.');
+  async update(id: string, data: UpdateRecipeDto): Promise<Recipe> {
+    const { recipeTagIds, recipeIngredients, ...restData } = data;
+
+    return await this.prisma.recipe.update({
+      where: { id },
+      data: {
+        ...restData,
+        recipeTags: { deleteMany: {}, create: recipeTagIds?.map((id) => ({ tagId: id })) },
+        recipeIngredients: { deleteMany: {}, create: recipeIngredients },
+      },
+    });
   }
 
   async delete(id: string): Promise<Recipe> {

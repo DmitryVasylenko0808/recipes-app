@@ -5,16 +5,13 @@ import {
   RecipeTagOmit,
   RecipeUpdateInput,
 } from 'src/generated/prisma/models';
-import { CreateRecipeDto, GetAuthorRecipesQueryDto, GetRecipesQueryDto } from '../dtos';
+import {
+  CreateRecipeDto,
+  GetAuthorRecipesQueryDto,
+  GetRecipesQueryDto,
+  UpdateRecipeDto,
+} from '../dtos';
 
-export type RecipeFindManyOptions = {
-  tagsId?: string[];
-  cookingTime?: number;
-  difficulty?: Difficulty;
-  search?: string;
-  page?: number;
-  limit?: number;
-};
 export type CreateRecipeData = RecipeCreateInput;
 export type UpdateRecipeData = RecipeUpdateInput;
 
@@ -43,6 +40,6 @@ export interface IRecipesRepository {
     options: GetAuthorRecipesQueryDto
   ): Promise<RecipeFindManyResult>;
   create(authorId: string, data: CreateRecipeDto): Promise<Recipe>;
-  update(data: UpdateRecipeData): Promise<Recipe>;
+  update(id: string, data: UpdateRecipeDto): Promise<Recipe>;
   delete(id: string): Promise<Recipe>;
 }
