@@ -155,15 +155,19 @@ export class RecipesRepository implements IRecipesRepository {
     });
   }
 
-  async update(id: string, data: UpdateRecipeDto): Promise<Recipe> {
+  async update(id: string, data: UpdateRecipeDto, previewImageFilename?: string): Promise<Recipe> {
     const { recipeTagIds, recipeIngredients, ...restData } = data;
 
     return await this.prisma.recipe.update({
       where: { id },
       data: {
         ...restData,
-        recipeTags: { deleteMany: {}, create: recipeTagIds?.map((id) => ({ tagId: id })) },
-        recipeIngredients: { deleteMany: {}, create: recipeIngredients },
+        previewImage: previewImageFilename,
+        recipeTags: recipeTagIds && {
+          deleteMany: {},
+          create: recipeTagIds?.map((id) => ({ tagId: id })),
+        },
+        recipeIngredients: recipeIngredients && { deleteMany: {}, create: recipeIngredients },
       },
     });
   }

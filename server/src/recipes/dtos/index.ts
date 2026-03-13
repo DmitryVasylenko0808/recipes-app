@@ -201,7 +201,7 @@ export class CreateRecipeDto {
   readonly content: string;
 
   @IsInt({ message: 'Invalid cooking time' })
-  @Type(() => Number) // преобразует string -> number
+  @Type(() => Number)
   readonly cookingTime: number;
 
   @IsEnum(Difficulty, { message: 'Invalid difficulty' })
@@ -272,6 +272,10 @@ export class UpdateRecipeDto {
 
   @IsOptional()
   @IsArray()
+  @Transform(({ value }) => {
+    if (value === undefined) return undefined;
+    return JSON.parse(value);
+  })
   @IsString({ each: true })
   readonly recipeTagIds?: string[];
 
@@ -280,5 +284,9 @@ export class UpdateRecipeDto {
   @ArrayNotEmpty()
   @ValidateNested({ each: true })
   @Type(() => CreateRecipeIngredientDto)
+  @Transform(({ value }) => {
+    if (value === undefined) return undefined;
+    return JSON.parse(value);
+  })
   recipeIngredients?: CreateRecipeIngredientDto[];
 }

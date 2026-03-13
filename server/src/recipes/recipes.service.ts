@@ -35,12 +35,12 @@ export class RecipesService {
     return await this.recipesRepository.create(authorId, dto, previewImageFilename);
   }
 
-  async update(id: string, dto: UpdateRecipeDto) {
+  async update(id: string, dto: UpdateRecipeDto, previewImageFilename?: string) {
     const existedRecipe = await this.recipesRepository.findById(id);
 
     if (!existedRecipe) throw new NotFoundException('Cannot update non-existed recipe');
 
-    return await this.recipesRepository.update(id, dto);
+    return await this.recipesRepository.update(id, dto, previewImageFilename);
   }
 
   async delete(id: string) {

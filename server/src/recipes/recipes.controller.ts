@@ -55,8 +55,13 @@ export class RecipesController {
 
   @Patch(':id')
   @UseGuards(PrivateAuthGuard)
-  async updateRecipe(@Param('id') id: string, @Body() dto: UpdateRecipeDto) {
-    const recipe = await this.recipesService.update(id, dto);
+  @UseInterceptors(FileInterceptor('previewImage', multerOptions))
+  async updateRecipe(
+    @Param('id') id: string,
+    @Body() dto: UpdateRecipeDto,
+    @UploadedFile() previewImageFile?: Express.Multer.File
+  ) {
+    const recipe = await this.recipesService.update(id, dto, previewImageFile?.filename);
     return new RecipeDto(recipe);
   }
 
