@@ -40,8 +40,14 @@ export class RecipesService {
 
     if (!existedRecipe) throw new NotFoundException('Cannot update non-existed recipe');
 
-    const recipe = await this.recipesRepository.update(id, dto);
+    return await this.recipesRepository.update(id, dto);
+  }
 
-    return recipe;
+  async delete(id: string) {
+    const existedRecipe = await this.recipesRepository.findById(id);
+
+    if (!existedRecipe) throw new NotFoundException('Cannot delete non-existed recipe');
+
+    return await this.recipesRepository.delete(id);
   }
 }

@@ -165,6 +165,8 @@ export class RecipesRepository implements IRecipesRepository {
   }
 
   async delete(id: string): Promise<Recipe> {
-    throw new Error('Method not implemented.');
+    return await this.prisma.recipe.delete({
+      where: { id },
+    });
   }
 }

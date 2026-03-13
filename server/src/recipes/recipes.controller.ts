@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { RecipesService } from './recipes.service';
 import {
   CreateRecipeDto,
@@ -38,6 +48,13 @@ export class RecipesController {
   @UseGuards(PrivateAuthGuard)
   async updateRecipe(@Param('id') id: string, @Body() dto: UpdateRecipeDto) {
     const recipe = await this.recipesService.update(id, dto);
+    return new RecipeDto(recipe);
+  }
+
+  @Delete(':id')
+  @UseGuards(PrivateAuthGuard)
+  async deleteRecipe(@Param('id') id: string) {
+    const recipe = await this.recipesService.delete(id);
     return new RecipeDto(recipe);
   }
 }
