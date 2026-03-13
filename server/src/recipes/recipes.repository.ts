@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { IRecipesRepository, RecipeDetails, RecipeFindManyResult } from './interfaces';
+import { IRecipesRepository } from './interfaces';
+import { RecipeDetails, RecipeFindManyResult } from './recipes.types';
 import { Recipe } from 'src/generated/prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { RecipeWhereInput } from 'src/generated/prisma/models';
 import {
-  CreateRecipeDto,
+  CreateRecipeRequestDto,
   GetAuthorRecipesQueryDto,
   GetRecipesQueryDto,
-  UpdateRecipeDto,
+  UpdateRecipeRequestDto,
 } from './dtos';
-import { RecipeWhereInput } from 'src/generated/prisma/models';
 
 @Injectable()
 export class RecipesRepository implements IRecipesRepository {
@@ -20,9 +21,10 @@ export class RecipesRepository implements IRecipesRepository {
       include: {
         author: true,
         recipeTags: {
-          include: {
-            tag: true,
-          },
+          include: { tag: true },
+        },
+        recipeIngredients: {
+          include: { ingredient: true },
         },
       },
     });
@@ -65,9 +67,7 @@ export class RecipesRepository implements IRecipesRepository {
         where: filter,
         include: {
           recipeTags: {
-            include: {
-              tag: true,
-            },
+            include: { tag: true },
           },
         },
         skip: limit * (page - 1),
@@ -97,9 +97,7 @@ export class RecipesRepository implements IRecipesRepository {
         where: { authorId },
         include: {
           recipeTags: {
-            include: {
-              tag: true,
-            },
+            include: { tag: true },
           },
         },
         skip: limit * (page - 1),
@@ -122,7 +120,7 @@ export class RecipesRepository implements IRecipesRepository {
 
   async create(
     authorId: string,
-    data: CreateRecipeDto,
+    data: CreateRecipeRequestDto,
     previewImageFilename: string
   ): Promise<Recipe> {
     const { recipeTagIds, recipeIngredients, ...restData } = data;
@@ -138,7 +136,11 @@ export class RecipesRepository implements IRecipesRepository {
     });
   }
 
-  async update(id: string, data: UpdateRecipeDto, previewImageFilename?: string): Promise<Recipe> {
+  async update(
+    id: string,
+    data: UpdateRecipeRequestDto,
+    previewImageFilename?: string
+  ): Promise<Recipe> {
     const { recipeTagIds, recipeIngredients, ...restData } = data;
 
     return await this.prisma.recipe.update({

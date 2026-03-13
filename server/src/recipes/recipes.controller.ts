@@ -12,18 +12,18 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
-import {
-  CreateRecipeDto,
-  GetRecipesQueryDto,
-  GetRecipesResponseDto,
-  RecipeDto,
-  RecipeResponseDto,
-  UpdateRecipeDto,
-} from './dtos';
 import { PrivateAuthGuard } from 'src/common/private-auth.guard';
 import { CurrentUser } from 'src/common/current-user.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/common/multer.config';
+import {
+  CreateRecipeRequestDto,
+  GetRecipesQueryDto,
+  GetRecipesResponseDto,
+  RecipeDto,
+  RecipeDetailsResponseDto,
+  UpdateRecipeRequestDto,
+} from './dtos';
 
 @Controller('recipes')
 export class RecipesController {
@@ -38,7 +38,7 @@ export class RecipesController {
   @Get(':id')
   async getOneById(@Param('id') id: string) {
     const recipe = await this.recipesService.getOneById(id);
-    return new RecipeResponseDto(recipe);
+    return new RecipeDetailsResponseDto(recipe);
   }
 
   @Post()
@@ -46,7 +46,7 @@ export class RecipesController {
   @UseInterceptors(FileInterceptor('previewImage', multerOptions))
   async createRecipe(
     @CurrentUser('id') authorId: string,
-    @Body() dto: CreateRecipeDto,
+    @Body() dto: CreateRecipeRequestDto,
     @UploadedFile() previewImageFile: Express.Multer.File
   ) {
     const recipe = await this.recipesService.create(authorId, dto, previewImageFile.filename);
@@ -58,7 +58,7 @@ export class RecipesController {
   @UseInterceptors(FileInterceptor('previewImage', multerOptions))
   async updateRecipe(
     @Param('id') id: string,
-    @Body() dto: UpdateRecipeDto,
+    @Body() dto: UpdateRecipeRequestDto,
     @UploadedFile() previewImageFile?: Express.Multer.File
   ) {
     const recipe = await this.recipesService.update(id, dto, previewImageFile?.filename);

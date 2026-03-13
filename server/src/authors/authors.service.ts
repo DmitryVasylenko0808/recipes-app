@@ -1,7 +1,7 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { AuthorsRepository } from './authors.repository';
-import { CreateAuthorRequestDto, UpdateAuthorRequestDto } from './dtos';
 import * as bcrypt from 'bcrypt';
+import { CreateAuthorRequestDto, UpdateAuthorRequestDto } from './dtos';
 
 @Injectable()
 export class AuthorsService {

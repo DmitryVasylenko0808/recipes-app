@@ -1,5 +1,5 @@
 import { IsEmail, IsString } from 'class-validator';
-import { CreateAuthorRequestDto } from 'src/authors/dtos';
+import { CreateAuthorRequestDto } from 'src/authors/dtos/create.author.request.dto';
 
 export class RegisterAuthorRequestDto extends CreateAuthorRequestDto {}
 
