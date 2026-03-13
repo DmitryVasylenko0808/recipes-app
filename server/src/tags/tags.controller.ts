@@ -1,5 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { TagsService } from './tags.service';
+import { TagDto } from './dtos';
 
 @Controller('tags')
 export class TagsController {
@@ -7,6 +8,7 @@ export class TagsController {
 
   @Get()
   async getAll() {
-    return await this.tagsService.getAll();
+    const tags = await this.tagsService.getAll();
+    return tags.map((tag) => new TagDto(tag));
   }
 }
