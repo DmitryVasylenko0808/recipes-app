@@ -7,7 +7,9 @@ import {
   Patch,
   Post,
   Query,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
 import {
@@ -20,6 +22,8 @@ import {
 } from './dtos';
 import { PrivateAuthGuard } from 'src/common/private-auth.guard';
 import { CurrentUser } from 'src/common/current-user.decorator';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { multerOptions } from 'src/common/multer.config';
 
 @Controller('recipes')
 export class RecipesController {
@@ -39,8 +43,13 @@ export class RecipesController {
 
   @Post()
   @UseGuards(PrivateAuthGuard)
-  async createRecipe(@CurrentUser('id') authorId: string, @Body() dto: CreateRecipeDto) {
-    const recipe = await this.recipesService.create(authorId, dto);
+  @UseInterceptors(FileInterceptor('previewImage', multerOptions))
+  async createRecipe(
+    @CurrentUser('id') authorId: string,
+    @Body() dto: CreateRecipeDto,
+    @UploadedFile() previewImageFile: Express.Multer.File
+  ) {
+    const recipe = await this.recipesService.create(authorId, dto, previewImageFile.filename);
     return new RecipeDto(recipe);
   }
 

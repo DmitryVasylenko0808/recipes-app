@@ -31,8 +31,8 @@ export class RecipesService {
     return recipe;
   }
 
-  async create(authorId: string, dto: CreateRecipeDto) {
-    return await this.recipesRepository.create(authorId, dto);
+  async create(authorId: string, dto: CreateRecipeDto, previewImageFilename: string) {
+    return await this.recipesRepository.create(authorId, dto, previewImageFilename);
   }
 
   async update(id: string, dto: UpdateRecipeDto) {

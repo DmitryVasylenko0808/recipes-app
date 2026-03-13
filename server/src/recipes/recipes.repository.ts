@@ -137,14 +137,18 @@ export class RecipesRepository implements IRecipesRepository {
     };
   }
 
-  async create(authorId: string, data: CreateRecipeDto): Promise<Recipe> {
+  async create(
+    authorId: string,
+    data: CreateRecipeDto,
+    previewImageFilename: string
+  ): Promise<Recipe> {
     const { recipeTagIds, recipeIngredients, ...restData } = data;
 
     return await this.prisma.recipe.create({
       data: {
         ...restData,
         authorId,
-        previewImage: 'img',
+        previewImage: previewImageFilename,
         recipeTags: { create: recipeTagIds.map((id) => ({ tagId: id })) },
         recipeIngredients: { create: recipeIngredients },
       },

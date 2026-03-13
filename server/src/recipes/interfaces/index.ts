@@ -39,7 +39,7 @@ export interface IRecipesRepository {
     authorId: string,
     options: GetAuthorRecipesQueryDto
   ): Promise<RecipeFindManyResult>;
-  create(authorId: string, data: CreateRecipeDto): Promise<Recipe>;
+  create(authorId: string, data: CreateRecipeDto, previewImageFilename: string): Promise<Recipe>;
   update(id: string, data: UpdateRecipeDto): Promise<Recipe>;
   delete(id: string): Promise<Recipe>;
 }
