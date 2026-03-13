@@ -8,6 +8,7 @@ import {
   GetRecipesQueryDto,
   UpdateRecipeDto,
 } from './dtos';
+import { RecipeWhereInput } from 'src/generated/prisma/models';
 
 @Injectable()
 export class RecipesRepository implements IRecipesRepository {
@@ -39,27 +40,29 @@ export class RecipesRepository implements IRecipesRepository {
       difficulties,
     } = options;
 
-    const [data, totalCount] = await Promise.all([
-      this.prisma.recipe.findMany({
-        where: {
-          title: { startsWith: search, mode: 'insensitive' },
-          cookingTime: { gte: minCookingTime, lte: maxCookingTime },
-          difficulty: { in: difficulties },
-          recipeTags: {
-            some: {
-              tag: {
-                name: { in: tagNames },
-              },
-            },
-          },
-          recipeIngredients: {
-            some: {
-              ingredient: {
-                name: { in: ingredientNames },
-              },
-            },
+    const filter: RecipeWhereInput = {
+      title: { startsWith: search, mode: 'insensitive' },
+      cookingTime: { gte: minCookingTime, lte: maxCookingTime },
+      difficulty: { in: difficulties },
+      recipeTags: {
+        some: {
+          tag: {
+            name: { in: tagNames },
           },
         },
+      },
+      recipeIngredients: {
+        some: {
+          ingredient: {
+            name: { in: ingredientNames },
+          },
+        },
+      },
+    };
+
+    const [data, totalCount] = await Promise.all([
+      this.prisma.recipe.findMany({
+        where: filter,
         include: {
           recipeTags: {
             include: {
@@ -71,27 +74,7 @@ export class RecipesRepository implements IRecipesRepository {
         take: limit,
         orderBy: { createdAt: 'desc' },
       }),
-      this.prisma.recipe.count({
-        where: {
-          title: { startsWith: search, mode: 'insensitive' },
-          cookingTime: { gte: minCookingTime, lte: maxCookingTime },
-          difficulty: { in: difficulties },
-          recipeTags: {
-            some: {
-              tag: {
-                name: { in: tagNames },
-              },
-            },
-          },
-          recipeIngredients: {
-            some: {
-              ingredient: {
-                name: { in: ingredientNames },
-              },
-            },
-          },
-        },
-      }),
+      this.prisma.recipe.count({ where: filter }),
     ]);
     const totalPages = Math.ceil(totalCount / limit);
 
