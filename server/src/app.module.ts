@@ -4,8 +4,9 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthorsModule } from './authors/authors.module';
 import { AuthModule } from './auth/auth.module';
 import { RecipesModule } from './recipes/recipes.module';
+import { TagsModule } from './tags/tags.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthorsModule, AuthModule, RecipesModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthorsModule, AuthModule, RecipesModule, TagsModule],
 })
 export class AppModule {}
