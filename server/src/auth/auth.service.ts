@@ -39,4 +39,8 @@ export class AuthService {
 
     if (!isValidPass) throw new BadRequestException('Invalid password');
   }
+
+  async getMe(id: string) {
+    return await this.authorsService.getAuthorById(id);
+  }
 }
