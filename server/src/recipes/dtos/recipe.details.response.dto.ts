@@ -3,10 +3,13 @@ import { Difficulty } from 'src/generated/prisma/enums';
 import { RecipeDetails, RecipeIngredientDetails } from '../recipes.types';
 import { RecipeTagDto } from './recipe.tag.dto';
 import { Exclude } from 'class-transformer';
+import { CategoryDto } from 'src/categories/dtos';
 
 export class RecipeDetailsResponseDto {
   id: string;
   title: string;
+  categoryId: string;
+  category: CategoryDto;
   description: string;
   //   @Transform((value) => `${process.env.SERVER_UPLOADS_URL}/${value}`)
   previewImage: string;
@@ -20,10 +23,11 @@ export class RecipeDetailsResponseDto {
   recipeIngredients: RecipeIngredientDetailsDto[];
 
   constructor(partial: RecipeDetails) {
-    const { recipeTags, recipeIngredients, author, ...data } = partial;
+    const { category, recipeTags, recipeIngredients, author, ...data } = partial;
 
     Object.assign(this, data);
 
+    this.category = new CategoryDto(category);
     this.author = new AuthorPreviewDto(author);
     this.recipeTags = recipeTags.map((rt) => new RecipeTagDto(rt));
     this.recipeIngredients = recipeIngredients.map((ing) => new RecipeIngredientDetailsDto(ing));

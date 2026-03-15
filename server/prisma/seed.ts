@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { Difficulty, PrismaClient, Recipe, Tag } from '../src/generated/prisma/client';
+import { Category, Difficulty, PrismaClient, Recipe, Tag } from '../src/generated/prisma/client';
 import { Author } from '../src/generated/prisma/browser';
 import { faker } from '@faker-js/faker';
 import * as bcrypt from 'bcrypt';
@@ -44,6 +44,7 @@ const createAuthor = (overwrites: Partial<Author> = {}): AuthorCreateInput => {
 
 const createRecipe = (
   author: Author,
+  category: Category,
   overwrites: Partial<Omit<RecipeUncheckedCreateInput, 'id' | 'authorId' | 'createdAt'>> = {}
 ): RecipeUncheckedCreateInput => {
   const {
@@ -61,6 +62,7 @@ const createRecipe = (
     title,
     description,
     previewImage,
+    categoryId: category.id,
     content,
     cookingTime,
     difficulty,
@@ -98,7 +100,7 @@ const createRecipeIngredient = (
 
 async function main() {
   await prisma.$executeRawUnsafe(
-    'TRUNCATE TABLE authors, tags, ingredients, recipes, recipe_ingredients RESTART IDENTITY CASCADE'
+    'TRUNCATE TABLE authors, tags, ingredients, categories, recipes, recipe_tags, recipe_ingredients RESTART IDENTITY CASCADE'
   );
 
   const authors = await prisma.author.createManyAndReturn({
@@ -120,9 +122,46 @@ async function main() {
     skipDuplicates: true,
   });
 
+  const categoriesArr = [
+    'breakfast',
+    'salads',
+    'soups',
+    'appetizers',
+    'main-dishes',
+    'side-dishes',
+    'pasta',
+    'pizza',
+    'sandwiches',
+    'meat-dishes',
+    'poultry',
+    'fish',
+    'seafood',
+    'vegetable-dishes',
+    'rice-dishes',
+    'potato-dishes',
+    'baking',
+    'desserts',
+    'cookies',
+    'pancakes',
+    'ice-cream',
+    'drinks',
+    'cocktails',
+    'sauces',
+    'street-food',
+    'vegetarian',
+    'vegan',
+    'diet',
+    'quick-meals',
+  ];
+  const categories = await prisma.category.createManyAndReturn({
+    data: categoriesArr.map((c) => ({ name: c })),
+  });
+
   const recipes = await prisma.recipe.createManyAndReturn({
     data: [
-      ...Array.from({ length: 50 }).map(() => createRecipe(faker.helpers.arrayElement(authors))),
+      ...Array.from({ length: 50 }).map(() =>
+        createRecipe(faker.helpers.arrayElement(authors), faker.helpers.arrayElement(categories))
+      ),
     ],
   });
 

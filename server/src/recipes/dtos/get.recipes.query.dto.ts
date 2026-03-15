@@ -9,6 +9,13 @@ export class GetRecipesQueryDto extends PaginationQueryDto {
   readonly search?: string;
 
   @IsOptional()
+  @Expose({ name: 'category_names' })
+  @IsArray()
+  @IsString({ each: true })
+  @Transform(({ value }) => value?.split(',').map(String))
+  readonly categoryNames?: string[];
+
+  @IsOptional()
   @Expose({ name: 'min_cooking_time' })
   @Type(() => Number)
   readonly minCookingTime: number;

@@ -19,6 +19,7 @@ export class RecipesRepository implements IRecipesRepository {
     return await this.prisma.recipe.findUnique({
       where: { id },
       include: {
+        category: true,
         author: true,
         recipeTags: {
           include: { tag: true },
@@ -35,6 +36,7 @@ export class RecipesRepository implements IRecipesRepository {
       page,
       limit,
       search,
+      categoryNames,
       minCookingTime,
       maxCookingTime,
       tagNames,
@@ -44,6 +46,9 @@ export class RecipesRepository implements IRecipesRepository {
 
     const filter: RecipeWhereInput = {
       title: { startsWith: search, mode: 'insensitive' },
+      category: {
+        name: { in: categoryNames },
+      },
       cookingTime: { gte: minCookingTime, lte: maxCookingTime },
       difficulty: { in: difficulties },
       recipeTags: {
@@ -66,6 +71,7 @@ export class RecipesRepository implements IRecipesRepository {
       this.prisma.recipe.findMany({
         where: filter,
         include: {
+          category: true,
           recipeTags: {
             include: { tag: true },
           },
@@ -96,6 +102,7 @@ export class RecipesRepository implements IRecipesRepository {
       this.prisma.recipe.findMany({
         where: { authorId },
         include: {
+          category: true,
           recipeTags: {
             include: { tag: true },
           },

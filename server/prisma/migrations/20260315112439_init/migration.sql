@@ -19,6 +19,7 @@ CREATE TABLE "authors" (
 CREATE TABLE "recipes" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
+    "category_id" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "preview_image" TEXT NOT NULL,
     "content" TEXT NOT NULL,
@@ -31,11 +32,19 @@ CREATE TABLE "recipes" (
 );
 
 -- CreateTable
-CREATE TABLE "recipe_tags" (
-    "recipeId" TEXT NOT NULL,
-    "tagId" TEXT NOT NULL,
+CREATE TABLE "categories" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
 
-    CONSTRAINT "recipe_tags_pkey" PRIMARY KEY ("recipeId","tagId")
+    CONSTRAINT "categories_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "recipe_tags" (
+    "recipe_id" TEXT NOT NULL,
+    "tag_id" TEXT NOT NULL,
+
+    CONSTRAINT "recipe_tags_pkey" PRIMARY KEY ("recipe_id","tag_id")
 );
 
 -- CreateTable
@@ -69,19 +78,25 @@ CREATE TABLE "ingredients" (
 CREATE UNIQUE INDEX "authors_email_key" ON "authors"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "categories_name_key" ON "categories"("name");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "tags_name_key" ON "tags"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "ingredients_name_key" ON "ingredients"("name");
 
 -- AddForeignKey
+ALTER TABLE "recipes" ADD CONSTRAINT "recipes_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "recipes" ADD CONSTRAINT "recipes_author_id_fkey" FOREIGN KEY ("author_id") REFERENCES "authors"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "recipe_tags" ADD CONSTRAINT "recipe_tags_recipeId_fkey" FOREIGN KEY ("recipeId") REFERENCES "recipes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "recipe_tags" ADD CONSTRAINT "recipe_tags_recipe_id_fkey" FOREIGN KEY ("recipe_id") REFERENCES "recipes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "recipe_tags" ADD CONSTRAINT "recipe_tags_tagId_fkey" FOREIGN KEY ("tagId") REFERENCES "tags"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "recipe_tags" ADD CONSTRAINT "recipe_tags_tag_id_fkey" FOREIGN KEY ("tag_id") REFERENCES "tags"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "recipe_ingredients" ADD CONSTRAINT "recipe_ingredients_recipe_id_fkey" FOREIGN KEY ("recipe_id") REFERENCES "recipes"("id") ON DELETE CASCADE ON UPDATE CASCADE;

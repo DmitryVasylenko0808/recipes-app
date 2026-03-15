@@ -32,6 +32,8 @@ model Author {
 model Recipe {
   id           String     @id @default(uuid())
   title        String
+  categoryId   String     @map("category_id")
+  category     Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   description  String
   previewImage String     @map("preview_image")
   content      String
@@ -48,9 +50,17 @@ model Recipe {
   @@map("recipes")
 }
 
+model Category {
+  id      String   @id @default(uuid())
+  name    String   @unique
+  recipes Recipe[]
+
+  @@map("categories")
+}
+
 model RecipeTag {
-  recipeId String
-  tagId    String
+  recipeId String @map("recipe_id")
+  tagId    String @map("tag_id")
 
   recipe Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade, onUpdate: Cascade)

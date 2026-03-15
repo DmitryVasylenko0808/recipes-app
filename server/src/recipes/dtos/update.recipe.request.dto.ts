@@ -19,6 +19,11 @@ export class UpdateRecipeRequestDto {
   readonly title?: string;
 
   @IsOptional()
+  @IsString({ message: 'Invalid category' })
+  @MinLength(1, { message: 'Category must contain at least $constraint1 characters' })
+  readonly categoryId?: string;
+
+  @IsOptional()
   @IsString({ message: 'Invalid description' })
   @MinLength(1, { message: 'Description must contain at least $constraint1 characters' })
   readonly description?: string;

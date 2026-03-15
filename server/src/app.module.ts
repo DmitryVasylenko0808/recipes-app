@@ -6,8 +6,9 @@ import { AuthModule } from './auth/auth.module';
 import { RecipesModule } from './recipes/recipes.module';
 import { TagsModule } from './tags/tags.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthorsModule, AuthModule, RecipesModule, TagsModule, IngredientsModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthorsModule, AuthModule, RecipesModule, TagsModule, IngredientsModule, CategoriesModule],
 })
 export class AppModule {}
