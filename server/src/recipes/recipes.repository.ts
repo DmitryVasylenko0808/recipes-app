@@ -75,6 +75,9 @@ export class RecipesRepository implements IRecipesRepository {
           recipeTags: {
             include: { tag: true },
           },
+          recipeIngredients: {
+            include: { ingredient: true },
+          },
         },
         skip: limit * (page - 1),
         take: limit,
@@ -105,6 +108,9 @@ export class RecipesRepository implements IRecipesRepository {
           category: true,
           recipeTags: {
             include: { tag: true },
+          },
+          recipeIngredients: {
+            include: { ingredient: true },
           },
         },
         skip: limit * (page - 1),

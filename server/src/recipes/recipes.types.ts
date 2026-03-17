@@ -13,6 +13,7 @@ export type RecipeIngredientDetails = RecipeIngredient & { ingredient: Ingredien
 export type RecipePreview = Recipe & {
   category: Category;
   recipeTags: Array<RecipeTagDetails>;
+  recipeIngredients: Array<RecipeIngredientDetails>;
 };
 
 export type RecipeFindManyResult = {

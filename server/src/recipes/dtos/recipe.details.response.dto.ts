@@ -1,9 +1,9 @@
 import { AuthorPreviewDto } from 'src/authors/dtos/author.preview.dto';
 import { Difficulty } from 'src/generated/prisma/enums';
-import { RecipeDetails, RecipeIngredientDetails } from '../recipes.types';
+import { RecipeDetails } from '../recipes.types';
 import { RecipeTagDto } from './recipe.tag.dto';
-import { Exclude } from 'class-transformer';
 import { CategoryDto } from 'src/categories/dtos';
+import { RecipeIngredientDetailsDto } from './recipe.ingredient.details.dto';
 
 export class RecipeDetailsResponseDto {
   id: string;
@@ -31,23 +31,5 @@ export class RecipeDetailsResponseDto {
     this.author = new AuthorPreviewDto(author);
     this.recipeTags = recipeTags.map((rt) => new RecipeTagDto(rt));
     this.recipeIngredients = recipeIngredients.map((ing) => new RecipeIngredientDetailsDto(ing));
-  }
-}
-
-class RecipeIngredientDetailsDto {
-  @Exclude()
-  id: string;
-
-  @Exclude()
-  recipeId: string;
-
-  ingredientId: string;
-  name: string;
-  amount: number;
-  unit: string;
-
-  constructor(partial: Partial<RecipeIngredientDetails>) {
-    const { ingredient, ...restData } = partial;
-    Object.assign(this, restData, ingredient);
   }
 }
