@@ -1,3 +1,4 @@
+export * from './create.recipe.multipart.dto';
 export * from './create.recipe.request.dto';
 export * from './get.author.recipes.query.dto';
 export * from './get.recipes.query.dto';
@@ -10,3 +11,4 @@ export * from './recipe.preview.response.dto';
 export * from './recipe.details.response.dto';
 export * from './recipe.tag.dto';
 export * from './update.recipe.request.dto';
+export * from './update.recipe.multipart.dto';

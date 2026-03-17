@@ -24,9 +24,12 @@ import {
   RecipeDto,
   RecipeDetailsResponseDto,
   UpdateRecipeRequestDto,
+  CreateRecipeRequestMultipartDto,
+  UpdateRecipeRequestMultipartDto,
 } from './dtos';
 import {
   ApiBearerAuth,
+  ApiBody,
   ApiConsumes,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -59,6 +62,7 @@ export class RecipesController {
   @UseInterceptors(FileInterceptor('previewImage', multerOptions))
   @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: CreateRecipeRequestMultipartDto })
   @ApiOkResponse({ type: RecipeDto })
   @ApiUnauthorizedResponse({ description: 'Unathorized' })
   async createRecipe(
@@ -75,6 +79,7 @@ export class RecipesController {
   @UseInterceptors(FileInterceptor('previewImage', multerOptions))
   @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: UpdateRecipeRequestMultipartDto })
   @ApiOkResponse({ type: RecipeDto })
   @ApiUnauthorizedResponse({ description: 'Unathorized' })
   @ApiNotFoundResponse({ description: 'Recipe is not found' })
