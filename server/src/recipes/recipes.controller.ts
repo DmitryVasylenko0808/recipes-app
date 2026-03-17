@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -24,18 +25,30 @@ import {
   RecipeDetailsResponseDto,
   UpdateRecipeRequestDto,
 } from './dtos';
+import {
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
+@ApiTags('Recipes')
 @Controller('recipes')
 export class RecipesController {
   constructor(private readonly recipesService: RecipesService) {}
 
   @Get()
+  @ApiOkResponse({ type: GetRecipesResponseDto })
   async getAll(@Query() queryDto: GetRecipesQueryDto) {
     const recipes = await this.recipesService.getAll(queryDto);
     return new GetRecipesResponseDto(recipes);
   }
 
   @Get(':id')
+  @ApiOkResponse({ type: RecipeDetailsResponseDto })
+  @ApiNotFoundResponse({ description: 'Recipe is not found' })
   async getOneById(@Param('id') id: string) {
     const recipe = await this.recipesService.getOneById(id);
     return new RecipeDetailsResponseDto(recipe);
@@ -44,6 +57,10 @@ export class RecipesController {
   @Post()
   @UseGuards(PrivateAuthGuard)
   @UseInterceptors(FileInterceptor('previewImage', multerOptions))
+  @ApiBearerAuth()
+  @ApiConsumes('multipart/form-data')
+  @ApiOkResponse({ type: RecipeDto })
+  @ApiUnauthorizedResponse({ description: 'Unathorized' })
   async createRecipe(
     @CurrentUser('id') authorId: string,
     @Body() dto: CreateRecipeRequestDto,
@@ -56,6 +73,11 @@ export class RecipesController {
   @Patch(':id')
   @UseGuards(PrivateAuthGuard)
   @UseInterceptors(FileInterceptor('previewImage', multerOptions))
+  @ApiBearerAuth()
+  @ApiConsumes('multipart/form-data')
+  @ApiOkResponse({ type: RecipeDto })
+  @ApiUnauthorizedResponse({ description: 'Unathorized' })
+  @ApiNotFoundResponse({ description: 'Recipe is not found' })
   async updateRecipe(
     @Param('id') id: string,
     @Body() dto: UpdateRecipeRequestDto,
@@ -67,6 +89,9 @@ export class RecipesController {
 
   @Delete(':id')
   @UseGuards(PrivateAuthGuard)
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: RecipeDto })
+  @ApiNotFoundResponse({ description: 'Cannot delete non-existed recipe' })
   async deleteRecipe(@Param('id') id: string) {
     const recipe = await this.recipesService.delete(id);
     return new RecipeDto(recipe);

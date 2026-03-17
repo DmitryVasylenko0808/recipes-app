@@ -1,7 +1,17 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Ingredient } from 'src/generated/prisma/client';
 
 export class IngredientDto implements Ingredient {
+  @ApiProperty({
+    description: 'Unique identifier for ingredient',
+    example: '43dff760-fe8e-4f60-9dda-e593e924ebda',
+  })
   id: string;
+
+  @ApiProperty({
+    description: 'Ingredient name',
+    example: 'eggs',
+  })
   name: string;
 
   constructor(partial: Partial<IngredientDto>) {

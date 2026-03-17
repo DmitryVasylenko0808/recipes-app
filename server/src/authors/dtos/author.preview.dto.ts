@@ -1,6 +1,11 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 
 export class AuthorPreviewDto {
+  @ApiProperty({
+    description: 'Unique identifier of author',
+    example: '43dff760-fe8e-4f60-9dda-e593e924ebda',
+  })
   id: string;
 
   @Exclude()
@@ -9,7 +14,16 @@ export class AuthorPreviewDto {
   @Exclude()
   passwordHash: string;
 
+  @ApiProperty({
+    description: "Author's firstname",
+    example: 'Michael',
+  })
   firstname: string;
+
+  @ApiProperty({
+    description: "Author's secondname",
+    example: 'Collins',
+  })
   secondname: string;
   avatar: string | null;
 

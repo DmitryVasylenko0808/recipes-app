@@ -17,7 +17,16 @@ import { multerOptions } from 'src/common/multer.config';
 import { RecipesService } from 'src/recipes/recipes.service';
 import { GetAuthorRecipesQueryDto, GetRecipesResponseDto } from 'src/recipes/dtos';
 import { GetAuthorRequestDto, UpdateAuthorRequestDto, UpdateAuthorResponseDto } from './dtos';
+import {
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
+@ApiTags('Authors')
 @Controller('authors')
 export class AuthorsController {
   constructor(
@@ -26,6 +35,8 @@ export class AuthorsController {
   ) {}
 
   @Get(':id')
+  @ApiOkResponse({ type: GetAuthorRequestDto })
+  @ApiNotFoundResponse({ description: 'Author is not found' })
   async getAuthorById(@Param('id') id: string) {
     const author = await this.authorsService.getAuthorById(id);
     return new GetAuthorRequestDto(author);
@@ -34,6 +45,10 @@ export class AuthorsController {
   @Patch()
   @UseGuards(PrivateAuthGuard)
   @UseInterceptors(FileInterceptor('avatar', multerOptions))
+  @ApiBearerAuth()
+  @ApiConsumes('multipart/form-data')
+  @ApiOkResponse({ type: UpdateAuthorResponseDto })
+  @ApiUnauthorizedResponse({ description: 'Unathorized' })
   async updateAuthor(
     @CurrentUser('id') userId: string,
     @Body() dto: UpdateAuthorRequestDto,
@@ -44,6 +59,7 @@ export class AuthorsController {
   }
 
   @Get(':id/recipes')
+  @ApiOkResponse({ type: GetRecipesResponseDto })
   async getRecipesByAuthorId(@Param('id') id: string, @Query() queryDto: GetAuthorRecipesQueryDto) {
     const recipes = await this.recipesService.getByAuthorId(id, queryDto);
     return new GetRecipesResponseDto(recipes);
