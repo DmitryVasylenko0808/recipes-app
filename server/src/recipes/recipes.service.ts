@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { RecipesRepository } from './recipes.repository';
 import {
   GetRecipesQueryDto,
@@ -35,10 +35,17 @@ export class RecipesService {
     return await this.recipesRepository.create(authorId, dto, previewImageFilename);
   }
 
-  async update(id: string, dto: UpdateRecipeRequestDto, previewImageFilename?: string) {
+  async update(
+    id: string,
+    userId: string,
+    dto: UpdateRecipeRequestDto,
+    previewImageFilename?: string
+  ) {
     const existedRecipe = await this.recipesRepository.findById(id);
 
     if (!existedRecipe) throw new NotFoundException('Cannot update non-existed recipe');
+    if (existedRecipe.authorId !== userId)
+      throw new ForbiddenException('Cannot update, you`re not author of this recipe');
 
     return await this.recipesRepository.update(id, dto, previewImageFilename);
   }

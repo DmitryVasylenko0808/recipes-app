@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Patch,
   Post,
@@ -31,6 +30,7 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiConsumes,
+  ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
@@ -83,12 +83,14 @@ export class RecipesController {
   @ApiOkResponse({ type: RecipeDto })
   @ApiUnauthorizedResponse({ description: 'Unathorized' })
   @ApiNotFoundResponse({ description: 'Recipe is not found' })
+  @ApiForbiddenResponse({ description: 'Not author of recipe' })
   async updateRecipe(
+    @CurrentUser('id') userId: string,
     @Param('id') id: string,
     @Body() dto: UpdateRecipeRequestDto,
     @UploadedFile() previewImageFile?: Express.Multer.File
   ) {
-    const recipe = await this.recipesService.update(id, dto, previewImageFile?.filename);
+    const recipe = await this.recipesService.update(id, userId, dto, previewImageFile?.filename);
     return new RecipeDto(recipe);
   }
 
