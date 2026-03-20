@@ -4,6 +4,7 @@ import { RegisterPage } from '@/pages/register-page';
 import { useAuth } from '@/shared';
 import { useEffect } from 'react';
 import { MainPage } from '@/pages/main-page';
+import { AuthLayout } from './layouts/auth-layout';
 
 function App() {
   const { accessToken } = useAuth();
@@ -15,8 +16,10 @@ function App() {
   return (
     <Routes>
       <Route index element={<MainPage />} />
-      <Route path="auth/sign-in" element={<SignInPage />}></Route>
-      <Route path="auth/register" element={<RegisterPage />}></Route>
+      <Route path="auth" element={<AuthLayout />}>
+        <Route path="sign-in" element={<SignInPage />}></Route>
+        <Route path="register" element={<RegisterPage />}></Route>
+      </Route>
     </Routes>
   );
 }
