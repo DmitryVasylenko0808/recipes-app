@@ -4,7 +4,7 @@
 
 :root {
   --font-size: 16px;
-  --background: #fef8f3;
+  --background: #fef8f3; 
   --foreground: #2d1810;
   --card: #ffffff;
   --card-foreground: #2d1810;
@@ -15,8 +15,8 @@
   --secondary: #fff4ed;
   --secondary-foreground: #2d1810;
   --muted: #f4e8df;
-  --muted-foreground: #6b5447;
-  --accent: #ffecd9;
+  --muted-foreground: #6b5447; /* p,span */
+  --accent: #ffecd9; /* menu item */
   --accent-foreground: #2d1810;
   --destructive: #d4183d;
   --destructive-foreground: #ffffff;
