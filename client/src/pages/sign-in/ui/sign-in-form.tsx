@@ -55,7 +55,7 @@ export const SignInForm = () => {
       </Button>
       <div className="flex justify-center gap-1">
         <Typograpghy tagVariant="span">Don't have an account?</Typograpghy>
-        <Link className="text-primary font-medium hover:underline" to={'/'}>
+        <Link className="text-primary font-medium hover:underline" to={'/auth/register'}>
           Sign up
         </Link>
       </div>
