@@ -5,7 +5,7 @@ export const useAuth = () => {
   const { refetch, data } = useQuery({
     queryFn: getMe,
     queryKey: ['currentUser'],
-    enabled: false,
+    enabled: !!localStorage.getItem('access_token'),
     retry: false,
   });
 
