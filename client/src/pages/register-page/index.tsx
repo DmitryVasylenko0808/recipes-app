@@ -1,9 +1,10 @@
+import { Card } from '@/shared';
 import { RegisterForm } from './ui/register-form';
 
 export const RegisterPage = () => {
   return (
-    <div className="bg-card border-ring/30 text-card-foreground rounded-xl border shadow-xl">
+    <Card>
       <RegisterForm />
-    </div>
+    </Card>
   );
 };
