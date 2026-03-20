@@ -4,3 +4,5 @@ export * from './ui/typography';
 
 export * from './config/contants';
 export * from './config/api-client';
+
+export * from './lib/hooks/use-auth';
