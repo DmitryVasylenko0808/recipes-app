@@ -1,11 +1,9 @@
 import { Button, TextField, Typograpghy } from '@/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router';
-import { type SignInFormFields, signInSchema } from '../validations';
-import { postSignInUser } from '../api';
-import { useAuth } from '@/shared/lib/hooks/use-auth';
+import { type SignInFormFields, signInSchema } from '../model/validations';
+import { useSignInUser } from '../model/hooks/use-sign-in-user';
 
 export const SignInForm = () => {
   const {
@@ -15,14 +13,8 @@ export const SignInForm = () => {
   } = useForm<SignInFormFields>({
     resolver: zodResolver(signInSchema),
   });
-  const { authenticate } = useAuth();
+  const { mutateAsync, isPending } = useSignInUser();
   const navigate = useNavigate();
-  const { mutateAsync, isPending } = useMutation({
-    mutationFn: postSignInUser,
-    onSuccess: (data) => {
-      authenticate(data.accessToken);
-    },
-  });
 
   const submitHanlder = (fields: SignInFormFields) => {
     mutateAsync(fields)

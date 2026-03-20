@@ -1,10 +1,9 @@
 import { Typograpghy, TextField, Button } from '@/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
-import { postRegisterUser } from '../api';
-import { type RegisterFormFields, registerSchema } from '../validations';
+import { Link, useNavigate } from 'react-router';
+import { type RegisterFormFields, registerSchema } from '../model/validations';
+import { useRegisterUser } from '../model/hooks/use-register-user';
 
 export const RegisterForm = () => {
   const {
@@ -14,18 +13,14 @@ export const RegisterForm = () => {
   } = useForm<RegisterFormFields>({
     resolver: zodResolver(registerSchema),
   });
-  const { mutateAsync, isPending } = useMutation({
-    mutationFn: postRegisterUser,
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  });
+  const { mutateAsync, isPending } = useRegisterUser();
+  const navigate = useNavigate();
 
   const submitHandler = (fields: RegisterFormFields) => {
     const { confirmPassword, ...postRegisterUserArgs } = fields;
 
     mutateAsync(postRegisterUserArgs)
-      .then(() => alert('Success'))
+      .then(() => navigate('/'))
       .catch((err) => alert(err.message));
   };
 

@@ -12,7 +12,7 @@ export type PostRegisterUserDto = {
 };
 
 export const postRegisterUser = async (args: PostRegisterUserArgs) => {
-  const response = await apiClient.post(`${API_URL}/auth/register`, args);
+  const response = await apiClient.post<PostRegisterUserDto>(`${API_URL}/auth/register`, args);
 
   return response.data;
 };

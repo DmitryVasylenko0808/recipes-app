@@ -1,4 +1,4 @@
-import { RegisterForm } from './ui';
+import { RegisterForm } from './ui/register-form';
 
 export const RegisterPage = () => {
   return (
