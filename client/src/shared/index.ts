@@ -4,6 +4,7 @@ export * from './ui/typography';
 export * from './ui/card';
 export * from './ui/logo';
 export * from './ui/menu';
+export * from './ui/acronym';
 
 export * from './config/contants';
 export * from './config/api-client';

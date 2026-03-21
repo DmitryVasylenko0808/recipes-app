@@ -20,7 +20,7 @@ type MenuContentProps = ComponentProps<'div'>;
 export const MenuContent = ({ className, children, ref, ...divProps }: MenuContentProps) => (
   <div
     className={cn(
-      'bg-card border-ring/30 text-card-foreground absolute top-full right-0 z-30 my-1 w-max min-w-32 overflow-x-hidden overflow-y-auto rounded-md border shadow-md',
+      'bg-card border-ring/30 text-card-foreground absolute top-full right-0 z-30 my-1 w-full min-w-32 overflow-x-hidden overflow-y-auto rounded-md border shadow-md',
       className
     )}
     ref={ref}

@@ -1,0 +1,51 @@
+import {
+  useToggleMenu,
+  useLogOut,
+  Menu,
+  Button,
+  Acronym,
+  MenuContent,
+  MenuSection,
+  MenuItem,
+  MenuDivider,
+} from '@/shared';
+import type { GetMeDto } from '@/shared/api';
+
+type UserMenuProps = { user: GetMeDto };
+
+export const UserMenu = ({ user }: UserMenuProps) => {
+  const { open, ref, handleToggle } = useToggleMenu();
+  const logout = useLogOut();
+
+  return (
+    <Menu
+      trigger={
+        <Button as="button" variant="text" className="h-14" onClick={handleToggle}>
+          {user.avatar ? (
+            <img className="h-10 w-10 rounded-full" src={user.avatar} alt="User avatar" />
+          ) : (
+            <Acronym firstname={user.firstname} secondname={user.secondname} />
+          )}
+          <span className="text-foreground text-sm font-semibold">
+            {user.firstname} {user.secondname}
+          </span>
+        </Button>
+      }
+      content={
+        <MenuContent ref={ref}>
+          <MenuSection>
+            <MenuItem>My profile</MenuItem>
+            <MenuItem>Create recipe</MenuItem>
+          </MenuSection>
+          <MenuDivider />
+          <MenuSection>
+            <MenuItem variant="desctructive" onClick={logout}>
+              Log out
+            </MenuItem>
+          </MenuSection>
+        </MenuContent>
+      }
+      open={open}
+    />
+  );
+};
