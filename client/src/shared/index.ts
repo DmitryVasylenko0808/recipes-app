@@ -5,6 +5,8 @@ export * from './ui/card';
 export * from './ui/logo';
 export * from './ui/menu';
 export * from './ui/acronym';
+export * from './ui/badge';
+export * from './ui/selector';
 
 export * from './config/contants';
 export * from './config/api-client';

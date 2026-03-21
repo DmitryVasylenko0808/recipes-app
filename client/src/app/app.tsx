@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router';
-import { SignInPage } from '../pages/sign-in';
 import { RegisterPage } from '@/pages/register-page';
 import { useAuth } from '@/shared';
 import { useEffect } from 'react';
 import { MainPage } from '@/pages/main-page';
 import { AuthLayout } from './layouts/auth-layout';
+import { SignInPage } from '@/pages/sign-in';
 
 function App() {
   const { accessToken } = useAuth();
