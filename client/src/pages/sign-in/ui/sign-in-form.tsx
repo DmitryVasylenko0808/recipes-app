@@ -45,7 +45,14 @@ export const SignInForm = () => {
         error={errors.password?.message}
         {...register('password')}
       />
-      <Button type="submit" variant="primary" className="mb-4" isLoading={isPending} fullWidth>
+      <Button
+        as="button"
+        type="submit"
+        variant="primary"
+        className="mb-4"
+        isLoading={isPending}
+        fullWidth
+      >
         Sign in
       </Button>
       <div className="flex justify-center gap-1">

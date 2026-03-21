@@ -70,7 +70,14 @@ export const RegisterForm = () => {
         error={errors.confirmPassword?.message}
         {...register('confirmPassword')}
       />
-      <Button type="submit" variant="primary" className="mb-4" isLoading={isPending} fullWidth>
+      <Button
+        as="button"
+        type="submit"
+        variant="primary"
+        className="mb-4"
+        isLoading={isPending}
+        fullWidth
+      >
         Register
       </Button>
       <div className="flex justify-center gap-1">
