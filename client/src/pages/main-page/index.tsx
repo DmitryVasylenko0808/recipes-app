@@ -1,12 +1,9 @@
-import { Button } from '@/shared';
-import { useLogOut } from '@/shared/lib/hooks/use-log-out';
+import { Header } from '@/app/widgets';
 
 export const MainPage = () => {
-  const logout = useLogOut();
-
   return (
-    <Button variant="secondary" onClick={logout}>
-      Logout
-    </Button>
+    <div className="bg-background min-h-screen">
+      <Header />
+    </div>
   );
 };
