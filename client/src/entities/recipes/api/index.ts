@@ -27,3 +27,30 @@ export const getRecipes = async (args: GetRecipesArgs) => {
 
   return response.data;
 };
+
+export type GetAuthorRecipesDto = {
+  data: RecipePreview[];
+  totalCount: number;
+  totalPages: number;
+  currentPage: number;
+};
+
+export type GetAuthorRecipesArgs = {
+  authorId?: string;
+  page: number;
+  limit: number;
+};
+
+export const getAuthorRecipes = async (args: GetAuthorRecipesArgs) => {
+  const response = await apiClient.get<GetAuthorRecipesDto>(
+    `${API_URL}/authors/${args.authorId}/recipes`,
+    {
+      params: {
+        page: args.page,
+        limit: args.limit,
+      },
+    }
+  );
+
+  return response.data;
+};
