@@ -1,9 +1,10 @@
 import { Card, Acronym, Typograpghy } from '@/shared';
 import type { Author } from '../model/types/author';
+import type { ReactNode } from 'react';
 
-type AuthorInfoProps = { author: Author };
+type AuthorInfoProps = { author: Author; actionsSlot?: ReactNode };
 
-export const AuthorInfo = ({ author }: AuthorInfoProps) => {
+export const AuthorInfo = ({ author, actionsSlot }: AuthorInfoProps) => {
   return (
     <Card>
       <div className="flex gap-6 p-8">
@@ -21,6 +22,7 @@ export const AuthorInfo = ({ author }: AuthorInfoProps) => {
             <Typograpghy tagVariant="h2">
               {author.firstname} {author.secondname}
             </Typograpghy>
+            {actionsSlot}
           </div>
           <Typograpghy tagVariant="p">{author.bio}</Typograpghy>
         </div>

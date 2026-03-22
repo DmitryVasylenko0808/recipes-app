@@ -1,6 +1,7 @@
 import { useGetAuthorById, AuthorInfo } from '@/entities/authors';
 import { useParams, Navigate } from 'react-router';
 import { AuthorDetailsSkeleton } from './author-details-skeleton';
+import { EditProfileButton } from '@/features/authors/edit-profile';
 
 export const AuthorDetails = () => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ export const AuthorDetails = () => {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
       {isLoading && <AuthorDetailsSkeleton />}
-      {data && <AuthorInfo author={data} />}
+      {data && <AuthorInfo author={data} actionsSlot={<EditProfileButton authorId={data.id} />} />}
     </div>
   );
 };

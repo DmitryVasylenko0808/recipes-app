@@ -1,11 +1,15 @@
 import type { ComponentProps } from 'react';
+import { cn } from '../lib/utils/cn';
 
-type CardProps = Omit<ComponentProps<'div'>, 'className'>;
+type CardProps = ComponentProps<'div'>;
 
-export const Card = ({ children, ...divProps }: CardProps) => {
+export const Card = ({ children, className, ...divProps }: CardProps) => {
   return (
     <div
-      className="bg-card border-ring/30 text-card-foreground rounded-xl border shadow-xl"
+      className={cn(
+        'bg-card border-ring/30 text-card-foreground rounded-xl border shadow-xl',
+        className
+      )}
       {...divProps}
     >
       {children}

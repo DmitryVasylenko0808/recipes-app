@@ -7,6 +7,7 @@ export * from './ui/menu';
 export * from './ui/acronym';
 export * from './ui/badge';
 export * from './ui/selector';
+export * from './ui/textarea';
 
 export * from './config/contants';
 export * from './config/api-client';

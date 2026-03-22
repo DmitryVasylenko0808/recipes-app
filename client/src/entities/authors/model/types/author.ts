@@ -4,6 +4,6 @@ export type Author = {
   firstname: string;
   secondname: string;
   avatar: string | null;
-  bio: string | number;
+  bio: string | null;
   createdAt: Date;
 };
