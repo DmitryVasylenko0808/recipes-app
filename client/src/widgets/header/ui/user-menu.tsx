@@ -10,12 +10,16 @@ import {
   MenuDivider,
 } from '@/shared';
 import type { GetMeDto } from '@/shared/api';
+import { useNavigate } from 'react-router';
 
 type UserMenuProps = { user: GetMeDto };
 
 export const UserMenu = ({ user }: UserMenuProps) => {
   const { open, ref, handleToggle } = useToggleMenu();
   const logout = useLogOut();
+  const navigate = useNavigate();
+
+  const handleClickMyProfile = () => navigate(`/authors/${user.id}`);
 
   return (
     <Menu
@@ -34,7 +38,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
       content={
         <MenuContent ref={ref}>
           <MenuSection>
-            <MenuItem>My profile</MenuItem>
+            <MenuItem onClick={handleClickMyProfile}>My profile</MenuItem>
             <MenuItem>Create recipe</MenuItem>
           </MenuSection>
           <MenuDivider />

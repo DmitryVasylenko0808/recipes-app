@@ -6,6 +6,8 @@ import { MainPage } from '@/pages/main-page';
 import { AuthLayout } from './layouts/auth-layout';
 import { SignInPage } from '@/pages/sign-in';
 import { BaseLayout } from './layouts/base-layout';
+import { AuthorPage } from '@/pages/author';
+import { NotFoundPage } from '@/pages/not-found';
 
 function App() {
   const { accessToken } = useAuth();
@@ -18,6 +20,8 @@ function App() {
     <Routes>
       <Route path="/" element={<BaseLayout />}>
         <Route index element={<MainPage />} />
+        <Route path="/authors/:id" element={<AuthorPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
       <Route path="auth" element={<AuthLayout />}>
         <Route path="sign-in" element={<SignInPage />}></Route>
