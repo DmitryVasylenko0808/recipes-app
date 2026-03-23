@@ -5,9 +5,13 @@ export const useToggleMenu = () => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  useClickOutside(ref, () => setOpen(false));
+  useClickOutside(ref, () => {
+    setOpen(false);
+  });
 
-  const handleToggle = () => setOpen((prev) => !prev);
+  const handleToggle = () => {
+    setOpen((prev) => !prev);
+  };
 
   return { open, ref, handleToggle };
 };
