@@ -1,4 +1,4 @@
-import { type Author } from '@/entities/authors';
+import { ProfileAvatarPreview, type Author } from '@/entities/authors';
 import { Button, Card, FileUploader, TextArea, TextField, Typograpghy } from '@/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
@@ -11,6 +11,7 @@ export const EditProfileForm = ({ author, onSubmit }: EditProfileFormProps) => {
   const {
     handleSubmit,
     register,
+    watch,
     control,
     formState: { errors },
   } = useForm<EditProfileFormFields>({
@@ -29,6 +30,8 @@ export const EditProfileForm = ({ author, onSubmit }: EditProfileFormProps) => {
       .catch((err) => alert(err.message));
   };
 
+  const avatar = watch('avatar');
+
   return (
     <Card className="w-3xl p-6">
       <form onSubmit={handleSubmit(submitHandler)}>
@@ -38,6 +41,9 @@ export const EditProfileForm = ({ author, onSubmit }: EditProfileFormProps) => {
           </Typograpghy>
           <Typograpghy tagVariant="p">Update your profile information and bio</Typograpghy>
         </div>
+
+        <ProfileAvatarPreview initialImageSrc={author.avatar} image={avatar} />
+
         <div className="mb-4 flex gap-4">
           <TextField
             label="First name"
