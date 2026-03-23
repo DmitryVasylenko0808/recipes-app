@@ -1,15 +1,17 @@
 import { type Author } from '@/entities/authors';
-import { Button, Card, TextArea, TextField, Typograpghy } from '@/shared';
+import { Button, Card, FileUploader, TextArea, TextField, Typograpghy } from '@/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { editProfileSchema, type EditProfileFormFields } from '../model/validations';
 import { useEditProfile } from '../model/hooks/use-edit-profile';
 
 type EditProfileFormProps = { author: Author; onSubmit?: (author?: Author) => void };
+
 export const EditProfileForm = ({ author, onSubmit }: EditProfileFormProps) => {
   const {
     handleSubmit,
     register,
+    control,
     formState: { errors },
   } = useForm<EditProfileFormFields>({
     resolver: zodResolver(editProfileSchema),
@@ -48,6 +50,22 @@ export const EditProfileForm = ({ author, onSubmit }: EditProfileFormProps) => {
             {...register('secondname')}
           />
         </div>
+        <Controller
+          name="avatar"
+          control={control}
+          render={({ field, fieldState }) => (
+            <FileUploader
+              ref={field.ref}
+              name={field.name}
+              onBlur={field.onBlur}
+              onChange={(e) => field.onChange(e.target.files?.[0])}
+              error={fieldState.error?.message}
+              caption="Only supports image formats (.jpg, .jpeg, .png)"
+              accept="image/*"
+              className="mb-4"
+            />
+          )}
+        />
         <TextArea
           label="Bio"
           rows={5}

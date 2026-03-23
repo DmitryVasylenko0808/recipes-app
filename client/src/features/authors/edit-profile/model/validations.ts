@@ -8,5 +8,12 @@ export const editProfileSchema = z.object({
     .max(500, 'Too many characters. Bio contains maximum 500 charactes')
     .trim()
     .optional(),
+  avatar: z
+    .instanceof(File)
+    .refine(
+      (file) => ['image/jpeg', 'image/png'].includes(file.type),
+      'Only supported .jpeg and .png formats'
+    )
+    .optional(),
 });
 export type EditProfileFormFields = z.infer<typeof editProfileSchema>;

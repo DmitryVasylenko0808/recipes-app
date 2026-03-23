@@ -3,7 +3,7 @@ import { cn } from '../lib/utils/cn';
 import { Link, type LinkProps } from 'react-router';
 
 export type BaseButtonProps = {
-  variant: 'primary' | 'secondary' | 'menu' | 'text' | 'destructive' | 'menu-destructive';
+  variant: 'primary' | 'secondary' | 'text' | 'destructive' | 'file';
   fullWidth?: true;
 };
 
@@ -30,6 +30,8 @@ export const Button = ({
       'hover:bg-accent': variant === 'text',
       'bg-red disabled:bg-red-hovered hover:bg-red-hovered text-secondary-100  min-w-32 rounded-full  font-semibold':
         variant === 'destructive',
+      'bg-input-background block h-9 cursor-pointer rounded-md px-4 py-2 duration-100 hover:bg-accent hover:text-accent-foreground':
+        variant === 'file',
       'w-full': fullWidth === true,
     },
     className
