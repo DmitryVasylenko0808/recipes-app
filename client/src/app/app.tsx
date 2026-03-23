@@ -9,6 +9,7 @@ import { BaseLayout } from './layouts/base-layout';
 import { AuthorPage } from '@/pages/author';
 import { NotFoundPage } from '@/pages/not-found';
 import { EditProfilePage } from '@/pages/edit-profile-page';
+import { RecipePage } from '@/pages/recipe';
 
 function App() {
   const { accessToken } = useAuth();
@@ -21,6 +22,7 @@ function App() {
     <Routes>
       <Route path="/" element={<BaseLayout />}>
         <Route index element={<MainPage />} />
+        <Route path="/recipes/:id" element={<RecipePage />} />
         <Route path="/authors/:id" element={<AuthorPage />} />
         <Route path="/authors/:id/edit" element={<EditProfilePage />} />
         <Route path="*" element={<NotFoundPage />} />

@@ -1,5 +1,6 @@
 import { API_URL, apiClient } from '@/shared';
-import type { Difficulty, RecipePreview } from '../model/types/recipe-preview';
+import type { RecipePreview } from '../model/types/recipe-preview';
+import type { Recipe } from '../model/types/recipe';
 
 export type GetRecipesArgs = {
   page: number;
@@ -24,6 +25,14 @@ export const getRecipes = async (args: GetRecipesArgs) => {
   const response = await apiClient.get<GetRecipesDto>(`${API_URL}/recipes`, {
     params: args,
   });
+
+  return response.data;
+};
+
+export type GetOneRecipeDto = Recipe;
+
+export const getOneRecipe = async (id?: string) => {
+  const response = await apiClient.get<GetOneRecipeDto>(`${API_URL}/recipes/${id}`);
 
   return response.data;
 };

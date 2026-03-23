@@ -1,5 +1,6 @@
 import { Badge, Card, Typograpghy } from '@/shared';
 import type { RecipePreview } from '../model/types/recipe-preview';
+import { Link } from 'react-router';
 
 type RecipeCardProps = {
   recipe: RecipePreview;
@@ -7,8 +8,8 @@ type RecipeCardProps = {
 
 export const RecipeCard = ({ recipe }: RecipeCardProps) => {
   return (
-    <Card>
-      <div className="h-120 w-73">
+    <Card className="h-120 w-73">
+      <Link to={`/recipes/${recipe.id}`}>
         <div className="relative h-48 w-full">
           <Badge variant="primary" className="absolute top-2 left-2">
             {recipe.category.name}
@@ -47,7 +48,7 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
             </div>
           </Typograpghy>
         </div>
-      </div>
+      </Link>
     </Card>
   );
 };
