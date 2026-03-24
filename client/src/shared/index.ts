@@ -12,6 +12,7 @@ export * from './ui/file-uploader';
 export * from './ui/markdown';
 export * from './ui/portal';
 export * from './ui/modal';
+export * from './ui/loader';
 
 export * from './config/contants';
 export * from './config/api-client';

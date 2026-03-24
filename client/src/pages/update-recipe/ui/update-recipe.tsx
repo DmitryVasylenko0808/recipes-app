@@ -1,6 +1,7 @@
 import type { RecipePreview } from '@/entities/recipes';
 import { useGetOneRecipe } from '@/entities/recipes/model/hooks/use-get-one-recipe';
 import { UpdateRecipeForm } from '@/features/recipe/update/ui/update-recipe-form';
+import { Loader } from '@/shared';
 import { Navigate, useNavigate, useParams } from 'react-router';
 
 export const UpdateRecipe = () => {
@@ -17,7 +18,7 @@ export const UpdateRecipe = () => {
 
   return (
     <div className="mx-auto max-w-3xl p-6">
-      {isLoading && 'Loading...'}
+      {isLoading && <Loader variant="primary" size="lg" className="my-10" center />}
       {data && <UpdateRecipeForm recipe={data} onSubmit={handleSubmit} />}
     </div>
   );

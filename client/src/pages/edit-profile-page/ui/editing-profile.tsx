@@ -1,5 +1,6 @@
 import { useGetAuthorById } from '@/entities/authors';
 import { EditProfileForm } from '@/features/authors/edit-profile';
+import { Loader } from '@/shared';
 import { useParams, useNavigate, Navigate } from 'react-router';
 
 export const EditingProfile = () => {
@@ -11,7 +12,7 @@ export const EditingProfile = () => {
 
   return (
     <div className="mx-auto flex max-w-7xl justify-center px-4 py-8">
-      {isLoading && 'Loading...'}
+      {isLoading && <Loader variant="primary" size="lg" className="my-10" center />}
       {data && <EditProfileForm author={data} onSubmit={() => navigate(`/authors/${id}`)} />}
     </div>
   );

@@ -1,6 +1,7 @@
 import type { ComponentProps } from 'react';
 import { cn } from '../lib/utils/cn';
 import { Link, type LinkProps } from 'react-router';
+import { Loader } from './loader';
 
 export type BaseButtonProps = {
   variant: 'primary' | 'secondary' | 'text' | 'destructive' | 'file';
@@ -42,7 +43,7 @@ export const Button = ({
 
     return (
       <button className={classes} {...btnProps} disabled={isLoading}>
-        {isLoading ? 'Loading...' : children}
+        {isLoading ? <Loader variant="secondary" size="sm" /> : children}
       </button>
     );
   }
