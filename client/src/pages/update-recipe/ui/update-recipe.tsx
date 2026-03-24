@@ -1,6 +1,5 @@
-import type { RecipePreview } from '@/entities/recipes';
-import { useGetOneRecipe } from '@/entities/recipes/model/hooks/use-get-one-recipe';
-import { UpdateRecipeForm } from '@/features/recipe/update/ui/update-recipe-form';
+import { useGetOneRecipe, type RecipePreview } from '@/entities/recipes';
+import { UpdateRecipeForm } from '@/features/recipe/update';
 import { Loader } from '@/shared';
 import { Navigate, useNavigate, useParams } from 'react-router';
 

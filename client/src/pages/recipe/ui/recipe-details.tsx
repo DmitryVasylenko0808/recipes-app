@@ -1,5 +1,4 @@
-import { RecipeDetailsView } from '@/entities/recipes';
-import { useGetOneRecipe } from '@/entities/recipes/model/hooks/use-get-one-recipe';
+import { RecipeDetailsView, useGetOneRecipe } from '@/entities/recipes';
 import { Loader, useAuth } from '@/shared';
 import { useParams, Navigate } from 'react-router';
 import { RecipeActionsMenu } from './recipe-actions-menu';

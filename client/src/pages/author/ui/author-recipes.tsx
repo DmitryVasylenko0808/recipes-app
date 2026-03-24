@@ -1,5 +1,4 @@
-import { RecipeCard, RecipesSkeleton } from '@/entities/recipes';
-import { useGetAuthorRecipes } from '@/entities/recipes/model/hooks/use-get-author-recipes';
+import { RecipeCard, RecipesSkeleton, useGetAuthorRecipes } from '@/entities/recipes';
 import { Pagination, usePagination } from '@/features/pagination';
 import { Typograpghy } from '@/shared';
 import { useParams } from 'react-router';
