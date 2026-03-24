@@ -18,7 +18,7 @@ export const FileUploader = ({
 }: FileUploaderProps) => {
   return (
     <div className={cn('relative w-full', className)}>
-      <label className="mb-2 block font-medium">Avatar</label>
+      <label className="mb-2 block font-medium">{label}</label>
       <input
         type="file"
         className="focus:border-ring focus:ring-ring/50 bg-input-background block h-9 w-full cursor-pointer rounded-md px-4 py-2 text-sm font-medium outline-0 duration-100 file:hidden focus:ring-[3px]"

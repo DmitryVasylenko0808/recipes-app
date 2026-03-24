@@ -1,3 +1,4 @@
+import { CreateRecipeMenuItem } from '@/features/recipe/create';
 import {
   useToggleMenu,
   useLogOut,
@@ -39,7 +40,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
         <MenuContent ref={ref}>
           <MenuSection>
             <MenuItem onClick={handleClickMyProfile}>My profile</MenuItem>
-            <MenuItem>Create recipe</MenuItem>
+            <CreateRecipeMenuItem />
           </MenuSection>
           <MenuDivider />
           <MenuSection>

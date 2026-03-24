@@ -1,5 +1,6 @@
 import { useAuth, Logo, Typograpghy, Button } from '@/shared';
 import { UserMenu } from './user-menu';
+import { CreateRecipeButton } from '@/features/recipe/create';
 
 export const Header = () => {
   const { currentUser } = useAuth();
@@ -16,7 +17,10 @@ export const Header = () => {
           </div>
           <div>
             {currentUser ? (
-              <UserMenu user={currentUser} />
+              <div className="flex items-center gap-3">
+                <CreateRecipeButton />
+                <UserMenu user={currentUser} />
+              </div>
             ) : (
               <Button as="link" to={'/auth/sign-in'} variant="primary">
                 Login
