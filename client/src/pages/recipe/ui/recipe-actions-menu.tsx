@@ -1,5 +1,6 @@
 import type { Recipe } from '@/entities/recipes';
 import { DeleleRecipeMenuItem, ConfirmDeleteRecipeModal } from '@/features/recipe/delete';
+import { UpdateRecipeMenuItem } from '@/features/recipe/update';
 import { useToggleMenu, useModal, Menu, Button, MenuContent } from '@/shared';
 
 type RecipeActionsMenuProps = { recipe: Recipe };
@@ -18,6 +19,7 @@ export const RecipeActionsMenu = ({ recipe }: RecipeActionsMenuProps) => {
         }
         content={
           <MenuContent ref={ref}>
+            <UpdateRecipeMenuItem recipeId={recipe.id} />
             <DeleleRecipeMenuItem onClick={handleClickOpen} />
           </MenuContent>
         }

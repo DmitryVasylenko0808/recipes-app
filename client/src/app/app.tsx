@@ -11,6 +11,7 @@ import { NotFoundPage } from '@/pages/not-found';
 import { EditProfilePage } from '@/pages/edit-profile-page';
 import { RecipePage } from '@/pages/recipe';
 import { CreateRecipePage } from '@/pages/create-recipe';
+import { UpdateRecipePage } from '@/pages/update-recipe';
 
 function App() {
   const { accessToken } = useAuth();
@@ -24,6 +25,7 @@ function App() {
       <Route path="/" element={<BaseLayout />}>
         <Route index element={<MainPage />} />
         <Route path="/recipes/:id" element={<RecipePage />} />
+        <Route path="/recipes/:id/update" element={<UpdateRecipePage />} />
         <Route path="/recipes/create" element={<CreateRecipePage />} />
         <Route path="/authors/:id" element={<AuthorPage />} />
         <Route path="/authors/:id/edit" element={<EditProfilePage />} />
