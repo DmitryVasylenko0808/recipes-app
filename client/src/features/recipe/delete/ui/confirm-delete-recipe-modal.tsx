@@ -30,7 +30,13 @@ export const ConfirmDeleteRecipeModal = ({
         This action cannot be undone. This will permanently delete the recipe from your collection.
       </Typograpghy>
       <div className="flex justify-end">
-        <Button as="button" variant="primary" isLoading={isPending} onClick={handleClickDelete}>
+        <Button
+          as="button"
+          variant="primary"
+          disabled={isPending}
+          isLoading={isPending}
+          onClick={handleClickDelete}
+        >
           Delete
         </Button>
       </div>

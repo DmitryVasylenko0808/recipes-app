@@ -69,7 +69,8 @@ export const UpdateRecipeForm = ({ recipe, onSubmit }: UpdateRecipeFormProps) =>
       .catch((err) => alert(err.message));
   };
 
-  const isDisableSubmitBtn = isLoadingCategories || isLoadingTags || isLoadingIngredients;
+  const isDisableSubmitBtn =
+    isLoadingCategories || isLoadingTags || isLoadingIngredients || isPending;
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>

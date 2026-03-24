@@ -79,7 +79,14 @@ export const EditProfileForm = ({ author, onSubmit }: EditProfileFormProps) => {
           error={errors.bio?.message}
           {...register('bio')}
         />
-        <Button as="button" type="submit" variant="primary" isLoading={isPending} fullWidth>
+        <Button
+          as="button"
+          type="submit"
+          variant="primary"
+          disabled={isPending}
+          isLoading={isPending}
+          fullWidth
+        >
           Save changes
         </Button>
       </form>

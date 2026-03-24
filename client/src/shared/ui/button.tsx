@@ -42,7 +42,7 @@ export const Button = ({
     const { isLoading } = btnProps;
 
     return (
-      <button className={classes} {...btnProps} disabled={isLoading}>
+      <button className={classes} {...btnProps}>
         {isLoading ? <Loader variant="secondary" size="sm" /> : children}
       </button>
     );

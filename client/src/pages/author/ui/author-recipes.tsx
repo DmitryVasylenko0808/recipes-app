@@ -3,10 +3,12 @@ import { Pagination, usePagination } from '@/features/pagination';
 import { Typograpghy } from '@/shared';
 import { useParams } from 'react-router';
 
+const INITIAL_LIMIT = 16;
+
 export const AuthorRecipes = () => {
   const { id } = useParams();
   const { page, limit, onPageChange } = usePagination({
-    initialLimit: 2,
+    initialLimit: INITIAL_LIMIT,
   });
   const { data, isFetching } = useGetAuthorRecipes({
     authorId: id,

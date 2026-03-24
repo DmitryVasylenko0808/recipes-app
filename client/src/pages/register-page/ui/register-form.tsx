@@ -75,6 +75,7 @@ export const RegisterForm = () => {
         type="submit"
         variant="primary"
         className="mb-4"
+        disabled={isPending}
         isLoading={isPending}
         fullWidth
       >
