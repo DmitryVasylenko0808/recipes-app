@@ -8,7 +8,7 @@ type RecipeCardProps = {
 
 export const RecipeCard = ({ recipe }: RecipeCardProps) => {
   return (
-    <Card className="h-120 w-73">
+    <Card className="h-120 w-73 duration-100 hover:shadow-xl">
       <Link to={`/recipes/${recipe.id}`}>
         <div className="relative h-48 w-full">
           <Badge variant="primary" className="absolute top-2 left-2">

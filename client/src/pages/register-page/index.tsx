@@ -3,7 +3,7 @@ import { RegisterForm } from './ui/register-form';
 
 export const RegisterPage = () => {
   return (
-    <Card>
+    <Card className="shadow-xl">
       <RegisterForm />
     </Card>
   );
