@@ -12,6 +12,7 @@ import {
   pathKeys,
 } from '@/shared';
 import type { GetMeDto } from '@/shared/api';
+import { LogOut, UserRound } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
 type UserMenuProps = { user: GetMeDto };
@@ -40,12 +41,14 @@ export const UserMenu = ({ user }: UserMenuProps) => {
       content={
         <MenuContent ref={ref}>
           <MenuSection>
-            <MenuItem onClick={handleClickMyProfile}>My profile</MenuItem>
+            <MenuItem icon={UserRound} onClick={handleClickMyProfile}>
+              My profile
+            </MenuItem>
             <CreateRecipeMenuItem />
           </MenuSection>
           <MenuDivider />
           <MenuSection>
-            <MenuItem variant="desctructive" onClick={logout}>
+            <MenuItem icon={LogOut} variant="desctructive" onClick={logout}>
               Log out
             </MenuItem>
           </MenuSection>

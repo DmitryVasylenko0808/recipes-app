@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router';
 import { type SignInFormFields, signInSchema } from '../model/validations';
 import { useSignInUser } from '../model/hooks/use-sign-in-user';
+import { Lock, Mail } from 'lucide-react';
 
 export const SignInForm = () => {
   const {
@@ -34,6 +35,7 @@ export const SignInForm = () => {
         label="Email"
         className="mb-4"
         error={errors.email?.message}
+        icon={Mail}
         {...register('email')}
       />
       <TextField
@@ -43,6 +45,7 @@ export const SignInForm = () => {
         caption="Must be at least 8 characters long"
         className="mb-4"
         error={errors.password?.message}
+        icon={Lock}
         {...register('password')}
       />
       <Button

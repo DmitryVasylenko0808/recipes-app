@@ -1,6 +1,7 @@
 import { useAuth, Logo, Typograpghy, Button, pathKeys } from '@/shared';
 import { UserMenu } from './user-menu';
 import { CreateRecipeButton } from '@/features/recipe/create';
+import { LogIn } from 'lucide-react';
 
 export const Header = () => {
   const { currentUser } = useAuth();
@@ -22,7 +23,7 @@ export const Header = () => {
                 <UserMenu user={currentUser} />
               </div>
             ) : (
-              <Button as="link" to={pathKeys.auth.signIn} variant="primary">
+              <Button as="link" icon={LogIn} to={pathKeys.auth.signIn} variant="primary">
                 Login
               </Button>
             )}

@@ -1,6 +1,7 @@
 import { Badge, Card, pathKeys, Typograpghy } from '@/shared';
 import type { RecipePreview } from '../model/types/recipe-preview';
 import { Link } from 'react-router';
+import { Clock } from 'lucide-react';
 
 type RecipeCardProps = {
   recipe: RecipePreview;
@@ -21,11 +22,15 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
           />
         </div>
         <div className="p-6">
-          <div className="mb-1.5 flex items-center justify-between gap-0.5">
-            <Typograpghy tagVariant="h4" className="line-clamp-1">
+          <div className="mb-1.5 flex items-center gap-0.5">
+            <Typograpghy tagVariant="h4" className="line-clamp-1 flex-1">
               {recipe.title}
             </Typograpghy>
-            <Typograpghy tagVariant="span" className="line-clamp-1 text-sm">
+            <Typograpghy
+              tagVariant="span"
+              className="line-clamp-1 inline-flex items-center text-xs"
+            >
+              <Clock size={16} className="mr-1" />
               {recipe.cookingTime} min
             </Typograpghy>
           </div>

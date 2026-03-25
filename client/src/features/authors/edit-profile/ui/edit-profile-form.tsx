@@ -47,11 +47,13 @@ export const EditProfileForm = ({ author, onSubmit }: EditProfileFormProps) => {
         <div className="mb-4 flex gap-4">
           <TextField
             label="First name"
+            className="flex-1"
             error={errors.firstname?.message}
             {...register('firstname')}
           />
           <TextField
             label="Second name"
+            className="flex-1"
             error={errors.secondname?.message}
             {...register('secondname')}
           />

@@ -3,6 +3,7 @@ import type { Ingredient } from '@/entities/ingredients';
 import type { Difficulty } from '@/entities/recipes';
 import type { Tag } from '@/entities/tags';
 import { Card, Typograpghy, TextField, Selector, Badge, Button } from '@/shared';
+import { Search, X } from 'lucide-react';
 
 export type CookingTimeFilterItem = {
   readonly value?: string[];
@@ -61,6 +62,7 @@ export const RecipeFilters = ({
         placeholder="Search recipes..."
         onChange={(e) => onSearch?.(e.target.value)}
         value={search}
+        icon={Search}
         className="mb-6"
       />
 
@@ -181,7 +183,7 @@ export const RecipeFilters = ({
         </div>
       </div>
 
-      <Button as="button" variant="secondary" onClick={() => onResetFilters?.()} fullWidth>
+      <Button as="button" variant="secondary" icon={X} onClick={() => onResetFilters?.()} fullWidth>
         Clear all filters
       </Button>
     </Card>

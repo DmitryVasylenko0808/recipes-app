@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router';
 import { type RegisterFormFields, registerSchema } from '../model/validations';
 import { useRegisterUser } from '../model/hooks/use-register-user';
+import { Lock, Mail, UserRound } from 'lucide-react';
 
 export const RegisterForm = () => {
   const {
@@ -25,24 +26,28 @@ export const RegisterForm = () => {
   };
 
   return (
-    <form className="max-w-110 p-6" onSubmit={handleSubmit(submitHandler)}>
+    <form className="max-w-135 p-6" onSubmit={handleSubmit(submitHandler)}>
       <Typograpghy tagVariant="h4" className="mb-6 text-center text-2xl">
         Create an account
       </Typograpghy>
       <Typograpghy tagVariant="p" className="mb-6 text-center">
         Join our recipe community and start sharing your culinary creations.
       </Typograpghy>
-      <div className="mb-4 flex gap-4">
+      <div className="relative mb-4 flex gap-4">
         <TextField
           label="First Name"
           placeholder="John"
+          className="flex-1"
           error={errors.firstname?.message}
+          icon={UserRound}
           {...register('firstname')}
         />
         <TextField
           label="Second Name"
           placeholder="Doe"
+          className="flex-1"
           error={errors.secondname?.message}
+          icon={UserRound}
           {...register('secondname')}
         />
       </div>
@@ -51,6 +56,7 @@ export const RegisterForm = () => {
         placeholder="john.doe@example.com"
         className="mb-4"
         error={errors.email?.message}
+        icon={Mail}
         {...register('email')}
       />
       <TextField
@@ -60,6 +66,7 @@ export const RegisterForm = () => {
         caption="Must be at least 8 characters long"
         className="mb-4"
         error={errors.password?.message}
+        icon={Lock}
         {...register('password')}
       />
       <TextField
@@ -68,6 +75,7 @@ export const RegisterForm = () => {
         placeholder="********"
         className="mb-4"
         error={errors.confirmPassword?.message}
+        icon={Lock}
         {...register('confirmPassword')}
       />
       <Button

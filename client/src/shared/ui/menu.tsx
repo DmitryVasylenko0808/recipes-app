@@ -1,5 +1,6 @@
 import type { ComponentProps } from 'react';
 import { cn } from '../lib/utils/cn';
+import type { LucideIcon } from 'lucide-react';
 
 type MenuProps = {
   trigger: React.ReactNode;
@@ -37,8 +38,16 @@ export const MenuSection = ({ className, children, ...divProps }: MenuSectionPro
   </div>
 );
 
-type MenuItemProps = ComponentProps<'button'> & { variant?: 'default' | 'desctructive' };
-export const MenuItem = ({ variant = 'default', children, ...btnProps }: MenuItemProps) => (
+type MenuItemProps = ComponentProps<'button'> & {
+  variant?: 'default' | 'desctructive';
+  icon?: LucideIcon;
+};
+export const MenuItem = ({
+  variant = 'default',
+  icon: Icon,
+  children,
+  ...btnProps
+}: MenuItemProps) => (
   <button
     className={cn(
       'hover:text-accent-foreground hover:bg-accent flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm',
@@ -49,6 +58,7 @@ export const MenuItem = ({ variant = 'default', children, ...btnProps }: MenuIte
     )}
     {...btnProps}
   >
+    {Icon && <Icon size={16} />}
     {children}
   </button>
 );

@@ -2,9 +2,11 @@ import type { ComponentProps } from 'react';
 import { cn } from '../lib/utils/cn';
 import { Link, type LinkProps } from 'react-router';
 import { Loader } from './loader';
+import type { LucideIcon } from 'lucide-react';
 
 export type BaseButtonProps = {
   variant: 'primary' | 'secondary' | 'text' | 'destructive' | 'file';
+  icon?: LucideIcon;
   fullWidth?: true;
 };
 
@@ -16,6 +18,7 @@ type ButtonProps = LinkButtonProps | DefaultButtonProps;
 
 export const Button = ({
   variant = 'primary',
+  icon: Icon,
   fullWidth,
   className,
   children,
@@ -43,6 +46,7 @@ export const Button = ({
 
     return (
       <button className={classes} {...btnProps}>
+        {Icon && <Icon size={16} />}
         {isLoading ? <Loader variant="secondary" size="sm" /> : children}
       </button>
     );
@@ -50,6 +54,7 @@ export const Button = ({
 
   return (
     <Link className={classes} {...btnProps}>
+      {Icon && <Icon size={16} />}
       {children}
     </Link>
   );

@@ -1,4 +1,5 @@
 import { MenuItem, pathKeys } from '@/shared';
+import { Plus } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
 export const CreateRecipeMenuItem = () => {
@@ -6,5 +7,9 @@ export const CreateRecipeMenuItem = () => {
 
   const handleClick = () => navigate(pathKeys.recipes.create);
 
-  return <MenuItem onClick={handleClick}>Create Recipe</MenuItem>;
+  return (
+    <MenuItem icon={Plus} onClick={handleClick}>
+      Create Recipe
+    </MenuItem>
+  );
 };

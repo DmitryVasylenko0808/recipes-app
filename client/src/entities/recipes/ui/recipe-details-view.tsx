@@ -2,6 +2,7 @@ import { Typograpghy, Acronym, Badge, Card, Markdown, pathKeys } from '@/shared'
 import type { ReactNode, ComponentProps } from 'react';
 import { Link } from 'react-router';
 import type { Recipe } from '../model/types/recipe';
+import { ChefHat, Clock, type LucideIcon } from 'lucide-react';
 
 type RecipeDetailsViewProps = { recipe: Recipe; actionsSlot?: ReactNode };
 
@@ -62,7 +63,7 @@ export const RecipeDetailsView = ({ recipe, actionsSlot }: RecipeDetailsViewProp
               {recipe.category.name}
             </Typograpghy>
           </MetaBlock>
-          <MetaBlock>
+          <MetaBlock icon={ChefHat}>
             <Typograpghy tagVariant="span" className="text-sm">
               Difficulty
             </Typograpghy>
@@ -70,7 +71,7 @@ export const RecipeDetailsView = ({ recipe, actionsSlot }: RecipeDetailsViewProp
               {recipe.difficulty}
             </Typograpghy>
           </MetaBlock>
-          <MetaBlock>
+          <MetaBlock icon={Clock}>
             <Typograpghy tagVariant="span" className="text-sm">
               Cooking time
             </Typograpghy>
@@ -111,12 +112,13 @@ export const RecipeDetailsView = ({ recipe, actionsSlot }: RecipeDetailsViewProp
   );
 };
 
-type MetaBlockProps = ComponentProps<'div'>;
-const MetaBlock = ({ children, ...divProps }: MetaBlockProps) => (
+type MetaBlockProps = ComponentProps<'div'> & { icon?: LucideIcon };
+const MetaBlock = ({ children, icon: Icon, ...divProps }: MetaBlockProps) => (
   <div
-    className="border-ring/30 bg-secondary inline-flex flex-col gap-0.5 rounded-md px-4 py-2"
+    className="border-ring/30 bg-secondary inline-flex items-center gap-2 rounded-md px-4 py-2"
     {...divProps}
   >
-    {children}
+    {Icon && <Icon size={20} className="text-primary" />}
+    <div className="flex-col gap-0.5">{children}</div>
   </div>
 );
