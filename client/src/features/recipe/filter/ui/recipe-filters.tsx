@@ -67,7 +67,9 @@ export const RecipeFilters = ({
 
         {cookingTimes && (
           <div className="mb-6">
-            <label className="mb-3 block font-medium">Cooking time</label>
+            <Typograpghy tagVariant="label" className="mb-3">
+              Cooking time
+            </Typograpghy>
             <Selector
               options={cookingTimes}
               value={selectedCookingTime}
@@ -78,7 +80,9 @@ export const RecipeFilters = ({
 
         {difficulties && (
           <div className="mb-6">
-            <label className="mb-3 block font-medium">Difficulty</label>
+            <Typograpghy tagVariant="label" className="mb-3">
+              Difficulty
+            </Typograpghy>
             <div className="flex flex-wrap gap-2">
               <Badge
                 variant={selectedDifficulties.length ? 'terciary' : 'primary'}
@@ -102,7 +106,9 @@ export const RecipeFilters = ({
         )}
 
         <div className="mb-6">
-          <label className="mb-3 block font-medium">Categories</label>
+          <Typograpghy tagVariant="label" className="mb-3">
+            Categories
+          </Typograpghy>
           <div className="flex flex-wrap gap-2">
             <Badge
               variant={selectedCategories.length ? 'terciary' : 'primary'}
@@ -127,7 +133,9 @@ export const RecipeFilters = ({
         </div>
 
         <div className="mb-6">
-          <label className="mb-3 block font-medium">Tags</label>
+          <Typograpghy tagVariant="label" className="mb-3">
+            Tags
+          </Typograpghy>
           <div className="flex flex-wrap gap-2">
             <Badge
               variant={selectedTags.length ? 'terciary' : 'primary'}
@@ -150,7 +158,9 @@ export const RecipeFilters = ({
         </div>
 
         <div className="mb-6">
-          <label className="mb-3 block font-medium">Ingredients</label>
+          <Typograpghy tagVariant="label" className="mb-3">
+            Ingredients
+          </Typograpghy>
           <div className="flex flex-wrap gap-2">
             <Badge
               variant={selectedIngredients.length ? 'terciary' : 'primary'}
