@@ -6,5 +6,6 @@ export * from './model/hooks/use-get-author-recipes';
 export * from './api';
 
 export * from './ui/recipe-card';
-export * from './ui/recipes-skeleton';
 export * from './ui/recipe-details-view';
+export * from './ui/recipes-grid';
+export * from './ui/recipes-grid-skeleton';

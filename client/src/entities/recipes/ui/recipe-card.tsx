@@ -8,7 +8,7 @@ type RecipeCardProps = {
 
 export const RecipeCard = ({ recipe }: RecipeCardProps) => {
   return (
-    <Card className="h-120 w-73 duration-100 hover:shadow-xl">
+    <Card className="duration-100 hover:shadow-xl">
       <Link to={pathKeys.recipes.byId(recipe.id)}>
         <div className="relative h-48 w-full">
           <Badge variant="primary" className="absolute top-2 left-2">
@@ -21,18 +21,18 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
           />
         </div>
         <div className="p-6">
-          <div className="mb-1.5 flex items-center justify-between">
+          <div className="mb-1.5 flex items-center justify-between gap-0.5">
             <Typograpghy tagVariant="h4" className="line-clamp-1">
               {recipe.title}
             </Typograpghy>
-            <Typograpghy tagVariant="span" className="text-sm">
+            <Typograpghy tagVariant="span" className="line-clamp-1 text-sm">
               {recipe.cookingTime} min
             </Typograpghy>
           </div>
           <Typograpghy tagVariant="p" className="mb-4 line-clamp-2">
             {recipe.description}
           </Typograpghy>
-          <div className="mb-3 flex flex-wrap gap-1.5">
+          <div className="mb-1.5 flex flex-wrap gap-1.5">
             {recipe.recipeTags.map((t) => (
               <Badge variant="secondary" key={t.id}>
                 {t.name}

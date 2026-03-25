@@ -1,4 +1,4 @@
-import { RecipeCard, RecipesSkeleton, useGetAuthorRecipes } from '@/entities/recipes';
+import { RecipesGrid, RecipesGridSkeleton, useGetAuthorRecipes } from '@/entities/recipes';
 import { Pagination, usePagination } from '@/features/pagination';
 import { Typograpghy } from '@/shared';
 import { useParams } from 'react-router';
@@ -21,13 +21,10 @@ export const AuthorRecipes = () => {
       <Typograpghy tagVariant="h3" className="mb-6">
         Author recipes ({data?.totalCount})
       </Typograpghy>
-      {isFetching && <RecipesSkeleton className="gap-6" />}
-      {data && (
-        <div className="flex flex-wrap gap-6">
-          {data.data?.map((r) => (
-            <RecipeCard recipe={r} key={r.id} />
-          ))}
-        </div>
+      {isFetching ? (
+        <RecipesGridSkeleton countItems={16} cols={4} />
+      ) : (
+        <RecipesGrid recipes={data?.data} cols={4} />
       )}
       <Pagination totalPages={data?.totalPages} currentPage={page} onPageChange={onPageChange} />
     </div>

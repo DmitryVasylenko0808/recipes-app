@@ -1,4 +1,9 @@
-import { useGetRecipes, RecipeCard, type Difficulty, RecipesSkeleton } from '@/entities/recipes';
+import {
+  useGetRecipes,
+  type Difficulty,
+  RecipesGridSkeleton,
+  RecipesGrid,
+} from '@/entities/recipes';
 import { usePagination, Pagination } from '@/features/pagination';
 import { useGetCategories } from '@/entities/categories';
 import { useGetTags } from '@/entities/tags';
@@ -76,7 +81,7 @@ export const Recipes = () => {
   });
 
   return (
-    <div className="mx-auto flex max-w-7xl gap-5 px-4 py-8">
+    <div className="mx-auto flex max-w-7xl gap-8 px-4 py-8">
       <aside>
         <RecipeFilters
           search={search}
@@ -99,16 +104,8 @@ export const Recipes = () => {
           onResetFilters={handleResetFilters}
         />
       </aside>
-      <div className="flex-auto">
-        {isFetching ? (
-          <RecipesSkeleton />
-        ) : (
-          <div className="flex flex-wrap gap-3">
-            {data?.data.map((r) => (
-              <RecipeCard recipe={r} key={r.id} />
-            ))}
-          </div>
-        )}
+      <div className="flex-1">
+        {isFetching ? <RecipesGridSkeleton /> : <RecipesGrid recipes={data?.data} />}
         <Pagination totalPages={data?.totalPages} currentPage={page} onPageChange={onPageChange} />
       </div>
     </div>
