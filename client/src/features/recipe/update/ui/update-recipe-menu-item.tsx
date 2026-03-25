@@ -1,4 +1,4 @@
-import { MenuItem } from '@/shared';
+import { MenuItem, pathKeys } from '@/shared';
 import { useNavigate } from 'react-router';
 
 type UpdateRecipeMenuItemProps = { recipeId: string };
@@ -6,7 +6,7 @@ type UpdateRecipeMenuItemProps = { recipeId: string };
 export const UpdateRecipeMenuItem = ({ recipeId }: UpdateRecipeMenuItemProps) => {
   const navigate = useNavigate();
 
-  const handleClick = () => navigate(`/recipes/${recipeId}/update`);
+  const handleClick = () => navigate(pathKeys.recipes.byIdUpdate(recipeId));
 
   return <MenuItem onClick={handleClick}>Edit Recipe</MenuItem>;
 };

@@ -22,3 +22,5 @@ export * from './lib/hooks/use-log-out';
 export * from './lib/hooks/use-click-outside';
 export * from './lib/hooks/use-toggle-menu';
 export * from './lib/hooks/use-modal';
+
+export * from './router';

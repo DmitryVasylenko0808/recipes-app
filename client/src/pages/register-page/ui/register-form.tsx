@@ -1,4 +1,4 @@
-import { Typograpghy, TextField, Button } from '@/shared';
+import { Typograpghy, TextField, Button, pathKeys } from '@/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router';
@@ -20,7 +20,7 @@ export const RegisterForm = () => {
     const { confirmPassword, ...postRegisterUserArgs } = fields;
 
     mutateAsync(postRegisterUserArgs)
-      .then(() => navigate('/'))
+      .then(() => navigate(pathKeys.main))
       .catch((err) => alert(err.message));
   };
 
@@ -83,7 +83,7 @@ export const RegisterForm = () => {
       </Button>
       <div className="flex justify-center gap-1">
         <Typograpghy tagVariant="span">Already have an account?</Typograpghy>
-        <Link className="text-primary font-medium hover:underline" to={'/auth/sign-in'}>
+        <Link className="text-primary font-medium hover:underline" to={pathKeys.auth.signIn}>
           Sign in
         </Link>
       </div>

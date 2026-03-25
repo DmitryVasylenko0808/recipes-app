@@ -1,10 +1,10 @@
-import { Button } from '@/shared';
+import { Button, pathKeys } from '@/shared';
 import { useNavigate } from 'react-router';
 
 export const CreateRecipeButton = () => {
   const navigate = useNavigate();
 
-  const handleClick = () => navigate(`/recipes/create`);
+  const handleClick = () => navigate(pathKeys.recipes.create);
 
   return (
     <Button as="button" variant="secondary" onClick={handleClick}>

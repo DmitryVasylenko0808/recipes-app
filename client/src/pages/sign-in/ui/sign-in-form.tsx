@@ -1,4 +1,4 @@
-import { Button, TextField, Typograpghy } from '@/shared';
+import { Button, pathKeys, TextField, Typograpghy } from '@/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router';
@@ -18,7 +18,7 @@ export const SignInForm = () => {
 
   const submitHanlder = (fields: SignInFormFields) => {
     mutateAsync(fields)
-      .then(() => navigate('/'))
+      .then(() => navigate(pathKeys.main))
       .catch((err) => alert(err.message));
   };
 
@@ -58,7 +58,7 @@ export const SignInForm = () => {
       </Button>
       <div className="flex justify-center gap-1">
         <Typograpghy tagVariant="span">Don't have an account?</Typograpghy>
-        <Link className="text-primary font-medium hover:underline" to={'/auth/register'}>
+        <Link className="text-primary font-medium hover:underline" to={pathKeys.auth.register}>
           Sign up
         </Link>
       </div>

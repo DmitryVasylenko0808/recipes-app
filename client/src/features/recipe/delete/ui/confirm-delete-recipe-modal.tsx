@@ -1,5 +1,5 @@
 import type { Recipe } from '@/entities/recipes';
-import { type ModalProps, Modal, Typograpghy, Button } from '@/shared';
+import { type ModalProps, Modal, Typograpghy, Button, pathKeys } from '@/shared';
 import { useNavigate } from 'react-router';
 import { useDeleteRecipeById } from '../model/hooks/use-delete-recipe-by-id';
 
@@ -16,7 +16,7 @@ export const ConfirmDeleteRecipeModal = ({
     mutateAsync(recipe.id)
       .then(() => {
         alert('Recipe is deleted');
-        navigate(`/`);
+        navigate(pathKeys.main);
       })
       .catch((err) => alert(err.message));
   };

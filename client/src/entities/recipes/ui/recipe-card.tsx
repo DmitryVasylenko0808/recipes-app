@@ -1,4 +1,4 @@
-import { Badge, Card, Typograpghy } from '@/shared';
+import { Badge, Card, pathKeys, Typograpghy } from '@/shared';
 import type { RecipePreview } from '../model/types/recipe-preview';
 import { Link } from 'react-router';
 
@@ -9,7 +9,7 @@ type RecipeCardProps = {
 export const RecipeCard = ({ recipe }: RecipeCardProps) => {
   return (
     <Card className="h-120 w-73 duration-100 hover:shadow-xl">
-      <Link to={`/recipes/${recipe.id}`}>
+      <Link to={pathKeys.recipes.byId(recipe.id)}>
         <div className="relative h-48 w-full">
           <Badge variant="primary" className="absolute top-2 left-2">
             {recipe.category.name}

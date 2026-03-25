@@ -1,5 +1,6 @@
 import type { RecipePreview } from '@/entities/recipes';
 import { CreateRecipeForm } from '@/features/recipe/create';
+import { pathKeys } from '@/shared';
 import { useNavigate } from 'react-router';
 
 export const CreateRecipe = () => {
@@ -7,7 +8,7 @@ export const CreateRecipe = () => {
 
   const handleSubmit = (recipe: RecipePreview) => {
     alert('Recipe is created');
-    navigate(`/recipes/${recipe.id}`);
+    navigate(pathKeys.recipes.byId(recipe.id));
   };
 
   return (

@@ -1,4 +1,4 @@
-import { useAuth, Logo, Typograpghy, Button } from '@/shared';
+import { useAuth, Logo, Typograpghy, Button, pathKeys } from '@/shared';
 import { UserMenu } from './user-menu';
 import { CreateRecipeButton } from '@/features/recipe/create';
 
@@ -22,7 +22,7 @@ export const Header = () => {
                 <UserMenu user={currentUser} />
               </div>
             ) : (
-              <Button as="link" to={'/auth/sign-in'} variant="primary">
+              <Button as="link" to={pathKeys.auth.signIn} variant="primary">
                 Login
               </Button>
             )}

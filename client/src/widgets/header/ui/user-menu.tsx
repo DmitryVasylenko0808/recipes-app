@@ -9,6 +9,7 @@ import {
   MenuSection,
   MenuItem,
   MenuDivider,
+  pathKeys,
 } from '@/shared';
 import type { GetMeDto } from '@/shared/api';
 import { useNavigate } from 'react-router';
@@ -20,7 +21,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
   const logout = useLogOut();
   const navigate = useNavigate();
 
-  const handleClickMyProfile = () => navigate(`/authors/${user.id}`);
+  const handleClickMyProfile = () => navigate(pathKeys.authors.byId(user.id));
 
   return (
     <Menu

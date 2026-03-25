@@ -1,4 +1,4 @@
-import { Typograpghy, Acronym, Badge, Card, Markdown } from '@/shared';
+import { Typograpghy, Acronym, Badge, Card, Markdown, pathKeys } from '@/shared';
 import type { ReactNode, ComponentProps } from 'react';
 import { Link } from 'react-router';
 import type { Recipe } from '../model/types/recipe';
@@ -22,7 +22,7 @@ export const RecipeDetailsView = ({ recipe, actionsSlot }: RecipeDetailsViewProp
 
       <div className="mb-6">
         <div className="flex items-center gap-3 pb-6">
-          <Link to={`/authors/${recipe.author.id}`}>
+          <Link to={pathKeys.authors.byId(recipe.authorId)}>
             {recipe.author.avatar ? (
               <img
                 src={recipe.author.avatar}
@@ -42,7 +42,7 @@ export const RecipeDetailsView = ({ recipe, actionsSlot }: RecipeDetailsViewProp
               Recipe by
             </Typograpghy>
             <Link
-              to={`/authors/${recipe.author.id}`}
+              to={pathKeys.authors.byId(recipe.authorId)}
               className="text-foreground hover:text-primary font-medium duration-100"
             >
               {recipe.author.firstname} {recipe.author.secondname}

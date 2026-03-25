@@ -1,6 +1,6 @@
 import { useGetOneRecipe, type RecipePreview } from '@/entities/recipes';
 import { UpdateRecipeForm } from '@/features/recipe/update';
-import { Loader } from '@/shared';
+import { Loader, pathKeys } from '@/shared';
 import { Navigate, useNavigate, useParams } from 'react-router';
 
 export const UpdateRecipe = () => {
@@ -10,7 +10,7 @@ export const UpdateRecipe = () => {
 
   const handleSubmit = (recipe: RecipePreview) => {
     alert('Recipe is updated');
-    navigate(`/recipes/${recipe.id}`);
+    navigate(pathKeys.recipes.byId(recipe.id));
   };
 
   if (error) return <Navigate to="*" />;
