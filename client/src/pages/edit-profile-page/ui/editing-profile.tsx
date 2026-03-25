@@ -10,7 +10,7 @@ export const EditingProfile = () => {
 
   const handleSubmit = () => navigate(pathKeys.authors.byId(id));
 
-  if (error) return <Navigate to="*" replace />;
+  if (error) return <Navigate to="*" state={{ errorMessage: error.message }} replace />;
 
   return (
     <div className="mx-auto flex max-w-7xl justify-center px-4 py-8">

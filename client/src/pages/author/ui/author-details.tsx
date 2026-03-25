@@ -7,7 +7,7 @@ export const AuthorDetails = () => {
   const { id } = useParams();
   const { data, isLoading, error } = useGetAuthorById(id);
 
-  if (error) return <Navigate to="*" replace />;
+  if (error) return <Navigate to="*" state={{ errorMessage: error.message }} replace />;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">

@@ -8,7 +8,7 @@ export const RecipeDetails = () => {
   const { data, isLoading, error } = useGetOneRecipe(id);
   const { currentUser } = useAuth();
 
-  if (error) return <Navigate to="*" />;
+  if (error) return <Navigate to="*" state={{ errorMessage: error.message }} />;
 
   const isOwnRecipe = currentUser?.id === data?.authorId;
 

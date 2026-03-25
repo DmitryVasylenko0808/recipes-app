@@ -13,7 +13,7 @@ export const UpdateRecipe = () => {
     navigate(pathKeys.recipes.byId(recipe.id));
   };
 
-  if (error) return <Navigate to="*" />;
+  if (error) return <Navigate to="*" state={{ errorMessage: error.message }} />;
 
   return (
     <div className="mx-auto max-w-3xl p-6">
