@@ -1,3 +1,3 @@
 export const AuthorDetailsSkeleton = () => {
-  return <div className="h-48 w-full animate-pulse rounded-md bg-gray-200" />;
+  return <div className="bg-accent h-48 w-full animate-pulse rounded-md" />;
 };

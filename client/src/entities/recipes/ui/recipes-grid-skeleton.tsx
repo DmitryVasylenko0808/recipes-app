@@ -15,7 +15,7 @@ export const RecipesGridSkeleton = ({ countItems = 9, cols = 3 }: RecipesGridSke
       })}
     >
       {Array.from({ length: countItems }).map((_, i) => (
-        <div className="h-110 animate-pulse rounded-md bg-gray-200" key={i} />
+        <div className="bg-accent h-110 animate-pulse rounded-md" key={i} />
       ))}
     </div>
   );
