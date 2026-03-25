@@ -1,10 +1,10 @@
 import { AuthorPage } from '@/pages/author';
 import { CreateRecipePage } from '@/pages/create-recipe';
-import { EditProfilePage } from '@/pages/edit-profile-page';
-import { MainPage } from '@/pages/main-page';
+import { EditProfilePage } from '@/pages/edit-profile';
+import { MainPage } from '@/pages/main';
 import { NotFoundPage } from '@/pages/not-found';
 import { RecipePage } from '@/pages/recipe';
-import { RegisterPage } from '@/pages/register-page';
+import { RegisterPage } from '@/pages/register';
 import { SignInPage } from '@/pages/sign-in';
 import { UpdateRecipePage } from '@/pages/update-recipe';
 import { Routes, Route } from 'react-router';
