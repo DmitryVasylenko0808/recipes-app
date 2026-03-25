@@ -55,26 +55,26 @@ export const RecipeDetailsView = ({ recipe, actionsSlot }: RecipeDetailsViewProp
       <div className="mb-6">
         <div className="mb-6 flex gap-4">
           <MetaBlock>
-            <Typograpghy tagVariant="span" className="text-xs">
+            <Typograpghy tagVariant="span" className="text-sm">
               Category
             </Typograpghy>
-            <Typograpghy tagVariant="span" className="text-muted-foreground font-medium">
+            <Typograpghy tagVariant="p" className="font-medium">
               {recipe.category.name}
             </Typograpghy>
           </MetaBlock>
           <MetaBlock>
-            <Typograpghy tagVariant="span" className="text-xs">
+            <Typograpghy tagVariant="span" className="text-sm">
               Difficulty
             </Typograpghy>
-            <Typograpghy tagVariant="span" className="text-muted-foreground font-medium">
+            <Typograpghy tagVariant="p" className="font-medium">
               {recipe.difficulty}
             </Typograpghy>
           </MetaBlock>
           <MetaBlock>
-            <Typograpghy tagVariant="span" className="text-xs">
+            <Typograpghy tagVariant="span" className="text-sm">
               Cooking time
             </Typograpghy>
-            <Typograpghy tagVariant="span" className="text-muted-foreground font-medium">
+            <Typograpghy tagVariant="p" className="font-medium">
               {recipe.cookingTime} minutes
             </Typograpghy>
           </MetaBlock>

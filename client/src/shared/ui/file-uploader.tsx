@@ -18,7 +18,9 @@ export const FileUploader = ({
 }: FileUploaderProps) => {
   return (
     <div className={cn('relative w-full', className)}>
-      <label className="mb-2 block font-medium">{label}</label>
+      <Typograpghy tagVariant="label" className="mb-2">
+        {label}
+      </Typograpghy>
       <input
         type="file"
         className="focus:border-ring focus:ring-ring/50 bg-input-background block h-9 w-full cursor-pointer rounded-md px-4 py-2 text-sm font-medium outline-0 duration-100 file:hidden focus:ring-[3px]"
@@ -26,11 +28,11 @@ export const FileUploader = ({
         {...inputProps}
       />
       {error ? (
-        <Typograpghy tagVariant="span" className="text-destructive mt-2 text-xs">
+        <Typograpghy tagVariant="span" className="text-destructive mt-2">
           {error}
         </Typograpghy>
       ) : (
-        <Typograpghy tagVariant="span" className="text-muted-foreground mt-2 text-xs">
+        <Typograpghy tagVariant="span" className="mt-2">
           {caption}
         </Typograpghy>
       )}

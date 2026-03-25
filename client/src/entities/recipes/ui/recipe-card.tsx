@@ -42,7 +42,7 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
           <Typograpghy tagVariant="span" className="text-foreground mb-1.5">
             Ingredients:
             <div>
-              <Typograpghy tagVariant="span" className="text-xs">
+              <Typograpghy tagVariant="span">
                 {recipe.recipeIngredients.map((ing) => ing.name).join(', ')}
               </Typograpghy>
             </div>

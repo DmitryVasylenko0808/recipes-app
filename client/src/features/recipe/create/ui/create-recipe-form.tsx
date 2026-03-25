@@ -164,7 +164,9 @@ export const CreateRecipeForm = ({ onSubmit }: CreateRecipeFormProps) => {
         </div>
         {!!selectedTagIds.length && (
           <div className="mt-3">
-            <label className="mb-2 block font-medium">Selected tags:</label>
+            <Typograpghy tagVariant="label" className="mb-2">
+              Selected tags:
+            </Typograpghy>
             <div className="flex flex-wrap gap-2">
               {tags
                 ?.filter((t) => selectedTagIds.includes(t.id))

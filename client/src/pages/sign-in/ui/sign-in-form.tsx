@@ -57,7 +57,7 @@ export const SignInForm = () => {
         Sign in
       </Button>
       <div className="flex justify-center gap-1">
-        <Typograpghy tagVariant="span">Don't have an account?</Typograpghy>
+        <Typograpghy tagVariant="p">Don't have an account?</Typograpghy>
         <Link className="text-primary font-medium hover:underline" to={pathKeys.auth.register}>
           Sign up
         </Link>

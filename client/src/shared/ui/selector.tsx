@@ -8,6 +8,7 @@ export type Option<T> = {
 };
 type SelectorProps<T> = ComponentProps<'select'> & {
   label?: string;
+  caption?: string;
   error?: string;
   options?: Option<T>[];
 };
@@ -16,12 +17,17 @@ export const Selector = <T extends string | number | readonly string[] | undefin
   label,
   options,
   className,
+  caption,
   error,
   ...selectProps
 }: Readonly<SelectorProps<T>>) => {
   return (
     <div className={cn('relative w-full', className)}>
-      {label && <label className="mb-2 block font-medium">{label}</label>}
+      {label && (
+        <Typograpghy tagVariant="label" className="mb-2">
+          {label}
+        </Typograpghy>
+      )}
       <select
         className={cn(
           'bg-input-background placeholder:text-muted-foreground focus:border-ring focus:ring-ring/50 block h-9 w-full rounded-md px-4 py-2 text-sm font-medium outline-0 duration-100 focus:ring-[3px]',
@@ -35,9 +41,13 @@ export const Selector = <T extends string | number | readonly string[] | undefin
           </option>
         ))}
       </select>
-      {error && (
-        <Typograpghy tagVariant="span" className="text-destructive mt-2 text-xs">
+      {error ? (
+        <Typograpghy tagVariant="span" className="text-destructive mt-2">
           {error}
+        </Typograpghy>
+      ) : (
+        <Typograpghy tagVariant="span" className="mt-2">
+          {caption}
         </Typograpghy>
       )}
     </div>

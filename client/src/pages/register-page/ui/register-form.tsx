@@ -82,7 +82,7 @@ export const RegisterForm = () => {
         Register
       </Button>
       <div className="flex justify-center gap-1">
-        <Typograpghy tagVariant="span">Already have an account?</Typograpghy>
+        <Typograpghy tagVariant="p">Already have an account?</Typograpghy>
         <Link className="text-primary font-medium hover:underline" to={pathKeys.auth.signIn}>
           Sign in
         </Link>

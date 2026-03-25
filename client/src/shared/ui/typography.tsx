@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { cn } from '../lib/utils/cn';
 
 type TypograpghyProps = {
-  tagVariant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
+  tagVariant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'label';
   className?: string;
   children?: ReactNode;
 };
@@ -27,7 +27,9 @@ export const Typograpghy = ({
             tagVariant === 'h2' ||
             tagVariant === 'h3' ||
             tagVariant === 'h4',
-          'text-muted-foreground': tagVariant === 'p' || tagVariant === 'span',
+          'text-muted-foreground': tagVariant === 'p',
+          'text-muted-foreground text-xs': tagVariant === 'span',
+          'block font-medium': tagVariant === 'label',
         },
         className
       )}
