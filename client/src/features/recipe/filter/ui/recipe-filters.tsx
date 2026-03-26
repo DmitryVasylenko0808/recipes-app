@@ -2,8 +2,11 @@ import type { Category } from '@/entities/categories';
 import type { Ingredient } from '@/entities/ingredients';
 import type { Difficulty } from '@/entities/recipes';
 import type { Tag } from '@/entities/tags';
-import { Card, Typograpghy, TextField, Selector, Badge, Button } from '@/shared';
+import { Card, Typograpghy, TextField, Selector, Badge, Button, Collapsible } from '@/shared';
 import { Search, X } from 'lucide-react';
+
+const INITIAL_COUNT_TAGS = 9;
+const INITIAL_COUNT_INGREDIENTS = 9;
 
 export type CookingTimeFilterItem = {
   readonly value?: string[];
@@ -131,57 +134,97 @@ export const RecipeFilters = ({
         </div>
       </div>
 
-      <div className="mb-6">
-        <Typograpghy tagVariant="label" className="mb-3">
-          Tags
-        </Typograpghy>
-        <div className="flex flex-wrap gap-2">
-          <Badge
-            variant={selectedTags.length ? 'terciary' : 'primary'}
-            className="cursor-pointer"
-            onClick={() => onSelectTag?.(null)}
-          >
-            All
-          </Badge>
-          {avialableTags.map((t) => (
-            <Badge
-              variant={selectedTags.find((st) => t.name === st.name) ? 'primary' : 'terciary'}
-              onClick={() => onSelectTag?.(t)}
-              className="cursor-pointer"
-              key={t.id}
-            >
-              {t.name}
-            </Badge>
-          ))}
-        </div>
-      </div>
+      <Collapsible
+        className="mb-6"
+        preview={
+          <div>
+            <Typograpghy tagVariant="label" className="mb-3">
+              Tags
+            </Typograpghy>
+            <div className="flex flex-wrap gap-2">
+              <Badge
+                variant={selectedTags.length ? 'terciary' : 'primary'}
+                className="cursor-pointer"
+                onClick={() => onSelectTag?.(null)}
+              >
+                All
+              </Badge>
+              {avialableTags.slice(0, INITIAL_COUNT_TAGS).map((t) => (
+                <Badge
+                  variant={selectedTags.find((st) => t.name === st.name) ? 'primary' : 'terciary'}
+                  onClick={() => onSelectTag?.(t)}
+                  className="cursor-pointer"
+                  key={t.id}
+                >
+                  {t.name}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        }
+        full={
+          <div className="mt-2 flex flex-wrap gap-2">
+            {avialableTags.slice(INITIAL_COUNT_TAGS).map((t) => (
+              <Badge
+                variant={selectedTags.find((st) => t.name === st.name) ? 'primary' : 'terciary'}
+                onClick={() => onSelectTag?.(t)}
+                className="cursor-pointer"
+                key={t.id}
+              >
+                {t.name}
+              </Badge>
+            ))}
+          </div>
+        }
+      />
 
-      <div className="mb-6">
-        <Typograpghy tagVariant="label" className="mb-3">
-          Ingredients
-        </Typograpghy>
-        <div className="flex flex-wrap gap-2">
-          <Badge
-            variant={selectedIngredients.length ? 'terciary' : 'primary'}
-            onClick={() => onSelectIngredient?.(null)}
-            className="cursor-pointer"
-          >
-            All
-          </Badge>
-          {avialableIngredients.map((ing) => (
-            <Badge
-              variant={
-                selectedIngredients.find((si) => ing.name === si.name) ? 'primary' : 'terciary'
-              }
-              onClick={() => onSelectIngredient?.(ing)}
-              className="cursor-pointer"
-              key={ing.id}
-            >
-              {ing.name}
-            </Badge>
-          ))}
-        </div>
-      </div>
+      <Collapsible
+        className="mb-6"
+        preview={
+          <div>
+            <Typograpghy tagVariant="label" className="mb-3">
+              Ingredients
+            </Typograpghy>
+            <div className="flex flex-wrap gap-2">
+              <Badge
+                variant={selectedIngredients.length ? 'terciary' : 'primary'}
+                className="cursor-pointer"
+                onClick={() => onSelectIngredient?.(null)}
+              >
+                All
+              </Badge>
+              {avialableIngredients.slice(0, INITIAL_COUNT_INGREDIENTS).map((ing) => (
+                <Badge
+                  variant={
+                    selectedIngredients.find((si) => ing.name === si.name) ? 'primary' : 'terciary'
+                  }
+                  onClick={() => onSelectIngredient?.(ing)}
+                  className="cursor-pointer"
+                  key={ing.id}
+                >
+                  {ing.name}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        }
+        full={
+          <div className="mt-2 flex flex-wrap gap-2">
+            {avialableIngredients.slice(INITIAL_COUNT_INGREDIENTS).map((ing) => (
+              <Badge
+                variant={
+                  selectedIngredients.find((si) => ing.name === si.name) ? 'primary' : 'terciary'
+                }
+                onClick={() => onSelectIngredient?.(ing)}
+                className="cursor-pointer"
+                key={ing.id}
+              >
+                {ing.name}
+              </Badge>
+            ))}
+          </div>
+        }
+      />
 
       <Button as="button" variant="secondary" icon={X} onClick={() => onResetFilters?.()} fullWidth>
         Clear all filters

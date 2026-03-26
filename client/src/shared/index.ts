@@ -13,6 +13,7 @@ export * from './ui/markdown';
 export * from './ui/portal';
 export * from './ui/modal';
 export * from './ui/loader';
+export * from './ui/collapsable';
 
 export * from './config/contants';
 export * from './config/api-client';
