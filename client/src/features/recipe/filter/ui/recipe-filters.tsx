@@ -2,9 +2,11 @@ import type { Category } from '@/entities/categories';
 import type { Ingredient } from '@/entities/ingredients';
 import type { Difficulty } from '@/entities/recipes';
 import type { Tag } from '@/entities/tags';
-import { Card, Typograpghy, TextField, Selector, Badge, Button, Collapsible } from '@/shared';
+import { Card, Typograpghy, TextField, Selector, Badge, Button } from '@/shared';
 import { Search, X } from 'lucide-react';
+import { SelectableList } from './selectable-list';
 
+const INITIAL_COUNT_CATEGORIES = 9;
 const INITIAL_COUNT_TAGS = 9;
 const INITIAL_COUNT_INGREDIENTS = 9;
 
@@ -17,18 +19,18 @@ type RecipeFiltersProps = {
   search?: string;
   onSearch?: (search: string) => void;
   cookingTimes?: CookingTimeFilterItem[];
-  difficulties?: Difficulty[];
-  avialableCategories?: Category[];
-  avialableTags?: Tag[];
-  avialableIngredients?: Ingredient[];
   selectedCookingTime?: string;
   onSelectCookingTime?: (v?: string) => void;
+  difficulties?: Difficulty[];
   selectedDifficulties?: Difficulty[];
   onSelectDifficulty?: (difficulty: Difficulty | null) => void;
+  avialableCategories?: Category[];
   selectedCategories?: Category[];
   onSelectCategory?: (category: Category | null) => void;
+  avialableTags?: Tag[];
   selectedTags?: Tag[];
   onSelectTag?: (tag: Tag | null) => void;
+  avialableIngredients?: Ingredient[];
   selectedIngredients?: Ingredient[];
   onSelectIngredient?: (ingredient: Ingredient | null) => void;
   onResetFilters?: () => void;
@@ -37,19 +39,19 @@ type RecipeFiltersProps = {
 export const RecipeFilters = ({
   search,
   onSearch,
-  cookingTimes,
-  difficulties,
-  avialableCategories = [],
-  avialableTags = [],
-  avialableIngredients = [],
-  selectedCookingTime,
+  cookingTimes = [],
   onSelectCookingTime,
+  selectedCookingTime,
+  difficulties = [],
   selectedDifficulties = [],
   onSelectDifficulty,
+  avialableCategories = [],
   selectedCategories = [],
   onSelectCategory,
+  avialableTags = [],
   selectedTags = [],
   onSelectTag,
+  avialableIngredients = [],
   selectedIngredients = [],
   onSelectIngredient,
   onResetFilters,
@@ -69,161 +71,94 @@ export const RecipeFilters = ({
         className="mb-6"
       />
 
-      {cookingTimes && (
-        <div className="mb-6">
-          <Typograpghy tagVariant="label" className="mb-3">
-            Cooking time
-          </Typograpghy>
-          <Selector
-            options={cookingTimes}
-            value={selectedCookingTime}
-            onChange={(e) => onSelectCookingTime?.(e.target.value)}
-          />
-        </div>
-      )}
-
-      {difficulties && (
-        <div className="mb-6">
-          <Typograpghy tagVariant="label" className="mb-3">
-            Difficulty
-          </Typograpghy>
-          <div className="flex flex-wrap gap-2">
-            <Badge
-              variant={selectedDifficulties.length ? 'terciary' : 'primary'}
-              onClick={() => onSelectDifficulty?.(null)}
-              className="cursor-pointer"
-            >
-              All
-            </Badge>
-            {difficulties.map((diff) => (
-              <Badge
-                variant={selectedDifficulties.includes(diff) ? 'primary' : 'terciary'}
-                onClick={() => onSelectDifficulty?.(diff)}
-                className="cursor-pointer"
-                key={diff}
-              >
-                {diff}
-              </Badge>
-            ))}
-          </div>
-        </div>
-      )}
-
       <div className="mb-6">
         <Typograpghy tagVariant="label" className="mb-3">
-          Categories
+          Cooking time
         </Typograpghy>
-        <div className="flex flex-wrap gap-2">
-          <Badge
-            variant={selectedCategories.length ? 'terciary' : 'primary'}
-            className="cursor-pointer"
-            onClick={() => onSelectCategory?.(null)}
-          >
-            All
-          </Badge>
-          {avialableCategories.map((c) => (
-            <Badge
-              variant={selectedCategories.find((sc) => c.name === sc.name) ? 'primary' : 'terciary'}
-              onClick={() => onSelectCategory?.(c)}
-              className="cursor-pointer"
-              key={c.id}
-            >
-              {c.name}
-            </Badge>
-          ))}
-        </div>
+        <Selector
+          options={cookingTimes}
+          value={selectedCookingTime}
+          onChange={(e) => onSelectCookingTime?.(e.target.value)}
+        />
       </div>
 
-      <Collapsible
-        className="mb-6"
-        preview={
-          <div>
-            <Typograpghy tagVariant="label" className="mb-3">
-              Tags
-            </Typograpghy>
-            <div className="flex flex-wrap gap-2">
-              <Badge
-                variant={selectedTags.length ? 'terciary' : 'primary'}
-                className="cursor-pointer"
-                onClick={() => onSelectTag?.(null)}
-              >
-                All
-              </Badge>
-              {avialableTags.slice(0, INITIAL_COUNT_TAGS).map((t) => (
-                <Badge
-                  variant={selectedTags.find((st) => t.name === st.name) ? 'primary' : 'terciary'}
-                  onClick={() => onSelectTag?.(t)}
-                  className="cursor-pointer"
-                  key={t.id}
-                >
-                  {t.name}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        }
-        full={
-          <div className="mt-2 flex flex-wrap gap-2">
-            {avialableTags.slice(INITIAL_COUNT_TAGS).map((t) => (
-              <Badge
-                variant={selectedTags.find((st) => t.name === st.name) ? 'primary' : 'terciary'}
-                onClick={() => onSelectTag?.(t)}
-                className="cursor-pointer"
-                key={t.id}
-              >
-                {t.name}
-              </Badge>
-            ))}
-          </div>
-        }
+      <SelectableList
+        type="default"
+        title="Difficulty"
+        avialableItems={difficulties}
+        selectedItems={selectedDifficulties}
+        onSelectItem={onSelectDifficulty}
+        renderItem={(diff) => (
+          <Badge
+            variant={selectedDifficulties.includes(diff) ? 'primary' : 'terciary'}
+            onClick={() => onSelectDifficulty?.(diff)}
+            className="cursor-pointer"
+            key={diff}
+          >
+            {diff}
+          </Badge>
+        )}
       />
 
-      <Collapsible
-        className="mb-6"
-        preview={
-          <div>
-            <Typograpghy tagVariant="label" className="mb-3">
-              Ingredients
-            </Typograpghy>
-            <div className="flex flex-wrap gap-2">
-              <Badge
-                variant={selectedIngredients.length ? 'terciary' : 'primary'}
-                className="cursor-pointer"
-                onClick={() => onSelectIngredient?.(null)}
-              >
-                All
-              </Badge>
-              {avialableIngredients.slice(0, INITIAL_COUNT_INGREDIENTS).map((ing) => (
-                <Badge
-                  variant={
-                    selectedIngredients.find((si) => ing.name === si.name) ? 'primary' : 'terciary'
-                  }
-                  onClick={() => onSelectIngredient?.(ing)}
-                  className="cursor-pointer"
-                  key={ing.id}
-                >
-                  {ing.name}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        }
-        full={
-          <div className="mt-2 flex flex-wrap gap-2">
-            {avialableIngredients.slice(INITIAL_COUNT_INGREDIENTS).map((ing) => (
-              <Badge
-                variant={
-                  selectedIngredients.find((si) => ing.name === si.name) ? 'primary' : 'terciary'
-                }
-                onClick={() => onSelectIngredient?.(ing)}
-                className="cursor-pointer"
-                key={ing.id}
-              >
-                {ing.name}
-              </Badge>
-            ))}
-          </div>
-        }
+      <SelectableList
+        type="collapsible"
+        initialPreviewCount={INITIAL_COUNT_CATEGORIES}
+        title="Categories"
+        avialableItems={avialableCategories}
+        selectedItems={selectedCategories}
+        onSelectItem={onSelectCategory}
+        renderItem={(category) => (
+          <Badge
+            variant={
+              selectedCategories.find((c) => c.name === category.name) ? 'primary' : 'terciary'
+            }
+            onClick={() => onSelectCategory?.(category)}
+            className="cursor-pointer"
+            key={category.id}
+          >
+            {category.name}
+          </Badge>
+        )}
+      />
+
+      <SelectableList
+        type="collapsible"
+        initialPreviewCount={INITIAL_COUNT_TAGS}
+        title="Tags"
+        avialableItems={avialableTags}
+        selectedItems={selectedTags}
+        onSelectItem={onSelectTag}
+        renderItem={(tag) => (
+          <Badge
+            variant={selectedTags.find((t) => t.name === tag.name) ? 'primary' : 'terciary'}
+            onClick={() => onSelectTag?.(tag)}
+            className="cursor-pointer"
+            key={tag.id}
+          >
+            {tag.name}
+          </Badge>
+        )}
+      />
+
+      <SelectableList
+        type="collapsible"
+        initialPreviewCount={INITIAL_COUNT_INGREDIENTS}
+        title="Ingredients"
+        avialableItems={avialableIngredients}
+        selectedItems={selectedIngredients}
+        onSelectItem={onSelectIngredient}
+        renderItem={(ing) => (
+          <Badge
+            variant={
+              selectedIngredients.find((si) => si.name === ing.name) ? 'primary' : 'terciary'
+            }
+            onClick={() => onSelectIngredient?.(ing)}
+            className="cursor-pointer"
+            key={ing.id}
+          >
+            {ing.name}
+          </Badge>
+        )}
       />
 
       <Button as="button" variant="secondary" icon={X} onClick={() => onResetFilters?.()} fullWidth>
