@@ -35,8 +35,8 @@ export const Selector = <T extends string | number | readonly string[] | undefin
         )}
         {...selectProps}
       >
-        {options?.map((opt) => (
-          <option key={opt.value?.toString()} value={opt.value}>
+        {options?.map((opt, index) => (
+          <option key={index} value={opt.value}>
             {opt.label}
           </option>
         ))}
