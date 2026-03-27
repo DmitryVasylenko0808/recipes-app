@@ -10,6 +10,7 @@ import {
   MenuItem,
   MenuDivider,
   pathKeys,
+  Avatar,
 } from '@/shared';
 import type { GetMeDto } from '@/shared/api';
 import { LogOut, UserRound } from 'lucide-react';
@@ -29,7 +30,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
       trigger={
         <Button as="button" variant="text" className="h-14" onClick={handleToggle}>
           {user.avatar ? (
-            <img className="h-10 w-10 rounded-full" src={user.avatar} alt="User avatar" />
+            <Avatar size="sm" src={user.avatar} alt="User avatar" />
           ) : (
             <AvatarFallback firstname={user.firstname} secondname={user.secondname} />
           )}

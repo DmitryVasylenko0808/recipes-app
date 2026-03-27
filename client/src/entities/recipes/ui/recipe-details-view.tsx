@@ -1,4 +1,4 @@
-import { Typograpghy, AvatarFallback, Badge, Card, Markdown, pathKeys } from '@/shared';
+import { Typograpghy, AvatarFallback, Badge, Card, Markdown, pathKeys, Avatar } from '@/shared';
 import type { ReactNode, ComponentProps } from 'react';
 import { Link } from 'react-router';
 import type { Recipe } from '../model/types/recipe';
@@ -25,11 +25,7 @@ export const RecipeDetailsView = ({ recipe, actionsSlot }: RecipeDetailsViewProp
         <div className="flex items-center gap-3 pb-6">
           <Link to={pathKeys.authors.byId(recipe.authorId)}>
             {recipe.author.avatar ? (
-              <img
-                src={recipe.author.avatar}
-                className="h-14 w-14 rounded-full"
-                alt="author avatar"
-              />
+              <Avatar size="md" src={recipe.author.avatar} alt="author avatar" />
             ) : (
               <AvatarFallback
                 firstname={recipe.author.firstname}

@@ -1,4 +1,4 @@
-import { Typograpghy } from '@/shared';
+import { Avatar, Typograpghy } from '@/shared';
 import { useState, useEffect } from 'react';
 
 type ProfileAvatarPreviewProps = {
@@ -27,10 +27,11 @@ export const ProfileAvatarPreview = ({ initialImageSrc, image }: ProfileAvatarPr
     <div className="mb-6">
       <div className="mb-4 flex justify-center">
         {previewImage ? (
-          <img
+          <Avatar
             src={previewImage}
             className="border-ring/30 h-32 w-32 rounded-full border"
             alt="avatar preview"
+            size="lg"
           />
         ) : (
           <div className="border-ring/30 h-32 w-32 rounded-full border" />

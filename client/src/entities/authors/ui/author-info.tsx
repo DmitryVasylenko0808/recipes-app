@@ -1,4 +1,4 @@
-import { Card, AvatarFallback, Typograpghy } from '@/shared';
+import { Card, AvatarFallback, Typograpghy, Avatar } from '@/shared';
 import type { Author } from '../model/types/author';
 import type { ReactNode } from 'react';
 
@@ -9,7 +9,7 @@ export const AuthorInfo = ({ author, actionsSlot }: AuthorInfoProps) => {
     <Card>
       <div className="flex gap-6 p-8">
         {author.avatar ? (
-          <img className="h-32 w-32 rounded-full" src={author.avatar} alt="author avatar" />
+          <Avatar size="lg" src={author.avatar} alt="author avatar" />
         ) : (
           <AvatarFallback
             firstname={author.firstname}
