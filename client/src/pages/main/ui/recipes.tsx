@@ -69,7 +69,7 @@ export const Recipes = () => {
     ],
   });
 
-  const { data, isFetching } = useGetRecipes({
+  const { data, isPending, isFetching } = useGetRecipes({
     page,
     limit,
     search,
@@ -105,7 +105,11 @@ export const Recipes = () => {
         />
       </aside>
       <div className="flex-1">
-        {isFetching ? <RecipesGridSkeleton /> : <RecipesGrid recipes={data?.data} />}
+        {isPending ? (
+          <RecipesGridSkeleton />
+        ) : (
+          <RecipesGrid isFetching={isFetching} recipes={data?.data} />
+        )}
         <Pagination totalPages={data?.totalPages} currentPage={page} onPageChange={onPageChange} />
       </div>
     </div>

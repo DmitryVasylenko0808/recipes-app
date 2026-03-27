@@ -10,7 +10,7 @@ export const AuthorRecipes = () => {
   const { page, limit, onPageChange } = usePagination({
     initialLimit: INITIAL_LIMIT,
   });
-  const { data, isFetching } = useGetAuthorRecipes({
+  const { data, isPending, isFetching } = useGetAuthorRecipes({
     authorId: id,
     page,
     limit,
@@ -21,10 +21,10 @@ export const AuthorRecipes = () => {
       <Typograpghy tagVariant="h3" className="mb-6">
         Author recipes ({data?.totalCount})
       </Typograpghy>
-      {isFetching ? (
+      {isPending ? (
         <RecipesGridSkeleton countItems={16} cols={4} />
       ) : (
-        <RecipesGrid recipes={data?.data} cols={4} />
+        <RecipesGrid isFetching={isFetching} recipes={data?.data} cols={4} />
       )}
       <Pagination totalPages={data?.totalPages} currentPage={page} onPageChange={onPageChange} />
     </div>

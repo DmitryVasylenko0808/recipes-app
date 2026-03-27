@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getRecipes, type GetRecipesArgs } from '../../api';
 import type { Difficulty } from '../types/recipe-preview';
 import type { Category } from '@/entities/categories';
@@ -32,5 +32,6 @@ export const useGetRecipes = (args: UseGetRecipesArgs) => {
   return useQuery({
     queryKey: ['recipes', { ...args }],
     queryFn: () => getRecipes(apiArgs),
+    placeholderData: keepPreviousData,
   });
 };
