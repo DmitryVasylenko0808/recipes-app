@@ -1,4 +1,4 @@
-import { Typograpghy, Acronym, Badge, Card, Markdown, pathKeys } from '@/shared';
+import { Typograpghy, AvatarFallback, Badge, Card, Markdown, pathKeys } from '@/shared';
 import type { ReactNode, ComponentProps } from 'react';
 import { Link } from 'react-router';
 import type { Recipe } from '../model/types/recipe';
@@ -31,7 +31,7 @@ export const RecipeDetailsView = ({ recipe, actionsSlot }: RecipeDetailsViewProp
                 alt="author avatar"
               />
             ) : (
-              <Acronym
+              <AvatarFallback
                 firstname={recipe.author.firstname}
                 secondname={recipe.author.secondname}
                 className="h-14 w-14"

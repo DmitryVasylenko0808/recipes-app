@@ -4,7 +4,7 @@ export * from './ui/typography';
 export * from './ui/card';
 export * from './ui/logo';
 export * from './ui/menu';
-export * from './ui/acronym';
+export * from './ui/avatar-fallback';
 export * from './ui/badge';
 export * from './ui/selector';
 export * from './ui/textarea';

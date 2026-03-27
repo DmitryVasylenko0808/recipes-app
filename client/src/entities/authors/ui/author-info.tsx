@@ -1,4 +1,4 @@
-import { Card, Acronym, Typograpghy } from '@/shared';
+import { Card, AvatarFallback, Typograpghy } from '@/shared';
 import type { Author } from '../model/types/author';
 import type { ReactNode } from 'react';
 
@@ -11,7 +11,7 @@ export const AuthorInfo = ({ author, actionsSlot }: AuthorInfoProps) => {
         {author.avatar ? (
           <img className="h-32 w-32 rounded-full" src={author.avatar} alt="author avatar" />
         ) : (
-          <Acronym
+          <AvatarFallback
             firstname={author.firstname}
             secondname={author.secondname}
             className="h-32 w-32 text-4xl"

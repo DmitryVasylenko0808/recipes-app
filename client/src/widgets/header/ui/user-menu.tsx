@@ -4,7 +4,7 @@ import {
   useLogOut,
   Menu,
   Button,
-  Acronym,
+  AvatarFallback,
   MenuContent,
   MenuSection,
   MenuItem,
@@ -31,7 +31,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
           {user.avatar ? (
             <img className="h-10 w-10 rounded-full" src={user.avatar} alt="User avatar" />
           ) : (
-            <Acronym firstname={user.firstname} secondname={user.secondname} />
+            <AvatarFallback firstname={user.firstname} secondname={user.secondname} />
           )}
           <span className="text-foreground text-sm font-semibold">
             {user.firstname} {user.secondname}
