@@ -13,6 +13,7 @@ import {
   RecipeFilters,
   useFilterRecipes,
 } from '@/features/recipe/filter';
+import { useDebounce } from '@/shared';
 
 const COOKING_TIMES: CookingTimeFilterItem[] = [
   { label: 'Any time' },
@@ -56,6 +57,7 @@ export const Recipes = () => {
     handleSelectIngredient,
     handleResetFilters,
   } = useFilterRecipes();
+  const debouncedSearch = useDebounce(search, 300);
 
   const { page, limit, onPageChange } = usePagination({
     initialLimit: INITIAL_LIMIT,
@@ -72,7 +74,7 @@ export const Recipes = () => {
   const { data, isPending, isFetching } = useGetRecipes({
     page,
     limit,
-    search,
+    search: debouncedSearch,
     cookingTime: selectedCookingTime,
     difficulties: selectedDifficulties,
     categories: selectedCategories,

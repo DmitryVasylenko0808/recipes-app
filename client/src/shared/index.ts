@@ -23,5 +23,6 @@ export * from './lib/hooks/use-auth';
 export * from './lib/hooks/use-click-outside';
 export * from './lib/hooks/use-toggle-menu';
 export * from './lib/hooks/use-modal';
+export * from './lib/hooks/use-debounce';
 
 export * from './router';
