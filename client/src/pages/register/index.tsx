@@ -1,5 +1,5 @@
+import { RegisterForm } from '@/features/sessions/register-user';
 import { Card } from '@/shared';
-import { RegisterForm } from './ui/register-form';
 
 export const RegisterPage = () => {
   return (
