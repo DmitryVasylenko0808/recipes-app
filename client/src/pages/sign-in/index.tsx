@@ -1,5 +1,5 @@
+import { SignInForm } from '@/features/sessions/sign-in-user';
 import { Card } from '@/shared';
-import { SignInForm } from './ui/sign-in-form';
 
 export const SignInPage = () => {
   return (
