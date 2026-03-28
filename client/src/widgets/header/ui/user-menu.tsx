@@ -11,6 +11,7 @@ import {
   MenuDivider,
   pathKeys,
   Avatar,
+  Typograpghy,
 } from '@/shared';
 import type { GetMeDto } from '@/shared/api';
 import { UserRound } from 'lucide-react';
@@ -33,9 +34,9 @@ export const UserMenu = ({ user }: UserMenuProps) => {
           ) : (
             <AvatarFallback firstname={user.firstname} secondname={user.secondname} />
           )}
-          <span className="text-foreground text-sm font-semibold">
+          <Typograpghy tagVariant="span" className="text-foreground text-sm font-semibold">
             {user.firstname} {user.secondname}
-          </span>
+          </Typograpghy>
         </Button>
       }
       content={
