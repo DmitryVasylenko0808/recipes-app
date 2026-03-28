@@ -63,6 +63,7 @@ export const EditProfileForm = ({ author, onSubmit }: EditProfileFormProps) => {
           control={control}
           render={({ field, fieldState }) => (
             <FileUploader
+              label="Avatar"
               ref={field.ref}
               name={field.name}
               onBlur={field.onBlur}
