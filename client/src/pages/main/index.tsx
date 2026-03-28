@@ -1,5 +1,6 @@
 import { Recipes } from './ui/recipes';
 
-export const MainPage = () => {
+const MainPage = () => {
   return <Recipes />;
 };
+export default MainPage;

@@ -1,5 +1,6 @@
 import { UpdateRecipe } from './ui/update-recipe';
 
-export const UpdateRecipePage = () => {
+const UpdateRecipePage = () => {
   return <UpdateRecipe />;
 };
+export default UpdateRecipePage;

@@ -1,16 +1,19 @@
-import { AuthorPage } from '@/pages/author';
-import { CreateRecipePage } from '@/pages/create-recipe';
-import { EditProfilePage } from '@/pages/edit-profile';
-import { MainPage } from '@/pages/main';
-import { NotFoundPage } from '@/pages/not-found';
-import { RecipePage } from '@/pages/recipe';
-import { RegisterPage } from '@/pages/register';
-import { SignInPage } from '@/pages/sign-in';
-import { UpdateRecipePage } from '@/pages/update-recipe';
+import { lazy } from 'react';
+
+import { AuthGuard } from './auth-guard';
 import { Routes, Route } from 'react-router';
 import { AuthLayout } from '../layouts/auth-layout';
 import { BaseLayout } from '../layouts/base-layout';
-import { AuthGuard } from './auth-guard';
+
+const MainPage = lazy(() => import('@/pages/main'));
+const RecipePage = lazy(() => import('@/pages/recipe'));
+const AuthorPage = lazy(() => import('@/pages/author'));
+const NotFoundPage = lazy(() => import('@/pages/not-found'));
+const CreateRecipePage = lazy(() => import('@/pages/create-recipe'));
+const UpdateRecipePage = lazy(() => import('@/pages/update-recipe'));
+const EditProfilePage = lazy(() => import('@/pages/edit-profile'));
+const SignInPage = lazy(() => import('@/pages/sign-in'));
+const RegisterPage = lazy(() => import('@/pages/register'));
 
 export const AppRoutes = () => (
   <Routes>

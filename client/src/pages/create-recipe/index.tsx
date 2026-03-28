@@ -1,5 +1,6 @@
 import { CreateRecipe } from './ui/create-recipe';
 
-export const CreateRecipePage = () => {
+const CreateRecipePage = () => {
   return <CreateRecipe />;
 };
+export default CreateRecipePage;

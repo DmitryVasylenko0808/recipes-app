@@ -1,9 +1,10 @@
 import { RecipeDetails } from './ui/recipe-details';
 
-export const RecipePage = () => {
+const RecipePage = () => {
   return (
     <>
       <RecipeDetails />
     </>
   );
 };
+export default RecipePage;

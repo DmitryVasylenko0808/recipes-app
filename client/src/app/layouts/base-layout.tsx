@@ -1,9 +1,20 @@
+import { Loader } from '@/shared';
 import { Header } from '@/widgets/header';
-import { Outlet } from 'react-router';
+import { Suspense } from 'react';
+import { Outlet, useLocation } from 'react-router';
 
-export const BaseLayout = () => (
-  <div className="bg-background min-h-screen">
-    <Header />
-    <Outlet />
-  </div>
-);
+export const BaseLayout = () => {
+  const location = useLocation();
+
+  return (
+    <div className="bg-background min-h-screen">
+      <Header />
+      <Suspense
+        key={location.pathname}
+        fallback={<Loader size="lg" variant="primary" className="my-20" center />}
+      >
+        <Outlet />
+      </Suspense>
+    </div>
+  );
+};

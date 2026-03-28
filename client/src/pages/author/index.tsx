@@ -1,7 +1,7 @@
 import { AuthorDetails } from './ui/author-details';
 import { AuthorRecipes } from './ui/author-recipes';
 
-export const AuthorPage = () => {
+const AuthorPage = () => {
   return (
     <>
       <AuthorDetails />
@@ -9,3 +9,4 @@ export const AuthorPage = () => {
     </>
   );
 };
+export default AuthorPage;

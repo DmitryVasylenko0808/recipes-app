@@ -1,5 +1,6 @@
 import { EditingProfile } from './ui/editing-profile';
 
-export const EditProfilePage = () => {
+const EditProfilePage = () => {
   return <EditingProfile />;
 };
+export default EditProfilePage;

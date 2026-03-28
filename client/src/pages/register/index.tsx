@@ -1,10 +1,11 @@
 import { RegisterForm } from '@/features/sessions/register-user';
 import { Card } from '@/shared';
 
-export const RegisterPage = () => {
+const RegisterPage = () => {
   return (
     <Card className="shadow-xl">
       <RegisterForm />
     </Card>
   );
 };
+export default RegisterPage;

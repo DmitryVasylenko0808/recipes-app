@@ -1,7 +1,7 @@
 import { Typograpghy } from '@/shared';
 import { useLocation } from 'react-router';
 
-export const NotFoundPage = () => {
+const NotFoundPage = () => {
   const { state } = useLocation();
 
   return (
@@ -15,3 +15,4 @@ export const NotFoundPage = () => {
     </div>
   );
 };
+export default NotFoundPage;
