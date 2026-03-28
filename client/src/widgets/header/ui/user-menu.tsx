@@ -1,7 +1,7 @@
 import { CreateRecipeMenuItem } from '@/features/recipe/create';
+import { LogOutMenuItem } from '@/features/sessions/log-out-user';
 import {
   useToggleMenu,
-  useLogOut,
   Menu,
   Button,
   AvatarFallback,
@@ -13,14 +13,13 @@ import {
   Avatar,
 } from '@/shared';
 import type { GetMeDto } from '@/shared/api';
-import { LogOut, UserRound } from 'lucide-react';
+import { UserRound } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
 type UserMenuProps = { user: GetMeDto };
 
 export const UserMenu = ({ user }: UserMenuProps) => {
   const { open, ref, handleToggle } = useToggleMenu();
-  const logout = useLogOut();
   const navigate = useNavigate();
 
   const handleClickMyProfile = () => navigate(pathKeys.authors.byId(user.id));
@@ -49,9 +48,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
           </MenuSection>
           <MenuDivider />
           <MenuSection>
-            <MenuItem icon={LogOut} variant="desctructive" onClick={logout}>
-              Log out
-            </MenuItem>
+            <LogOutMenuItem />
           </MenuSection>
         </MenuContent>
       }

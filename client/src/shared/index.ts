@@ -20,7 +20,6 @@ export * from './config/contants';
 export * from './config/api-client';
 
 export * from './lib/hooks/use-auth';
-export * from './lib/hooks/use-log-out';
 export * from './lib/hooks/use-click-outside';
 export * from './lib/hooks/use-toggle-menu';
 export * from './lib/hooks/use-modal';
