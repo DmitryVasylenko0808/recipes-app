@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Exclude } from 'class-transformer';
+import { Exclude, Transform } from 'class-transformer';
 
 export class AuthorPreviewDto {
   @ApiProperty({
@@ -25,6 +25,12 @@ export class AuthorPreviewDto {
     example: 'Collins',
   })
   secondname: string;
+
+  @ApiProperty({
+    description: "Author's avatar",
+    example: 'Collins',
+  })
+  @Transform(({ value }) => (value ? `${process.env.SERVER_UPLOADS_URL}/${value}` : null))
   avatar: string | null;
 
   @Exclude()

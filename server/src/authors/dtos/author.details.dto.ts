@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Exclude } from 'class-transformer';
+import { Exclude, Transform } from 'class-transformer';
 
 export class AuthorDetailsDto {
   @ApiProperty({
@@ -44,6 +44,7 @@ export class AuthorDetailsDto {
     example: 'https://avatars.githubusercontent.com/u/96959575',
     nullable: true,
   })
+  @Transform(({ value }) => (value ? `${process.env.SERVER_UPLOADS_URL}/${value}` : null))
   avatar: string | null;
 
   @ApiProperty({
