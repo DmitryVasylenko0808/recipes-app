@@ -2,11 +2,18 @@ import { RecipeDetailsView, useGetOneRecipe } from '@/entities/recipes';
 import { Loader, useAuth } from '@/shared';
 import { useParams, Navigate } from 'react-router';
 import { RecipeActionsMenu } from './recipe-actions-menu';
+import { useIncrementViews } from '@/features/recipe/increment-views';
+import { useEffect } from 'react';
 
 export const RecipeDetails = () => {
   const { id } = useParams();
   const { data, isLoading, error } = useGetOneRecipe(id);
+  const { mutate } = useIncrementViews();
   const { currentUser } = useAuth();
+
+  useEffect(() => {
+    mutate(id);
+  }, [id]);
 
   if (error) return <Navigate to="*" state={{ errorMessage: error.message }} />;
 
