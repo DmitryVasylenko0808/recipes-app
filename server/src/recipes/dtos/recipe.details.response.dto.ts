@@ -68,6 +68,12 @@ export class RecipeDetailsResponseDto {
   difficulty: Difficulty;
 
   @ApiProperty({
+    description: 'Show how many users viewed recipe',
+    example: 50,
+  })
+  viewsCount: number;
+
+  @ApiProperty({
     description: 'Published date of recipe',
     example: '2024-11-01T02:14:34.244Z',
   })
