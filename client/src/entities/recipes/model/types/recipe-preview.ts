@@ -10,6 +10,7 @@ export type RecipePreview = {
   previewImage: string;
   cookingTime: number;
   difficulty: Difficulty;
+  viewsCount: number;
   createdAt: Date;
   recipeTags: Tag[];
   recipeIngredients: RecipeIngredient[];
