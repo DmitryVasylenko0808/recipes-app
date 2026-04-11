@@ -1,7 +1,7 @@
 import { Badge, Card, pathKeys, Typograpghy } from '@/shared';
 import type { RecipePreview } from '../model/types/recipe-preview';
 import { Link } from 'react-router';
-import { Clock } from 'lucide-react';
+import { Clock, Eye } from 'lucide-react';
 
 type RecipeCardProps = {
   recipe: RecipePreview;
@@ -34,9 +34,17 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
               {recipe.cookingTime} min
             </Typograpghy>
           </div>
-          <Typograpghy tagVariant="p" className="mb-4 line-clamp-2">
-            {recipe.description}
-          </Typograpghy>
+          <div className="mb-4">
+            <Typograpghy tagVariant="p" className="line-clamp-2">
+              {recipe.description}
+            </Typograpghy>
+          </div>
+          <div className="mb-2">
+            <Typograpghy tagVariant="span" className="inline-flex">
+              <Eye size={16} className="mr-1" />
+              {recipe.viewsCount} views
+            </Typograpghy>
+          </div>
           <div className="mb-1.5 flex flex-wrap gap-1.5">
             {recipe.recipeTags.map((t) => (
               <Badge variant="secondary" key={t.id}>
