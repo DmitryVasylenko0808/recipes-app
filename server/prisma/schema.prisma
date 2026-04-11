@@ -39,6 +39,7 @@ model Recipe {
   content      String
   cookingTime  Int        @map("cooking_time")
   difficulty   Difficulty
+  viewsCount   Int        @default(0) @map("views_count")
   createdAt    DateTime   @default(now()) @map("created_at")
 
   authorId String @map("author_id")

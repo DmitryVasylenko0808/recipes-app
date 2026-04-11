@@ -558,6 +558,7 @@ inpune, *digitosque genua*. **Sustulit abstinet**!
   id: uuidv4(),
   authorId: faker.helpers.arrayElement(authorsIds),
   previewImage: `${index}.jpg`,
+  viewsCount: faker.number.int({ min: 10, max: 150 }),
   createdAt: faker.date.past({ years: 2 }),
 }));
 
