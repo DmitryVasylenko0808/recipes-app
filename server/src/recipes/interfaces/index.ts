@@ -21,4 +21,5 @@ export interface IRecipesRepository {
   ): Promise<Recipe>;
   update(id: string, data: UpdateRecipeRequestDto): Promise<Recipe>;
   delete(id: string): Promise<Recipe>;
+  incrementViews(id: string): Promise<void>;
 }

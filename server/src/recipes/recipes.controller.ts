@@ -103,4 +103,9 @@ export class RecipesController {
     const recipe = await this.recipesService.delete(id);
     return new RecipeDto(recipe);
   }
+
+  @Patch(':id/views')
+  async incrementViews(@Param('id') id: string) {
+    await this.recipesService.incrementViews(id);
+  }
 }

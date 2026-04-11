@@ -57,4 +57,8 @@ export class RecipesService {
 
     return await this.recipesRepository.delete(id);
   }
+
+  async incrementViews(id: string) {
+    await this.recipesRepository.incrementViews(id);
+  }
 }

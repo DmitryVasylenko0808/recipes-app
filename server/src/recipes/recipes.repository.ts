@@ -175,4 +175,13 @@ export class RecipesRepository implements IRecipesRepository {
       where: { id },
     });
   }
+
+  async incrementViews(id: string) {
+    await this.prisma.recipe.update({
+      where: { id },
+      data: {
+        viewsCount: { increment: 1 },
+      },
+    });
+  }
 }
