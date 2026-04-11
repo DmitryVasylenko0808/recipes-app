@@ -2,7 +2,7 @@ import { Typograpghy, AvatarFallback, Badge, Card, Markdown, pathKeys, Avatar } 
 import type { ReactNode, ComponentProps } from 'react';
 import { Link } from 'react-router';
 import type { Recipe } from '../model/types/recipe';
-import { ChefHat, Clock, type LucideIcon } from 'lucide-react';
+import { ChefHat, Clock, Eye, type LucideIcon } from 'lucide-react';
 
 type RecipeDetailsViewProps = { recipe: Recipe; actionsSlot?: ReactNode };
 
@@ -73,6 +73,14 @@ export const RecipeDetailsView = ({ recipe, actionsSlot }: RecipeDetailsViewProp
             </Typograpghy>
             <Typograpghy tagVariant="p" className="font-medium">
               {recipe.cookingTime} minutes
+            </Typograpghy>
+          </MetaBlock>
+          <MetaBlock icon={Eye}>
+            <Typograpghy tagVariant="span" className="text-sm">
+              Views
+            </Typograpghy>
+            <Typograpghy tagVariant="p" className="font-medium">
+              {recipe.viewsCount}
             </Typograpghy>
           </MetaBlock>
         </div>
