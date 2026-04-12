@@ -7,8 +7,19 @@ import { RecipesModule } from './recipes/recipes.module';
 import { TagsModule } from './tags/tags.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
 import { CategoriesModule } from './categories/categories.module';
+import { FavoritesModule } from './favorites/favorites.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthorsModule, AuthModule, RecipesModule, TagsModule, IngredientsModule, CategoriesModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    PrismaModule,
+    AuthorsModule,
+    AuthModule,
+    RecipesModule,
+    TagsModule,
+    IngredientsModule,
+    CategoriesModule,
+    FavoritesModule,
+  ],
 })
 export class AppModule {}
