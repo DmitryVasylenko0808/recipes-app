@@ -24,7 +24,8 @@ model Author {
   avatar       String?
   createdAt    DateTime @default(now()) @map("created_at")
 
-  recipes Recipe[]
+  recipes         Recipe[]
+  favoriteRecipes FavoriteRecipe[]
 
   @@map("authors")
 }
@@ -48,7 +49,21 @@ model Recipe {
   recipeTags        RecipeTag[]
   recipeIngredients RecipeIngredient[]
 
+  favoriteEntries FavoriteRecipe[]
+
   @@map("recipes")
+}
+
+model FavoriteRecipe {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  user        Author   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  recipeId    String   @map("recipe_id")
+  recipe      Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  favoritedAt DateTime @default(now()) @map("favorited_at")
+
+  @@unique([userId, recipeId])
+  @@map("favorite_recipes")
 }
 
 model Category {
