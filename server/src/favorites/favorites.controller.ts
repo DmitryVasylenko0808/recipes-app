@@ -5,6 +5,12 @@ import { PrivateAuthGuard } from 'src/common/private-auth.guard';
 import { PaginationQueryDto } from 'src/recipes/dtos';
 import { GetFavoriteRecipesDto } from './dtos/get.favorite.recipes';
 import { FavoriteRecipeDto } from './dtos/favorite.recipe.dto';
+import {
+  ApiBearerAuth,
+  ApiNoContentResponse,
+  ApiOkResponse,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
 @Controller('favorites')
 export class FavoritesController {
@@ -12,6 +18,9 @@ export class FavoritesController {
 
   @Get()
   @UseGuards(PrivateAuthGuard)
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: GetFavoriteRecipesDto })
+  @ApiUnauthorizedResponse({ description: 'Unathorized' })
   async getFavoriteRecipes(
     @CurrentUser('id') userId: string,
     @Query() queryDto: PaginationQueryDto
@@ -22,13 +31,20 @@ export class FavoritesController {
 
   @Post()
   @UseGuards(PrivateAuthGuard)
-  async addFavoriteRecipe(@CurrentUser('id') userId: string, @Body('recipeId') recipeId: string) {
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: FavoriteRecipeDto })
+  @ApiUnauthorizedResponse({ description: 'Unathorized' })
+  async addFavoriteRecipe(@CurrentUser('id') userId: string, @Body('id') recipeId: string) {
     const data = await this.favoritesService.addFavoriteRecipe(userId, recipeId);
     return new FavoriteRecipeDto(data);
   }
 
   @Delete(':id')
   @UseGuards(PrivateAuthGuard)
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: FavoriteRecipeDto })
+  @ApiUnauthorizedResponse({ description: 'Unathorized' })
+  @ApiNoContentResponse({ description: 'Author is not found' })
   async deleteFavoriteRecipe(@Param('id') id: string) {
     const data = await this.favoritesService.deleteFavoriteRecipe(id);
     return new FavoriteRecipeDto(data);
