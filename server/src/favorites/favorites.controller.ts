@@ -45,7 +45,7 @@ export class FavoritesController {
   @ApiBearerAuth()
   @ApiOkResponse({ type: FavoriteRecipeDto })
   @ApiUnauthorizedResponse({ description: 'Unathorized' })
-  @ApiNotFoundResponse({ description: 'Author is not found' })
+  @ApiNotFoundResponse({ description: 'Favorite recipe is not found' })
   async deleteFavoriteRecipe(@Param('id') id: string) {
     const data = await this.favoritesService.deleteFavoriteRecipe(id);
     return new FavoriteRecipeDto(data);
