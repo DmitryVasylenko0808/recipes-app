@@ -22,6 +22,10 @@ export class FavoritesRepository implements IFavoritesRepository {
         recipe: {
           include: {
             category: true,
+            favoriteEntries: {
+              where: { userId },
+              select: { userId: true },
+            },
             recipeIngredients: {
               include: { ingredient: true },
             },
