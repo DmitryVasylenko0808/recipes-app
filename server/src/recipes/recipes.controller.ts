@@ -36,6 +36,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { OptionalAuthGuard } from 'src/common/optional-auth.guard';
 
 @ApiTags('Recipes')
 @Controller('recipes')
@@ -43,17 +44,19 @@ export class RecipesController {
   constructor(private readonly recipesService: RecipesService) {}
 
   @Get()
+  @UseGuards(OptionalAuthGuard)
   @ApiOkResponse({ type: GetRecipesResponseDto })
-  async getAll(@Query() queryDto: GetRecipesQueryDto) {
-    const recipes = await this.recipesService.getAll(queryDto);
+  async getAll(@Query() queryDto: GetRecipesQueryDto, @CurrentUser('id') userId?: string) {
+    const recipes = await this.recipesService.getAll(queryDto, userId);
     return new GetRecipesResponseDto(recipes);
   }
 
   @Get(':id')
+  @UseGuards(OptionalAuthGuard)
   @ApiOkResponse({ type: RecipeDetailsResponseDto })
   @ApiNotFoundResponse({ description: 'Recipe is not found' })
-  async getOneById(@Param('id') id: string) {
-    const recipe = await this.recipesService.getOneById(id);
+  async getOneById(@Param('id') id: string, @CurrentUser('id') userId?: string) {
+    const recipe = await this.recipesService.getOneById(id, userId);
     return new RecipeDetailsResponseDto(recipe);
   }
 

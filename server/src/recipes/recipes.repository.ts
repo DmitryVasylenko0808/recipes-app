@@ -15,12 +15,18 @@ import {
 export class RecipesRepository implements IRecipesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findById(id: string): Promise<RecipeDetails | null> {
+  async findById(id: string, userId?: string): Promise<RecipeDetails | null> {
     return await this.prisma.recipe.findUnique({
       where: { id },
       include: {
         category: true,
         author: true,
+        favoriteEntries: userId
+          ? {
+              where: { userId },
+              select: { userId: true },
+            }
+          : undefined,
         recipeTags: {
           include: { tag: true },
         },
@@ -31,7 +37,7 @@ export class RecipesRepository implements IRecipesRepository {
     });
   }
 
-  async findMany(options: GetRecipesQueryDto): Promise<RecipeFindManyResult> {
+  async findMany(options: GetRecipesQueryDto, userId?: string): Promise<RecipeFindManyResult> {
     const {
       page,
       limit,
@@ -72,6 +78,12 @@ export class RecipesRepository implements IRecipesRepository {
         where: filter,
         include: {
           category: true,
+          favoriteEntries: userId
+            ? {
+                where: { userId },
+                select: { userId: true },
+              }
+            : false,
           recipeTags: {
             include: { tag: true },
           },
@@ -97,7 +109,8 @@ export class RecipesRepository implements IRecipesRepository {
 
   async findManyByAuthorId(
     authorId: string,
-    options: GetAuthorRecipesQueryDto
+    options: GetAuthorRecipesQueryDto,
+    userId?: string
   ): Promise<RecipeFindManyResult> {
     const { page, limit } = options;
 
@@ -106,6 +119,12 @@ export class RecipesRepository implements IRecipesRepository {
         where: { authorId },
         include: {
           category: true,
+          favoriteEntries: userId
+            ? {
+                where: { userId },
+                select: { userId: true },
+              }
+            : false,
           recipeTags: {
             include: { tag: true },
           },

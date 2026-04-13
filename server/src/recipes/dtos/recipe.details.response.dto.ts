@@ -4,7 +4,7 @@ import { RecipeDetails } from '../recipes.types';
 import { RecipeTagDto } from './recipe.tag.dto';
 import { CategoryDto } from 'src/categories/dtos';
 import { RecipeIngredientDetailsDto } from './recipe.ingredient.details.dto';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 
 export class RecipeDetailsResponseDto {
@@ -85,6 +85,12 @@ export class RecipeDetailsResponseDto {
   })
   authorId: string;
 
+  @ApiPropertyOptional({
+    description: 'Determines if recipe is favorited by current user',
+    example: false,
+  })
+  isFavorite?: boolean;
+
   @ApiProperty({ type: AuthorPreviewDto })
   author: AuthorPreviewDto;
 
@@ -95,12 +101,13 @@ export class RecipeDetailsResponseDto {
   recipeIngredients: RecipeIngredientDetailsDto[];
 
   constructor(partial: RecipeDetails) {
-    const { category, recipeTags, recipeIngredients, author, ...data } = partial;
+    const { category, recipeTags, recipeIngredients, author, favoriteEntries, ...data } = partial;
 
     Object.assign(this, data);
 
     this.category = new CategoryDto(category);
     this.author = new AuthorPreviewDto(author);
+    this.isFavorite = favoriteEntries && favoriteEntries.length > 0;
     this.recipeTags = recipeTags.map((rt) => new RecipeTagDto(rt));
     this.recipeIngredients = recipeIngredients.map((ing) => new RecipeIngredientDetailsDto(ing));
   }

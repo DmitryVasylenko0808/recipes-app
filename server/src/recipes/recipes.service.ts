@@ -11,20 +11,16 @@ import {
 export class RecipesService {
   constructor(private readonly recipesRepository: RecipesRepository) {}
 
-  async getAll(options: GetRecipesQueryDto) {
-    const recipes = await this.recipesRepository.findMany(options);
-
-    return recipes;
+  async getAll(options: GetRecipesQueryDto, userId?: string) {
+    return await this.recipesRepository.findMany(options, userId);
   }
 
   async getByAuthorId(authorId: string, options: GetAuthorRecipesQueryDto) {
-    const recipes = await this.recipesRepository.findManyByAuthorId(authorId, options);
-
-    return recipes;
+    return await this.recipesRepository.findManyByAuthorId(authorId, options);
   }
 
-  async getOneById(id: string) {
-    const recipe = await this.recipesRepository.findById(id);
+  async getOneById(id: string, userId?: string) {
+    const recipe = await this.recipesRepository.findById(id, userId);
 
     if (!recipe) throw new NotFoundException('Recipe is not found');
 

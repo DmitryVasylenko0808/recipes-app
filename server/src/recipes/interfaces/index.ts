@@ -9,7 +9,7 @@ import { RecipeDetails, RecipeFindManyResult } from '../recipes.types';
 
 export interface IRecipesRepository {
   findById(id: string): Promise<RecipeDetails | null>;
-  findMany(options: GetRecipesQueryDto): Promise<RecipeFindManyResult>;
+  findMany(options: GetRecipesQueryDto, userId?: string): Promise<RecipeFindManyResult>;
   findManyByAuthorId(
     authorId: string,
     options: GetAuthorRecipesQueryDto

@@ -10,8 +10,10 @@ import {
 
 export type RecipeTagDetails = RecipeTag & { tag: Tag };
 export type RecipeIngredientDetails = RecipeIngredient & { ingredient: Ingredient };
+export type FavoriteEntryItem = { userId: string };
 export type RecipePreview = Recipe & {
   category: Category;
+  favoriteEntries?: FavoriteEntryItem[];
   recipeTags: Array<RecipeTagDetails>;
   recipeIngredients: Array<RecipeIngredientDetails>;
 };
@@ -26,6 +28,7 @@ export type RecipeFindManyResult = {
 export type RecipeDetails = Recipe & {
   category: Category;
   author: Author;
+  favoriteEntries?: FavoriteEntryItem[];
   recipeTags: Array<RecipeTagDetails>;
   recipeIngredients: Array<RecipeIngredientDetails>;
 };

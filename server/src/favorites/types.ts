@@ -1,4 +1,4 @@
 import { FavoriteRecipe } from 'src/generated/prisma/client';
 import { RecipePreview } from 'src/recipes/recipes.types';
 
-export type Favorite = FavoriteRecipe & { recipe: RecipePreview };
+export type Favorite = FavoriteRecipe & { recipe: Omit<RecipePreview, 'favoriteEntries'> };
