@@ -69,7 +69,7 @@ export const IconButton = ({
   ...btnProps
 }: Readonly<ButtonProps>) => {
   const classes = cn(
-    'inline-flex cursor-pointer items-center font-medium duration-100 w-10 h-10 disabled:opacity-50 rounded-md',
+    'inline-flex cursor-pointer items-center justify-center font-medium duration-100 w-10 h-10 disabled:opacity-50 rounded-md',
     {
       'bg-primary hover:bg-primary/90 text-primary-foreground  rounded-md justify-center':
         variant === 'primary',
