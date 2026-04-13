@@ -59,3 +59,45 @@ export const Button = ({
     </Link>
   );
 };
+
+export const IconButton = ({
+  variant = 'primary',
+  icon: Icon,
+  fullWidth,
+  className,
+  children,
+  ...btnProps
+}: Readonly<ButtonProps>) => {
+  const classes = cn(
+    'inline-flex cursor-pointer items-center font-medium duration-100 w-10 h-10 disabled:opacity-50 rounded-md',
+    {
+      'bg-primary hover:bg-primary/90 text-primary-foreground  rounded-md justify-center':
+        variant === 'primary',
+      'bg-background hover:bg-primary/20 hover:text-accent-foreground text-foreground border-border justify-center rounded-md border text-sm disabled:opacity-50':
+        variant === 'secondary',
+      'hover:bg-accent': variant === 'text',
+      'bg-red disabled:bg-red-hovered hover:bg-red-hovered text-secondary-100 rounded-full font-semibold':
+        variant === 'destructive',
+      'w-full': fullWidth === true,
+    },
+    className
+  );
+
+  if (btnProps.as === 'button') {
+    const { isLoading } = btnProps;
+
+    return (
+      <button className={classes} {...btnProps}>
+        {Icon && <Icon size={16} />}
+        {isLoading ? <Loader variant="secondary" size="sm" /> : children}
+      </button>
+    );
+  }
+
+  return (
+    <Link className={classes} {...btnProps}>
+      {Icon && <Icon size={16} />}
+      {children}
+    </Link>
+  );
+};

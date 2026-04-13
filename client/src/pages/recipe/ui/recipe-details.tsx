@@ -3,6 +3,7 @@ import { Loader, useAuth } from '@/shared';
 import { useParams, Navigate } from 'react-router';
 import { RecipeActionsMenu } from './recipe-actions-menu';
 import { useIncrementViews } from '@/features/recipe/increment-views';
+import { ToggleFavoriteRecipeButton } from '@/features/favorites/toggle';
 
 export const RecipeDetails = () => {
   const { id } = useParams();
@@ -21,7 +22,12 @@ export const RecipeDetails = () => {
       {data && (
         <RecipeDetailsView
           recipe={data}
-          actionsSlot={isOwnRecipe && <RecipeActionsMenu recipe={data} />}
+          actionsSlot={
+            <div className="flex gap-2">
+              <ToggleFavoriteRecipeButton recipe={data} />
+              {isOwnRecipe && <RecipeActionsMenu recipe={data} />}
+            </div>
+          }
         />
       )}
     </div>

@@ -1,15 +1,24 @@
 import { cn } from '@/shared/lib/utils/cn';
 import type { RecipePreview } from '../model/types/recipe-preview';
 import { RecipeCard } from './recipe-card';
-import type { ComponentProps } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
+import { ToggleFavoriteRecipeButton } from '@/features/favorites/toggle';
 
 type RecipeGridProps = ComponentProps<'div'> & {
   recipes?: RecipePreview[];
   cols?: number;
   isFetching?: boolean;
+  renderItems?: (item: RecipePreview) => ReactNode;
 };
 
-export const RecipesGrid = ({ recipes = [], cols = 3, isFetching, className }: RecipeGridProps) => {
+// !!
+export const RecipesGrid = ({
+  recipes = [],
+  cols = 3,
+  isFetching,
+  className,
+  renderItems,
+}: RecipeGridProps) => {
   return (
     <div
       className={cn(
@@ -29,8 +38,9 @@ export const RecipesGrid = ({ recipes = [], cols = 3, isFetching, className }: R
       )}
     >
       {recipes.map((r) => (
-        <RecipeCard recipe={r} key={r.id} />
+        <RecipeCard recipe={r} key={r.id} actionsSlot={<ToggleFavoriteRecipeButton recipe={r} />} />
       ))}
+      {renderItems()}
     </div>
   );
 };

@@ -1,20 +1,25 @@
 import { Badge, Card, pathKeys, Typograpghy } from '@/shared';
-import type { RecipePreview } from '../model/types/recipe-preview';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { Clock, Eye } from 'lucide-react';
+import type { ReactNode } from 'react';
+import type { RecipePreview } from '../model/types/recipe-preview';
 
 type RecipeCardProps = {
   recipe: RecipePreview;
+  actionsSlot?: ReactNode;
 };
 
-export const RecipeCard = ({ recipe }: RecipeCardProps) => {
+export const RecipeCard = ({ recipe, actionsSlot }: RecipeCardProps) => {
+  const navigate = useNavigate();
+
   return (
     <Card className="duration-100 hover:shadow-xl">
-      <Link to={pathKeys.recipes.byId(recipe.id)}>
+      <div onClick={() => navigate(pathKeys.recipes.byId(recipe.id))}>
         <div className="relative h-48 w-full">
           <Badge variant="primary" className="absolute top-2 left-2">
             {recipe.category.name}
           </Badge>
+          <div className="absolute top-2 right-2">{actionsSlot}</div>
           <img
             className="h-full w-full rounded-t-md"
             src={recipe.previewImage}
@@ -61,7 +66,7 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
             </div>
           </Typograpghy>
         </div>
-      </Link>
+      </div>
     </Card>
   );
 };
