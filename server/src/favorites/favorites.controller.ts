@@ -35,19 +35,24 @@ export class FavoritesController {
   @ApiBearerAuth()
   @ApiOkResponse({ type: FavoriteRecipeDto })
   @ApiUnauthorizedResponse({ description: 'Unathorized' })
-  async addFavoriteRecipe(@CurrentUser('id') userId: string, @Body('id') recipeId: string) {
+  async addFavoriteRecipe(@CurrentUser('id') userId: string, @Body('recipeId') recipeId: string) {
+    console.log(recipeId);
     const data = await this.favoritesService.addFavoriteRecipe(userId, recipeId);
     return new FavoriteRecipeDto(data);
   }
 
-  @Delete(':id')
+  @Delete()
   @UseGuards(PrivateAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: FavoriteRecipeDto })
   @ApiUnauthorizedResponse({ description: 'Unathorized' })
   @ApiNotFoundResponse({ description: 'Favorite recipe is not found' })
-  async deleteFavoriteRecipe(@Param('id') id: string) {
-    const data = await this.favoritesService.deleteFavoriteRecipe(id);
+  async deleteFavoriteRecipe(
+    @CurrentUser('id') userId: string,
+    @Body('recipeId') recipeId: string
+  ) {
+    console.log(recipeId);
+    const data = await this.favoritesService.deleteFavoriteRecipe(userId, recipeId);
     return new FavoriteRecipeDto(data);
   }
 }

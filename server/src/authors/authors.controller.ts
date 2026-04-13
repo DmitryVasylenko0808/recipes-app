@@ -25,6 +25,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { OptionalAuthGuard } from 'src/common/optional-auth.guard';
 
 @ApiTags('Authors')
 @Controller('authors')
@@ -59,9 +60,14 @@ export class AuthorsController {
   }
 
   @Get(':id/recipes')
+  @UseGuards(OptionalAuthGuard)
   @ApiOkResponse({ type: GetRecipesResponseDto })
-  async getRecipesByAuthorId(@Param('id') id: string, @Query() queryDto: GetAuthorRecipesQueryDto) {
-    const recipes = await this.recipesService.getByAuthorId(id, queryDto);
+  async getRecipesByAuthorId(
+    @Param('id') id: string,
+    @Query() queryDto: GetAuthorRecipesQueryDto,
+    @CurrentUser('id') userId?: string
+  ) {
+    const recipes = await this.recipesService.getByAuthorId(id, queryDto, userId);
     return new GetRecipesResponseDto(recipes);
   }
 }

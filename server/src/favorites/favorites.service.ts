@@ -24,11 +24,11 @@ export class FavoritesService {
     return await this.favoritesRepository.create(userId, recipeId);
   }
 
-  async deleteFavoriteRecipe(id: string) {
-    const favoriteRecipe = await this.favoritesRepository.findOneById(id);
+  async deleteFavoriteRecipe(userId: string, recipeId: string) {
+    const favoriteRecipe = await this.favoritesRepository.findOne(userId, recipeId);
 
     if (!favoriteRecipe) throw new NotFoundException('Favorite recipe is not found');
 
-    return await this.favoritesRepository.deleteById(id);
+    return await this.favoritesRepository.deleteOne(userId, recipeId);
   }
 }

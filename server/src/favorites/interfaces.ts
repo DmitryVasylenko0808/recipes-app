@@ -5,8 +5,8 @@ import { FavoriteRecipeWhereInput } from 'src/generated/prisma/models';
 
 export interface IFavoritesRepository {
   findFavoriteRecipesByUserId(userId: string, options: PaginationQueryDto): Promise<Favorite[]>;
-  findOneById(id: string): Promise<FavoriteRecipe | null>;
+  findOne(userId: string, recipeId: string): Promise<FavoriteRecipe | null>;
   create(userId: string, recipeId: string): Promise<FavoriteRecipe>;
-  deleteById(id: string): Promise<FavoriteRecipe>;
+  deleteOne(userId: string, recipeId: string): Promise<FavoriteRecipe>;
   count(filter: FavoriteRecipeWhereInput): Promise<number>;
 }

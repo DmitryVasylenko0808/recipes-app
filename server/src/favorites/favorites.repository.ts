@@ -37,9 +37,14 @@ export class FavoritesRepository implements IFavoritesRepository {
     });
   }
 
-  async findOneById(id: string): Promise<FavoriteRecipe | null> {
+  async findOne(userId: string, recipeId: string): Promise<FavoriteRecipe | null> {
     return await this.prisma.favoriteRecipe.findUnique({
-      where: { id },
+      where: {
+        userId_recipeId: {
+          userId,
+          recipeId,
+        },
+      },
     });
   }
 
@@ -52,9 +57,14 @@ export class FavoritesRepository implements IFavoritesRepository {
     });
   }
 
-  async deleteById(id: string): Promise<FavoriteRecipe> {
+  async deleteOne(userId: string, recipeId: string): Promise<FavoriteRecipe> {
     return await this.prisma.favoriteRecipe.delete({
-      where: { id },
+      where: {
+        userId_recipeId: {
+          userId,
+          recipeId,
+        },
+      },
     });
   }
 

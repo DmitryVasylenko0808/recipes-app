@@ -15,8 +15,8 @@ export class RecipesService {
     return await this.recipesRepository.findMany(options, userId);
   }
 
-  async getByAuthorId(authorId: string, options: GetAuthorRecipesQueryDto) {
-    return await this.recipesRepository.findManyByAuthorId(authorId, options);
+  async getByAuthorId(authorId: string, options: GetAuthorRecipesQueryDto, userId?: string) {
+    return await this.recipesRepository.findManyByAuthorId(authorId, options, userId);
   }
 
   async getOneById(id: string, userId?: string) {
