@@ -1,5 +1,5 @@
 import { Badge, Card, pathKeys, Typograpghy } from '@/shared';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { Clock, Eye } from 'lucide-react';
 import type { ReactNode } from 'react';
 import type { RecipePreview } from '../model/types/recipe-preview';
