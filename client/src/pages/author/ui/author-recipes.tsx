@@ -1,8 +1,14 @@
-import { useGetAuthorRecipes, RecipesGridSkeleton, RecipesGrid } from '@/entities/recipes';
+import {
+  useGetAuthorRecipes,
+  RecipesGridSkeleton,
+  RecipesGrid,
+  RecipeCard,
+} from '@/entities/recipes';
 import { usePagination, Pagination } from '@/features/pagination';
 import { Typograpghy } from '@/shared';
 import { useParams } from 'react-router';
 import { INITIAL_LIMIT } from '../constants';
+import { ToggleFavoriteRecipeButton } from '@/features/favorites/toggle';
 
 export const AuthorRecipes = () => {
   const { id } = useParams();
@@ -23,7 +29,18 @@ export const AuthorRecipes = () => {
       {isPending ? (
         <RecipesGridSkeleton countItems={16} cols={4} />
       ) : (
-        <RecipesGrid isFetching={isFetching} recipes={data?.data} cols={4} />
+        <RecipesGrid
+          isFetching={isFetching}
+          recipes={data?.data}
+          cols={4}
+          renderItems={(r) => (
+            <RecipeCard
+              recipe={r}
+              key={r.id}
+              actionsSlot={<ToggleFavoriteRecipeButton recipe={r} />}
+            />
+          )}
+        />
       )}
       <Pagination totalPages={data?.totalPages} currentPage={page} onPageChange={onPageChange} />
     </div>

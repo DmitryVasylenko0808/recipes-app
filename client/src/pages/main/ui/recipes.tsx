@@ -3,6 +3,7 @@ import {
   type Difficulty,
   RecipesGridSkeleton,
   RecipesGrid,
+  RecipeCard,
 } from '@/entities/recipes';
 import { usePagination, Pagination } from '@/features/pagination';
 import { useGetCategories } from '@/entities/categories';
@@ -14,6 +15,7 @@ import {
   useFilterRecipes,
 } from '@/features/recipe/filter';
 import { useDebounce } from '@/shared';
+import { ToggleFavoriteRecipeButton } from '@/features/favorites/toggle';
 
 const COOKING_TIMES: CookingTimeFilterItem[] = [
   { label: 'Any time' },
@@ -110,7 +112,17 @@ export const Recipes = () => {
         {isPending ? (
           <RecipesGridSkeleton />
         ) : (
-          <RecipesGrid isFetching={isFetching} recipes={data?.data} />
+          <RecipesGrid
+            isFetching={isFetching}
+            recipes={data?.data}
+            renderItems={(r) => (
+              <RecipeCard
+                recipe={r}
+                key={r.id}
+                actionsSlot={<ToggleFavoriteRecipeButton recipe={r} />}
+              />
+            )}
+          />
         )}
         <Pagination totalPages={data?.totalPages} currentPage={page} onPageChange={onPageChange} />
       </div>
