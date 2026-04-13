@@ -1,11 +1,11 @@
-import { AuthorDetails } from './ui/author-details';
-import { AuthorRecipes } from './ui/author-recipes';
+import { ProfileDetails } from './ui/profile-details';
+import { ProfileRecipes } from './ui/profile-recipes';
 
 const AuthorPage = () => {
   return (
     <>
-      <AuthorDetails />
-      <AuthorRecipes />
+      <ProfileDetails />
+      <ProfileRecipes />
     </>
   );
 };
