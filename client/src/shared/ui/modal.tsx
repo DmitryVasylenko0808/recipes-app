@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react';
 import { cn } from '../lib/utils/cn';
-import { Button } from './button';
+import { IconButton } from './button';
 import { Portal } from './portal';
 import { X } from 'lucide-react';
 
@@ -22,7 +22,7 @@ export const Modal = ({ open, className, children, onClose }: ModalProps) => {
         >
           <div className="p-6">
             <div className="flex items-start justify-end">
-              <Button as="button" icon={X} variant="text" onClick={onClose} />
+              <IconButton as="button" icon={X} variant="text" onClick={onClose} />
             </div>
             <div onClick={(e) => e.stopPropagation()}>{children}</div>
           </div>
