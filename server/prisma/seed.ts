@@ -8,6 +8,7 @@ import { tags } from './data/tags';
 import { ingredients } from './data/ingredients';
 import { recipeIngredients, recipes, recipeTags } from './data/recipes';
 import { authors } from './data/authors';
+import { comments } from './data/comments';
 
 const connectionString = `${process.env.DATABASE_URL}`;
 const pool = new Pool({ connectionString });
@@ -41,6 +42,9 @@ async function main() {
   });
   await prisma.recipeIngredient.createMany({
     data: recipeIngredients,
+  });
+  await prisma.comment.createMany({
+    data: comments,
   });
 }
 

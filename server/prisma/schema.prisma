@@ -26,6 +26,7 @@ model Author {
 
   recipes         Recipe[]
   favoriteRecipes FavoriteRecipe[]
+  comments        Comment[]
 
   @@map("authors")
 }
@@ -50,6 +51,7 @@ model Recipe {
   recipeIngredients RecipeIngredient[]
 
   favoriteEntries FavoriteRecipe[]
+  comments        Comment[]
 
   @@map("recipes")
 }
@@ -64,6 +66,19 @@ model FavoriteRecipe {
 
   @@unique([userId, recipeId])
   @@map("favorite_recipes")
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  user      Author   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  recipeId  String   @map("recipe_id")
+  recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("comments")
 }
 
 model Category {
