@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { CommentFindManyResultItem, ICommentsRepository } from './interfaces';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { GetCommentsQueryDto } from './dtos/get.comments.query.dto';
-import { CommentWhereInput } from 'src/generated/prisma/models';
+import { CommentUncheckedCreateInput, CommentWhereInput } from 'src/generated/prisma/models';
+import { Comment } from 'src/generated/prisma/client';
 
 @Injectable()
 export class CommentRepository implements ICommentsRepository {
@@ -20,6 +21,9 @@ export class CommentRepository implements ICommentsRepository {
       skip: (page - 1) * limit,
       take: limit,
     });
+  }
+  async create(data: CommentUncheckedCreateInput): Promise<Comment> {
+    return await this.prisma.comment.create({ data });
   }
 
   async count(filter?: CommentWhereInput): Promise<number> {
