@@ -37,11 +37,19 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { OptionalAuthGuard } from 'src/common/optional-auth.guard';
+import { GetCommentsResponseDto } from 'src/comments/dtos/get.comments.response.dto';
+import { GetCommentsQueryDto } from 'src/comments/dtos/get.comments.query.dto';
+import { CommentResponseDto } from 'src/comments/dtos/comment.response.dto';
+import { PostCommentRequestDto } from 'src/comments/dtos/post.comment.request.dto';
+import { CommentsService } from 'src/comments/comments.service';
 
 @ApiTags('Recipes')
 @Controller('recipes')
 export class RecipesController {
-  constructor(private readonly recipesService: RecipesService) {}
+  constructor(
+    private readonly recipesService: RecipesService,
+    private readonly commentsService: CommentsService
+  ) {}
 
   @Get()
   @UseGuards(OptionalAuthGuard)
@@ -110,5 +118,26 @@ export class RecipesController {
   @Patch(':id/views')
   async incrementViews(@Param('id') id: string) {
     await this.recipesService.incrementViews(id);
+  }
+
+  @Get(':id/comments')
+  @ApiOkResponse({ type: GetCommentsResponseDto })
+  async getCommentsByRecipeId(@Param('id') id: string, @Query() queryDto: GetCommentsQueryDto) {
+    const result = await this.commentsService.getCommentsByRecipeId(id, queryDto);
+    return new GetCommentsResponseDto(result);
+  }
+
+  @Post(':id/comments')
+  @UseGuards(PrivateAuthGuard)
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: CommentResponseDto })
+  @ApiUnauthorizedResponse({ description: 'Unathorized' })
+  async postComment(
+    @Param('id') id: string,
+    @CurrentUser('id') userId: string,
+    @Body() dto: PostCommentRequestDto
+  ) {
+    const result = await this.commentsService.postComment(id, userId, dto);
+    return new CommentResponseDto(result);
   }
 }

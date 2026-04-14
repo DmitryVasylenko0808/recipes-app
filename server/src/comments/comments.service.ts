@@ -2,22 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CommentRepository } from './comment.repository';
 import { GetCommentsQueryDto } from './dtos/get.comments.query.dto';
 import { PostCommentRequestDto } from './dtos/post.comment.request.dto';
-import { RecipesService } from 'src/recipes/recipes.service';
 import { UpdateCommentRequestDto } from './dtos/update.comment.request.dto';
-
-type UpdateCommentArgs = {
-  recipeId: string;
-  commentId: string;
-  userId: string;
-  dto: UpdateCommentRequestDto;
-};
 
 @Injectable()
 export class CommentsService {
-  constructor(
-    private readonly commentsRepository: CommentRepository,
-    private readonly recipesService: RecipesService
-  ) {}
+  constructor(private readonly commentsRepository: CommentRepository) {}
 
   async getCommentsByRecipeId(recipeId: string, options: GetCommentsQueryDto) {
     const [comments, totalCount] = await Promise.all([
@@ -34,26 +23,18 @@ export class CommentsService {
   }
 
   async postComment(recipeId: string, userId: string, dto: PostCommentRequestDto) {
-    await this.recipesService.getOneById(recipeId);
-
     return await this.commentsRepository.create({ recipeId, userId, ...dto });
   }
 
-  async updateComment(args: UpdateCommentArgs) {
-    const { recipeId, commentId, userId, dto } = args;
-
-    await this.recipesService.getOneById(recipeId);
-
-    const comment = await this.commentsRepository.findOneById(commentId);
+  async updateComment(id: string, userId: string, dto: UpdateCommentRequestDto) {
+    const comment = await this.commentsRepository.findOneById(id);
 
     if (!comment) throw new NotFoundException('Comment is not found');
 
-    return await this.commentsRepository.update(commentId, { userId, ...dto });
+    return await this.commentsRepository.update(id, { userId, ...dto });
   }
 
-  async deleteComment(recipeId: string, id: string) {
-    await this.recipesService.getOneById(recipeId);
-
+  async deleteComment(id: string) {
     const comment = await this.commentsRepository.findOneById(id);
 
     if (!comment) throw new NotFoundException('Comment is not found');
