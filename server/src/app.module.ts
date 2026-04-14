@@ -8,6 +8,7 @@ import { TagsModule } from './tags/tags.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
 import { CategoriesModule } from './categories/categories.module';
 import { FavoritesModule } from './favorites/favorites.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { FavoritesModule } from './favorites/favorites.module';
     IngredientsModule,
     CategoriesModule,
     FavoritesModule,
+    CommentsModule,
   ],
 })
 export class AppModule {}
