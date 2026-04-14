@@ -5,6 +5,13 @@ import { PostCommentRequestDto } from './dtos/post.comment.request.dto';
 import { RecipesService } from 'src/recipes/recipes.service';
 import { UpdateCommentRequestDto } from './dtos/update.comment.request.dto';
 
+type UpdateCommentArgs = {
+  recipeId: string;
+  commentId: string;
+  userId: string;
+  dto: UpdateCommentRequestDto;
+};
+
 @Injectable()
 export class CommentsService {
   constructor(
@@ -32,15 +39,21 @@ export class CommentsService {
     return await this.commentsRepository.create({ recipeId, userId, ...dto });
   }
 
-  async updateComment(id: string, userId: string, dto: UpdateCommentRequestDto) {
-    const comment = await this.commentsRepository.findOneById(id);
+  async updateComment(args: UpdateCommentArgs) {
+    const { recipeId, commentId, userId, dto } = args;
+
+    await this.recipesService.getOneById(recipeId);
+
+    const comment = await this.commentsRepository.findOneById(commentId);
 
     if (!comment) throw new NotFoundException('Comment is not found');
 
-    return await this.commentsRepository.update(id, { userId, ...dto });
+    return await this.commentsRepository.update(commentId, { userId, ...dto });
   }
 
-  async deleteComment(id: string) {
+  async deleteComment(recipeId: string, id: string) {
+    await this.recipesService.getOneById(recipeId);
+
     const comment = await this.commentsRepository.findOneById(id);
 
     if (!comment) throw new NotFoundException('Comment is not found');
