@@ -42,6 +42,10 @@ export class CommentRepository implements ICommentsRepository {
     });
   }
 
+  async delete(id: string): Promise<Comment> {
+    return await this.prisma.comment.delete({ where: { id } });
+  }
+
   async count(filter?: CommentWhereInput): Promise<number> {
     return await this.prisma.comment.count({ where: filter });
   }

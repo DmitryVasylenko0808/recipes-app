@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { GetCommentsQueryDto } from './dtos/get.comments.query.dto';
 import { GetCommentsResponseDto } from './dtos/get.comments.response.dto';
@@ -37,6 +47,13 @@ export class CommentsController {
     @Body() dto: UpdateCommentRequestDto
   ) {
     const result = await this.commentsService.updateComment(commentId, userId, dto);
+    return new CommentResponseDto(result);
+  }
+
+  @Delete(':commentId')
+  @UseGuards(PrivateAuthGuard)
+  async deleteComment(@Param('commentId') commentId: string) {
+    const result = await this.commentsService.deleteComment(commentId);
     return new CommentResponseDto(result);
   }
 }

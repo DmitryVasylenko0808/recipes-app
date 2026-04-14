@@ -39,4 +39,12 @@ export class CommentsService {
 
     return await this.commentsRepository.update(id, { userId, ...dto });
   }
+
+  async deleteComment(id: string) {
+    const comment = await this.commentsRepository.findOneById(id);
+
+    if (!comment) throw new NotFoundException('Comment is not found');
+
+    return await this.commentsRepository.delete(id);
+  }
 }

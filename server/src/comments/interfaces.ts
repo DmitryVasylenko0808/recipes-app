@@ -16,5 +16,6 @@ export interface ICommentsRepository {
   findOneById(id: string): Promise<Comment | null>;
   create(data: CommentUncheckedCreateInput): Promise<Comment>;
   update(id: string, data: CommentUncheckedUpdateInput): Promise<Comment>;
+  delete(id: string): Promise<Comment>;
   count(filter?: CommentWhereInput): Promise<number>;
 }
