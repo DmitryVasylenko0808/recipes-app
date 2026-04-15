@@ -5,6 +5,7 @@ import {
   useGetRecipeComments,
 } from '@/entities/comments';
 import { DeleteCommentButton } from '@/features/comments/delete';
+import { UpdateCommentButton } from '@/features/comments/update';
 import { Pagination, usePagination } from '@/features/pagination';
 import { Typograpghy, useAuth } from '@/shared';
 import { useParams } from 'react-router';
@@ -37,7 +38,10 @@ export const RecipeComments = () => {
               <CommentItem
                 comment={c}
                 actionsSlot={
-                  <>{c.userId === currentUser?.id && <DeleteCommentButton commentId={c.id} />}</>
+                  <>
+                    {c.userId === currentUser?.id && <UpdateCommentButton comment={c} />}
+                    {c.userId === currentUser?.id && <DeleteCommentButton commentId={c.id} />}
+                  </>
                 }
               />
             )}
