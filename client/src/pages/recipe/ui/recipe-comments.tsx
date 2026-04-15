@@ -4,12 +4,14 @@ import {
   CommentsSkeleton,
   useGetRecipeComments,
 } from '@/entities/comments';
+import { DeleteCommentButton } from '@/features/comments/delete';
 import { Pagination, usePagination } from '@/features/pagination';
-import { Typograpghy } from '@/shared';
+import { Typograpghy, useAuth } from '@/shared';
 import { useParams } from 'react-router';
 
 export const RecipeComments = () => {
   const { id } = useParams();
+  const { currentUser } = useAuth();
   const { page, limit, onPageChange } = usePagination({ initialLimit: 15 });
   const { data, isPending, isFetching } = useGetRecipeComments({
     recipeId: id,
@@ -31,7 +33,14 @@ export const RecipeComments = () => {
           <CommentsList
             comments={data?.data}
             isFetching={isFetching}
-            renderItem={(c) => <CommentItem comment={c} />}
+            renderItem={(c) => (
+              <CommentItem
+                comment={c}
+                actionsSlot={
+                  <>{c.userId === currentUser?.id && <DeleteCommentButton commentId={c.id} />}</>
+                }
+              />
+            )}
           />
         </div>
       )}

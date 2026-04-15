@@ -76,7 +76,7 @@ export const IconButton = ({
       'bg-background hover:bg-primary/20 hover:text-accent-foreground text-foreground border-border justify-center rounded-md border text-sm disabled:opacity-50':
         variant === 'secondary',
       'hover:bg-accent': variant === 'text',
-      'bg-red disabled:bg-red-hovered hover:bg-red-hovered text-secondary-100 rounded-full font-semibold':
+      'text-destructive disabled:text-destructive/70 hover:bg-destructive/10 font-semibold':
         variant === 'destructive',
       'w-full': fullWidth === true,
     },

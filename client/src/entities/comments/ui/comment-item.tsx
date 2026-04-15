@@ -20,7 +20,7 @@ export const CommentItem = ({ comment, actionsSlot }: CommentItemProps) => {
           )}
         </Link>
         <div className="flex-auto">
-          <div className="mb-2 flex justify-between">
+          <div className="flex min-h-10 justify-between">
             <div className="flex flex-auto items-center gap-2">
               <Link to={pathKeys.authors.byId(comment.userId)}>
                 <Typograpghy tagVariant="p" className="text-foreground font-medium">
@@ -37,9 +37,8 @@ export const CommentItem = ({ comment, actionsSlot }: CommentItemProps) => {
                 </Typograpghy>
               )}
             </div>
-            {actionsSlot}
+            <div className="flex gap-1">{actionsSlot}</div>
           </div>
-
           <div>
             <Typograpghy tagVariant="p">{comment.content}</Typograpghy>
           </div>
