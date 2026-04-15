@@ -37,6 +37,7 @@ export const RecipeComments = () => {
             renderItem={(c) => (
               <CommentItem
                 comment={c}
+                key={c.id}
                 actionsSlot={
                   <>
                     {c.userId === currentUser?.id && <UpdateCommentButton comment={c} />}
