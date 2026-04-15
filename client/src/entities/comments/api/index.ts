@@ -1,6 +1,15 @@
 import { apiClient, API_URL } from '@/shared';
 import type { Comment } from '../model/types/comment';
 
+export type CommentDto = {
+  id: string;
+  userId: string;
+  recipeId: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 export type GetRecipeCommentsArgs = {
   recipeId?: string;
   page: number;
