@@ -22,6 +22,7 @@ export class CommentRepository implements ICommentsRepository {
     return await this.prisma.comment.findMany({
       where: { recipeId },
       include: { user: true },
+      orderBy: { createdAt: 'desc' },
       skip: (page - 1) * limit,
       take: limit,
     });
