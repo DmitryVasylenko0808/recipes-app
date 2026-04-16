@@ -28,7 +28,6 @@ export class AuthorPreviewDto {
 
   @ApiProperty({
     description: "Author's avatar",
-    example: 'Collins',
   })
   @Transform(({ value }) => (value ? `${process.env.SERVER_UPLOADS_URL}/${value}` : null))
   avatar: string | null;

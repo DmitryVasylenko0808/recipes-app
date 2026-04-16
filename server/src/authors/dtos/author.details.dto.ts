@@ -41,7 +41,6 @@ export class AuthorDetailsDto {
   @ApiProperty({
     type: 'string',
     description: "Author's avatar",
-    example: 'https://avatars.githubusercontent.com/u/96959575',
     nullable: true,
   })
   @Transform(({ value }) => (value ? `${process.env.SERVER_UPLOADS_URL}/${value}` : null))
