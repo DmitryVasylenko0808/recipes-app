@@ -19,7 +19,7 @@ export type GetRecipeCommentsArgs = {
 export type GetRecipeCommentsDto = {
   data: Comment[];
   totalCount: number;
-  totalPage: number;
+  totalPages: number;
   currentPage: number;
 };
 

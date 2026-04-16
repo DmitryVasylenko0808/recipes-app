@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CommentFindManyResultItem, ICommentsRepository } from './interfaces';
+import { FindManyCommentsResults, ICommentsRepository } from './interfaces';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { GetCommentsQueryDto } from './dtos/get.comments.query.dto';
 import {
@@ -16,16 +16,25 @@ export class CommentRepository implements ICommentsRepository {
   async findManyByRecipeId(
     recipeId: string,
     options: GetCommentsQueryDto
-  ): Promise<CommentFindManyResultItem[]> {
+  ): Promise<FindManyCommentsResults> {
     const { page, limit } = options;
 
-    return await this.prisma.comment.findMany({
-      where: { recipeId },
-      include: { user: true },
-      orderBy: { createdAt: 'desc' },
-      skip: (page - 1) * limit,
-      take: limit,
-    });
+    const [data, totalCount] = await this.prisma.$transaction([
+      this.prisma.comment.findMany({
+        where: { recipeId },
+        include: { user: true },
+        orderBy: { createdAt: 'desc' },
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+      this.prisma.comment.count({
+        where: {
+          recipeId,
+        },
+      }),
+    ]);
+
+    return { data, totalCount };
   }
 
   async findOneById(id: string): Promise<Comment | null> {

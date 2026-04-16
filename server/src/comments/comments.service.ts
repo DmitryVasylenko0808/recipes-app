@@ -9,13 +9,13 @@ export class CommentsService {
   constructor(private readonly commentsRepository: CommentRepository) {}
 
   async getCommentsByRecipeId(recipeId: string, options: GetCommentsQueryDto) {
-    const [comments, totalCount] = await Promise.all([
-      this.commentsRepository.findManyByRecipeId(recipeId, options),
-      this.commentsRepository.count({ recipeId }),
-    ]);
+    const { data, totalCount } = await this.commentsRepository.findManyByRecipeId(
+      recipeId,
+      options
+    );
 
     return {
-      data: comments,
+      data,
       totalCount,
       totalPages: Math.ceil(totalCount / options.limit),
       currentPage: options.page,

@@ -52,7 +52,7 @@ export const RecipeComments = () => {
           />
         </div>
       )}
-      <Pagination totalPages={data?.totalPage} currentPage={page} onPageChange={onPageChange} />
+      <Pagination totalPages={data?.totalPages} currentPage={page} onPageChange={onPageChange} />
     </div>
   );
 };
