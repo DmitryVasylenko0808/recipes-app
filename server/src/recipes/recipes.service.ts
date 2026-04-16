@@ -12,11 +12,29 @@ export class RecipesService {
   constructor(private readonly recipesRepository: RecipesRepository) {}
 
   async getAll(options: GetRecipesQueryDto, userId?: string) {
-    return await this.recipesRepository.findMany(options, userId);
+    const { data, totalCount } = await this.recipesRepository.findMany(options, userId);
+
+    return {
+      data,
+      totalCount,
+      totalPages: Math.ceil(totalCount / options.limit),
+      currentPage: options.page,
+    };
   }
 
   async getByAuthorId(authorId: string, options: GetAuthorRecipesQueryDto, userId?: string) {
-    return await this.recipesRepository.findManyByAuthorId(authorId, options, userId);
+    const { data, totalCount } = await this.recipesRepository.findManyByAuthorId(
+      authorId,
+      options,
+      userId
+    );
+
+    return {
+      data,
+      totalCount,
+      totalPages: Math.ceil(totalCount / options.limit),
+      currentPage: options.page,
+    };
   }
 
   async getOneById(id: string, userId?: string) {

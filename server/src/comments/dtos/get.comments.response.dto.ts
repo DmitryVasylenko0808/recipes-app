@@ -63,7 +63,7 @@ export class GetCommentsResponseDto implements PaginatedResponseDto<GetCommentsR
   totalCount: number;
 
   @ApiProperty({ description: 'Total pages of comments', example: 5 })
-  totalPage: number;
+  totalPages: number;
 
   @ApiProperty({ description: 'Current page of comments', example: 1 })
   currentPage: number;

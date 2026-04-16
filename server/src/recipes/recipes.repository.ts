@@ -73,7 +73,7 @@ export class RecipesRepository implements IRecipesRepository {
       },
     };
 
-    const [data, totalCount] = await Promise.all([
+    const [data, totalCount] = await this.prisma.$transaction([
       this.prisma.recipe.findMany({
         where: filter,
         include: {
@@ -97,14 +97,8 @@ export class RecipesRepository implements IRecipesRepository {
       }),
       this.prisma.recipe.count({ where: filter }),
     ]);
-    const totalPages = Math.ceil(totalCount / limit);
 
-    return {
-      data,
-      totalCount,
-      totalPages,
-      currentPage: page,
-    };
+    return { data, totalCount };
   }
 
   async findManyByAuthorId(
@@ -114,7 +108,7 @@ export class RecipesRepository implements IRecipesRepository {
   ): Promise<RecipeFindManyResult> {
     const { page, limit } = options;
 
-    const [data, totalCount] = await Promise.all([
+    const [data, totalCount] = await this.prisma.$transaction([
       this.prisma.recipe.findMany({
         where: { authorId },
         include: {
@@ -140,14 +134,8 @@ export class RecipesRepository implements IRecipesRepository {
         where: { authorId },
       }),
     ]);
-    const totalPages = Math.ceil(totalCount / limit);
 
-    return {
-      data,
-      totalCount,
-      totalPages,
-      currentPage: page,
-    };
+    return { data, totalCount };
   }
 
   async create(

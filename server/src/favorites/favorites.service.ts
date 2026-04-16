@@ -7,15 +7,12 @@ export class FavoritesService {
   constructor(private readonly favoritesRepository: FavoritesRepository) {}
 
   async getFavoriteRecipesByUserId(userId: string, options: PaginationQueryDto) {
-    const [data, totalCount] = await Promise.all([
-      this.favoritesRepository.findFavoriteRecipesByUserId(userId, options),
-      this.favoritesRepository.count({ userId }),
-    ]);
+    const { data, totalCount } = await this.favoritesRepository.findManyByUserId(userId, options);
 
     return {
       data,
       totalCount,
-      totalPage: Math.ceil(totalCount / options.limit),
+      totalPages: Math.ceil(totalCount / options.limit),
       currentPage: options.page,
     };
   }

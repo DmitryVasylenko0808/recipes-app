@@ -49,7 +49,7 @@ export class GetFavoriteRecipesDto implements PaginatedResponseDto<GetFavoriteRe
   totalCount: number;
 
   @ApiProperty({ description: 'Total pages of favorited recipe', example: 1 })
-  totalPage: number;
+  totalPages: number;
 
   @ApiProperty({ description: 'Current page of favorited recipe', example: 1 })
   currentPage: number;

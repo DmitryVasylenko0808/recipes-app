@@ -11,7 +11,7 @@ export class GetRecipesResponseDto implements PaginatedResponseDto<RecipePreview
   totalCount: number;
 
   @ApiProperty()
-  totalPage: number;
+  totalPages: number;
 
   @ApiProperty()
   currentPage: number;

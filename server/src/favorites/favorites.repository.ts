@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { IFavoritesRepository } from './interfaces';
-import { Favorite } from './types';
+import { FindManyFavoritesResult } from './types';
 import { FavoriteRecipe } from 'src/generated/prisma/client';
 import { PaginationQueryDto } from 'src/recipes/dtos';
 import { FavoriteRecipeWhereInput } from 'src/generated/prisma/models';
@@ -10,35 +10,40 @@ import { FavoriteRecipeWhereInput } from 'src/generated/prisma/models';
 export class FavoritesRepository implements IFavoritesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findFavoriteRecipesByUserId(
+  async findManyByUserId(
     userId: string,
     options: PaginationQueryDto
-  ): Promise<Favorite[]> {
+  ): Promise<FindManyFavoritesResult> {
     const { page, limit } = options;
 
-    return await this.prisma.favoriteRecipe.findMany({
-      where: { userId },
-      include: {
-        recipe: {
-          include: {
-            category: true,
-            favoriteEntries: {
-              where: { userId },
-              select: { userId: true },
-            },
-            recipeIngredients: {
-              include: { ingredient: true },
-            },
-            recipeTags: {
-              include: { tag: true },
+    const [data, totalCount] = await this.prisma.$transaction([
+      this.prisma.favoriteRecipe.findMany({
+        where: { userId },
+        include: {
+          recipe: {
+            include: {
+              category: true,
+              favoriteEntries: {
+                where: { userId },
+                select: { userId: true },
+              },
+              recipeIngredients: {
+                include: { ingredient: true },
+              },
+              recipeTags: {
+                include: { tag: true },
+              },
             },
           },
         },
-      },
-      orderBy: { favoritedAt: 'desc' },
-      take: limit,
-      skip: limit * (page - 1),
-    });
+        orderBy: { favoritedAt: 'desc' },
+        take: limit,
+        skip: limit * (page - 1),
+      }),
+      this.prisma.favoriteRecipe.count({ where: { userId } }),
+    ]);
+
+    return { data, totalCount };
   }
 
   async findOne(userId: string, recipeId: string): Promise<FavoriteRecipe | null> {

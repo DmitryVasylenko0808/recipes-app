@@ -21,8 +21,6 @@ export type RecipePreview = Recipe & {
 export type RecipeFindManyResult = {
   data: RecipePreview[];
   totalCount: number;
-  totalPages: number;
-  currentPage: number;
 };
 
 export type RecipeDetails = Recipe & {

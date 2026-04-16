@@ -17,7 +17,7 @@ export class CommentsService {
     return {
       data: comments,
       totalCount,
-      totalPage: Math.ceil(totalCount / options.limit),
+      totalPages: Math.ceil(totalCount / options.limit),
       currentPage: options.page,
     };
   }
