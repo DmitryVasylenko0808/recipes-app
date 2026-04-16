@@ -16,6 +16,7 @@ export * from './ui/loader';
 export * from './ui/collapsable';
 export * from './ui/avatar';
 export * from './ui/tabs';
+export * from './ui/empty-state';
 
 export * from './config/contants';
 export * from './config/api-client';

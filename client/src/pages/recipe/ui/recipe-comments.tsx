@@ -7,7 +7,7 @@ import {
 import { DeleteCommentButton } from '@/features/comments/delete';
 import { UpdateCommentButton } from '@/features/comments/update';
 import { Pagination, usePagination } from '@/features/pagination';
-import { Typograpghy, useAuth } from '@/shared';
+import { EmptyState, Typograpghy, useAuth } from '@/shared';
 import { useParams } from 'react-router';
 
 export const RecipeComments = () => {
@@ -25,7 +25,10 @@ export const RecipeComments = () => {
       {isPending ? (
         <CommentsSkeleton countItems={10} />
       ) : data?.totalCount === 0 ? (
-        <div>No comments</div>
+        <EmptyState
+          title="No comments yet"
+          description="Start the conversation and leave the first comment."
+        />
       ) : (
         <div>
           <Typograpghy tagVariant="h2" className="mb-6">
