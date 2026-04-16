@@ -9,3 +9,4 @@ export * from './ui/recipe-card';
 export * from './ui/recipe-details-view';
 export * from './ui/recipes-grid';
 export * from './ui/recipes-grid-skeleton';
+export * from './ui/recipe-details-skeleton';

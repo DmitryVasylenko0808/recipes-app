@@ -1,5 +1,5 @@
-import { RecipeDetailsView, useGetOneRecipe } from '@/entities/recipes';
-import { Loader, useAuth } from '@/shared';
+import { RecipeDetailsSkeleton, RecipeDetailsView, useGetOneRecipe } from '@/entities/recipes';
+import { useAuth } from '@/shared';
 import { useParams, Navigate } from 'react-router';
 import { RecipeActionsMenu } from './recipe-actions-menu';
 import { useIncrementViews } from '@/features/recipe/increment-views';
@@ -18,7 +18,7 @@ export const RecipeDetails = () => {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
-      {isLoading && <Loader variant="primary" size="lg" className="my-10" center />}
+      {isLoading && <RecipeDetailsSkeleton />}
       {data && (
         <RecipeDetailsView
           recipe={data}
