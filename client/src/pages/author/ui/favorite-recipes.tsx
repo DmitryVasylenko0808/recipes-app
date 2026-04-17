@@ -3,7 +3,6 @@ import { RecipesGridSkeleton, RecipesGrid, RecipeCard } from '@/entities/recipes
 import { usePagination, Pagination } from '@/features/pagination';
 import { EmptyState, Typograpghy } from '@/shared';
 import { INITIAL_LIMIT } from '../constants';
-import { ToggleFavoriteRecipeButton } from '@/features/favorites/toggle';
 
 export const FavoriteRecipes = () => {
   const { page, limit, onPageChange } = usePagination({
