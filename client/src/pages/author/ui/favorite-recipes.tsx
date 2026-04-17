@@ -33,13 +33,7 @@ export const FavoriteRecipes = () => {
             isFetching={isFetching}
             recipes={data?.data.map((fr) => fr.recipe)}
             cols={4}
-            renderItems={(r) => (
-              <RecipeCard
-                recipe={r}
-                key={r.id}
-                actionsSlot={<ToggleFavoriteRecipeButton recipe={r} />}
-              />
-            )}
+            renderItems={(r) => <RecipeCard recipe={r} key={r.id} />}
           />
         </div>
       )}

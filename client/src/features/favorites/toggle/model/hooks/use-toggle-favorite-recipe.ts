@@ -31,18 +31,6 @@ export const useToggleFavoriteRecipe = () => {
           ),
         };
       });
-      queryClient.setQueryData(['favorites'], (oldData: any) => {
-        if (!oldData?.data) return oldData;
-
-        return {
-          ...oldData,
-          data: oldData.data.map((item: any) =>
-            item.recipe.id === variables.id
-              ? { ...item, recipe: { ...item.recipe, isFavorite: !item.recipe.isFavorite } }
-              : item
-          ),
-        };
-      });
 
       return { previous };
     },
@@ -53,7 +41,6 @@ export const useToggleFavoriteRecipe = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['recipes'] });
-      queryClient.invalidateQueries({ queryKey: ['favorites'] });
     },
   });
 };
