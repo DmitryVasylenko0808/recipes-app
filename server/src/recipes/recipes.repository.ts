@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IRecipesRepository } from './interfaces';
-import { RecipeDetails, RecipeFindManyResult } from './recipes.types';
+import { RecipeFindManyResult, RecipeFindOneResult } from './recipes.types';
 import { Recipe } from 'src/generated/prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RecipeWhereInput } from 'src/generated/prisma/models';
@@ -15,7 +15,7 @@ import {
 export class RecipesRepository implements IRecipesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findById(id: string, userId?: string): Promise<RecipeDetails | null> {
+  async findById(id: string, userId?: string): Promise<RecipeFindOneResult | null> {
     return await this.prisma.recipe.findUnique({
       where: { id },
       include: {

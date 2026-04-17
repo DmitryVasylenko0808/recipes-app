@@ -1,6 +1,6 @@
 import { Exclude, Transform } from 'class-transformer';
 import { Difficulty } from 'src/generated/prisma/enums';
-import { RecipePreview } from '../recipes.types';
+import { FavoriteEntryItem, RecipePreview } from '../recipes.types';
 import { RecipeTagDto } from './recipe.tag.dto';
 import { CategoryDto } from 'src/categories/dtos';
 import { RecipeIngredientDetailsDto } from './recipe.ingredient.details.dto';
@@ -86,13 +86,16 @@ export class RecipePreviewResponseDto {
   @ApiProperty({ type: [RecipeIngredientDetailsDto] })
   recipeIngredients: RecipeIngredientDetailsDto[];
 
+  @Exclude()
+  favoriteEntries?: FavoriteEntryItem[];
+
   constructor(partial: RecipePreview) {
-    const { recipeTags, recipeIngredients, category, favoriteEntries, ...data } = partial;
+    const { recipeTags, recipeIngredients, category, isFavorite, ...data } = partial;
 
     Object.assign(this, data);
 
     this.category = new CategoryDto(category);
-    this.isFavorite = favoriteEntries && favoriteEntries.length > 0;
+    this.isFavorite = isFavorite;
     this.recipeTags = recipeTags.map((rt) => new RecipeTagDto(rt));
     this.recipeIngredients = recipeIngredients.map((ri) => new RecipeIngredientDetailsDto(ri));
   }

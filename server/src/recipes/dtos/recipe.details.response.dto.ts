@@ -1,11 +1,11 @@
 import { AuthorPreviewDto } from 'src/authors/dtos/author.preview.dto';
 import { Difficulty } from 'src/generated/prisma/enums';
-import { RecipeDetails } from '../recipes.types';
+import { FavoriteEntryItem, RecipeDetails } from '../recipes.types';
 import { RecipeTagDto } from './recipe.tag.dto';
 import { CategoryDto } from 'src/categories/dtos';
 import { RecipeIngredientDetailsDto } from './recipe.ingredient.details.dto';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
+import { Exclude, Transform } from 'class-transformer';
 
 export class RecipeDetailsResponseDto {
   @ApiProperty({
@@ -98,14 +98,17 @@ export class RecipeDetailsResponseDto {
   @ApiProperty({ type: [RecipeIngredientDetailsDto] })
   recipeIngredients: RecipeIngredientDetailsDto[];
 
+  @Exclude()
+  favoriteEntries?: FavoriteEntryItem[];
+
   constructor(partial: RecipeDetails) {
-    const { category, recipeTags, recipeIngredients, author, favoriteEntries, ...data } = partial;
+    const { category, recipeTags, recipeIngredients, author, isFavorite, ...data } = partial;
 
     Object.assign(this, data);
 
     this.category = new CategoryDto(category);
     this.author = new AuthorPreviewDto(author);
-    this.isFavorite = favoriteEntries && favoriteEntries.length > 0;
+    this.isFavorite = isFavorite;
     this.recipeTags = recipeTags.map((rt) => new RecipeTagDto(rt));
     this.recipeIngredients = recipeIngredients.map((ing) => new RecipeIngredientDetailsDto(ing));
   }

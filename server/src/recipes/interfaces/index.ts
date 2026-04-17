@@ -5,10 +5,10 @@ import {
   CreateRecipeRequestDto,
   UpdateRecipeRequestDto,
 } from '../dtos';
-import { RecipeDetails, RecipeFindManyResult } from '../recipes.types';
+import { RecipeFindManyResult, RecipeFindOneResult } from '../recipes.types';
 
 export interface IRecipesRepository {
-  findById(id: string): Promise<RecipeDetails | null>;
+  findById(id: string): Promise<RecipeFindOneResult | null>;
   findMany(options: GetRecipesQueryDto, userId?: string): Promise<RecipeFindManyResult>;
   findManyByAuthorId(
     authorId: string,

@@ -6,6 +6,7 @@ import {
   CreateRecipeRequestDto,
   UpdateRecipeRequestDto,
 } from './dtos';
+import { RecipeFindManyItem, RecipeFindOneResult } from './recipes.types';
 
 @Injectable()
 export class RecipesService {
@@ -15,7 +16,7 @@ export class RecipesService {
     const { data, totalCount } = await this.recipesRepository.findMany(options, userId);
 
     return {
-      data,
+      data: data.map((r) => ({ ...r, isFavorite: this.isFavorite(r) })),
       totalCount,
       totalPages: Math.ceil(totalCount / options.limit),
       currentPage: options.page,
@@ -30,7 +31,7 @@ export class RecipesService {
     );
 
     return {
-      data,
+      data: data.map((r) => ({ ...r, isFavorite: this.isFavorite(r) })),
       totalCount,
       totalPages: Math.ceil(totalCount / options.limit),
       currentPage: options.page,
@@ -42,7 +43,7 @@ export class RecipesService {
 
     if (!recipe) throw new NotFoundException('Recipe is not found');
 
-    return recipe;
+    return { ...recipe, isFavorite: this.isFavorite(recipe) };
   }
 
   async create(authorId: string, dto: CreateRecipeRequestDto, previewImageFilename: string) {
@@ -74,5 +75,9 @@ export class RecipesService {
 
   async incrementViews(id: string) {
     await this.recipesRepository.incrementViews(id);
+  }
+
+  private isFavorite(r: RecipeFindManyItem | RecipeFindOneResult) {
+    return r.favoriteEntries && r.favoriteEntries?.length > 0;
   }
 }
