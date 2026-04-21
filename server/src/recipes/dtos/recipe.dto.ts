@@ -49,6 +49,21 @@ export class RecipeDto {
   viewsCount: number;
 
   @ApiProperty({
+    description: 'Show how many users rated recipe',
+    example: 20,
+  })
+  ratingsCount: number;
+
+  @Exclude()
+  ratingsSum: number;
+
+  @ApiProperty({
+    description: 'Average rating of recipe',
+    example: 4.5,
+  })
+  ratingsAvg: number;
+
+  @ApiProperty({
     description: 'Published date of recipe',
     example: '2024-11-01T02:14:34.244Z',
   })
