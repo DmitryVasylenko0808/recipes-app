@@ -84,6 +84,7 @@ export class RecipeDetailsResponseDto {
     description: 'Average rating of recipe',
     example: 4.5,
   })
+  @Transform(({ value }) => Math.round(value * 10) / 10)
   ratingsAvg: number;
 
   @ApiProperty({
