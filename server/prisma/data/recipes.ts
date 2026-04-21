@@ -4,6 +4,7 @@ import { categories } from './categories';
 import { v4 as uuidv4 } from 'uuid';
 import { tags } from './tags';
 import { ingredients } from './ingredients';
+import { Rating } from 'src/generated/prisma/client';
 
 const authorsIds = authors.map((a) => a.id);
 
@@ -558,8 +559,11 @@ inpune, *digitosque genua*. **Sustulit abstinet**!
   id: uuidv4(),
   authorId: faker.helpers.arrayElement(authorsIds),
   previewImage: `${index}.jpg`,
-  viewsCount: faker.number.int({ min: 10, max: 150 }),
+  viewsCount: faker.number.int({ min: 50, max: 150 }),
   createdAt: faker.date.past({ years: 2 }),
+  ratingsCount: 0,
+  ratingsSum: 0,
+  ratingsAvg: 0,
 }));
 
 export const recipeTags = [
@@ -1996,3 +2000,25 @@ export const recipeIngredients = [
     unit: 'tsp',
   }, // Salt
 ].map((item) => ({ ...item, id: uuidv4() }));
+
+export let ratingsResult: Rating[] = [];
+for (const recipe of recipes) {
+  const shuffledAuthorIds = faker.helpers.shuffle(authorsIds);
+
+  const ratingsCount = faker.number.int({ min: 3, max: shuffledAuthorIds.length });
+
+  const recipeRatings = shuffledAuthorIds.slice(0, ratingsCount).map((userId) => ({
+    id: uuidv4(),
+    userId,
+    recipeId: recipe.id,
+    value: faker.number.int({ min: 1, max: 5 }),
+  }));
+
+  recipe.ratingsCount = ratingsCount;
+  recipe.ratingsSum = recipeRatings.reduce((acc, curr) => (acc += curr.value), 0);
+  recipe.ratingsAvg = recipe.ratingsSum / ratingsCount;
+
+  ratingsResult = [...ratingsResult, ...recipeRatings];
+}
+
+export const ratings: Rating[] = ratingsResult;

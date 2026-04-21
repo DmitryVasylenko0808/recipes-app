@@ -6,7 +6,7 @@ import { faker } from '@faker-js/faker';
 import { categories } from './data/categories';
 import { tags } from './data/tags';
 import { ingredients } from './data/ingredients';
-import { recipeIngredients, recipes, recipeTags } from './data/recipes';
+import { ratings, recipeIngredients, recipes, recipeTags } from './data/recipes';
 import { authors } from './data/authors';
 import { comments } from './data/comments';
 
@@ -45,6 +45,9 @@ async function main() {
   });
   await prisma.comment.createMany({
     data: comments,
+  });
+  await prisma.rating.createMany({
+    data: ratings,
   });
 }
 

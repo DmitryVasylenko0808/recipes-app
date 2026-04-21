@@ -27,6 +27,7 @@ model Author {
   recipes         Recipe[]
   favoriteRecipes FavoriteRecipe[]
   comments        Comment[]
+  ratings         Rating[]
 
   @@map("authors")
 }
@@ -42,6 +43,9 @@ model Recipe {
   cookingTime  Int        @map("cooking_time")
   difficulty   Difficulty
   viewsCount   Int        @default(0) @map("views_count")
+  ratingsCount Int        @default(0) @map("ratings_count")
+  ratingsSum   Int        @default(0) @map("ratings_sum")
+  ratingsAvg   Float      @default(0) @map("ratings_avg")
   createdAt    DateTime   @default(now()) @map("created_at")
 
   authorId String @map("author_id")
@@ -52,8 +56,21 @@ model Recipe {
 
   favoriteEntries FavoriteRecipe[]
   comments        Comment[]
+  ratings         Rating[]
 
   @@map("recipes")
+}
+
+model Rating {
+  id       String @id @default(uuid())
+  userId   String @map("user_id")
+  user     Author @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  recipeId String @map("recipe_id")
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  value    Int
+
+  @@unique([userId, recipeId])
+  @@map("ratings")
 }
 
 model FavoriteRecipe {
