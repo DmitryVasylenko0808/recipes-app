@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IRecipesRepository } from './interfaces';
-import { RecipeFindManyResult, RecipeFindOneResult } from './recipes.types';
+import { RateStats, RecipeFindManyResult, RecipeFindOneResult } from './recipes.types';
 import { Recipe } from 'src/generated/prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RecipeWhereInput } from 'src/generated/prisma/models';
@@ -174,6 +174,13 @@ export class RecipesRepository implements IRecipesRepository {
         },
         recipeIngredients: recipeIngredients && { deleteMany: {}, create: recipeIngredients },
       },
+    });
+  }
+
+  async updateRateStats(id: string, rateStats: Partial<RateStats>): Promise<Recipe> {
+    return await this.prisma.recipe.update({
+      where: { id },
+      data: rateStats,
     });
   }
 

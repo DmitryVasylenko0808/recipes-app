@@ -45,3 +45,5 @@ export type RecipeDetails = Recipe & {
   recipeTags: Array<RecipeTagDetails>;
   recipeIngredients: Array<RecipeIngredientDetails>;
 };
+
+export type RateStats = Pick<Recipe, 'ratingsCount' | 'ratingsSum' | 'ratingsAvg'>;

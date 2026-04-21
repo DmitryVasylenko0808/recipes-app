@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
   UploadedFile,
   UseGuards,
@@ -27,6 +28,7 @@ import {
   UpdateRecipeRequestMultipartDto,
 } from './dtos';
 import {
+  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiBody,
   ApiConsumes,
@@ -42,13 +44,17 @@ import { GetCommentsQueryDto } from 'src/comments/dtos/get.comments.query.dto';
 import { CommentResponseDto } from 'src/comments/dtos/comment.response.dto';
 import { PostCommentRequestDto } from 'src/comments/dtos/post.comment.request.dto';
 import { CommentsService } from 'src/comments/comments.service';
+import { RateRecipeRequestDto } from './dtos/rate.recipe.request.dto';
+import { RatingsService } from './ratings.service';
+import { RatingDto } from './dtos/rating.response.dto';
 
 @ApiTags('Recipes')
 @Controller('recipes')
 export class RecipesController {
   constructor(
     private readonly recipesService: RecipesService,
-    private readonly commentsService: CommentsService
+    private readonly commentsService: CommentsService,
+    private readonly ratingsService: RatingsService
   ) {}
 
   @Get()
@@ -118,6 +124,21 @@ export class RecipesController {
   @Patch(':id/views')
   async incrementViews(@Param('id') id: string) {
     await this.recipesService.incrementViews(id);
+  }
+
+  @Put(':id/ratings')
+  @UseGuards(PrivateAuthGuard)
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: RatingDto })
+  @ApiUnauthorizedResponse({ description: 'Unathorized' })
+  @ApiBadRequestResponse({ description: 'Cannot rate non-existed recipe' })
+  async rateRecipe(
+    @Param('id') id: string,
+    @CurrentUser('id') userId: string,
+    @Body() dto: RateRecipeRequestDto
+  ) {
+    const result = await this.ratingsService.rateRecipe(userId, id, dto);
+    return new RatingDto(result);
   }
 
   @Get(':id/comments')
