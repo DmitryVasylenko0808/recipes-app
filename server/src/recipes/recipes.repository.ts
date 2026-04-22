@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { IRecipesRepository } from './interfaces';
 import {
+  RangeDate,
   RateStats,
   RecipeFindManyItem,
   RecipeFindManyResult,
@@ -109,6 +110,40 @@ export class RecipesRepository implements IRecipesRepository {
     ]);
 
     return { data, totalCount };
+  }
+
+  async findTrending(
+    limit: number,
+    rangeDate: RangeDate,
+    userId?: string
+  ): Promise<RecipeFindManyItem[]> {
+    const { from, to } = rangeDate;
+
+    return await this.prisma.recipe.findMany({
+      where: {
+        createdAt: {
+          gte: from,
+          lt: to,
+        },
+      },
+      include: {
+        category: true,
+        favoriteEntries: userId
+          ? {
+              where: { userId },
+              select: { userId: true },
+            }
+          : undefined,
+        recipeTags: {
+          include: { tag: true },
+        },
+        recipeIngredients: {
+          include: { ingredient: true },
+        },
+      },
+      orderBy: { ratingsAvg: 'desc' },
+      take: limit,
+    });
   }
 
   async findPopular(limit: number, userId?: string): Promise<RecipeFindManyItem[]> {

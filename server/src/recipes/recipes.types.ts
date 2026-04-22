@@ -9,6 +9,8 @@ import {
   Rating,
 } from 'src/generated/prisma/client';
 
+export type RangeDate = { from: Date; to: Date };
+
 export type RecipeTagDetails = RecipeTag & { tag: Tag };
 export type RecipeIngredientDetails = RecipeIngredient & { ingredient: Ingredient };
 export type FavoriteEntryItem = { userId: string };

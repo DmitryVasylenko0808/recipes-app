@@ -7,6 +7,7 @@ import {
   UpdateRecipeRequestDto,
 } from './dtos';
 import { RecipeFindManyItem, RecipeFindOneResult } from './recipes.types';
+import { getMonthRange } from './utils/get.months.range';
 
 @Injectable()
 export class RecipesService {
@@ -21,6 +22,14 @@ export class RecipesService {
       totalPages: Math.ceil(totalCount / options.limit),
       currentPage: options.page,
     };
+  }
+
+  async getTrending(userId?: string) {
+    const rangeDate = getMonthRange(1);
+
+    const data = await this.recipesRepository.findTrending(4, rangeDate, userId);
+
+    return data.map((r) => ({ ...r, isFavorite: this.isFavorite(r) }));
   }
 
   async getPopular(userId?: string) {

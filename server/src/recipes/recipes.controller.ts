@@ -48,6 +48,7 @@ import { RateRecipeRequestDto } from './dtos/rate.recipe.request.dto';
 import { RatingsService } from './ratings.service';
 import { RatingDto } from './dtos/rating.response.dto';
 import { GetPopularRecipesResponseDto } from './dtos/get.popular.recipes.response.dto';
+import { GetTrendingRecipesResponseDto } from './dtos/get.trending.recipes.response.dto';
 
 @ApiTags('Recipes')
 @Controller('recipes')
@@ -64,6 +65,14 @@ export class RecipesController {
   async getAll(@Query() queryDto: GetRecipesQueryDto, @CurrentUser('id') userId?: string) {
     const recipes = await this.recipesService.getAll(queryDto, userId);
     return new GetRecipesResponseDto(recipes);
+  }
+
+  @Get('trending')
+  @UseGuards(OptionalAuthGuard)
+  @ApiOkResponse({ type: GetTrendingRecipesResponseDto })
+  async getTrending(@CurrentUser('id') userId?: string) {
+    const recipes = await this.recipesService.getTrending(userId);
+    return new GetTrendingRecipesResponseDto(recipes);
   }
 
   @Get('popular')

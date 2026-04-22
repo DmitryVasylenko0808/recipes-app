@@ -6,6 +6,7 @@ import {
   UpdateRecipeRequestDto,
 } from '../dtos';
 import {
+  RangeDate,
   RateStats,
   RecipeFindManyItem,
   RecipeFindManyResult,
@@ -15,6 +16,7 @@ import {
 export interface IRecipesRepository {
   findById(id: string): Promise<RecipeFindOneResult | null>;
   findMany(options: GetRecipesQueryDto, userId?: string): Promise<RecipeFindManyResult>;
+  findTrending(limit: number, rangeDate: RangeDate, userId?: string): Promise<RecipeFindManyItem[]>;
   findPopular(limit: number, userId?: string): Promise<RecipeFindManyItem[]>;
   findManyByAuthorId(
     authorId: string,
