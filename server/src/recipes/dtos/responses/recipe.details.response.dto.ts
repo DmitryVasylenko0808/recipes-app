@@ -1,6 +1,6 @@
 import { AuthorPreviewDto } from 'src/authors/dtos/author.preview.dto';
 import { Difficulty } from 'src/generated/prisma/enums';
-import { FavoriteEntryItem, RecipeDetails } from '../recipes.types';
+import { FavoriteEntryItem, RecipeDetails } from '../../recipes.types';
 import { RecipeTagDto } from './recipe.tag.dto';
 import { CategoryDto } from 'src/categories/dtos';
 import { RecipeIngredientDetailsDto } from './recipe.ingredient.details.dto';

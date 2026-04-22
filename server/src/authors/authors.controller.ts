@@ -14,7 +14,7 @@ import { PrivateAuthGuard } from 'src/common/private-auth.guard';
 import { CurrentUser } from 'src/common/current-user.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/common/multer.config';
-import { RecipesService } from 'src/recipes/recipes.service';
+import { RecipesService } from 'src/recipes/services/recipes.service';
 import { GetAuthorRecipesQueryDto, GetRecipesResponseDto } from 'src/recipes/dtos';
 import { GetAuthorRequestDto, UpdateAuthorRequestDto, UpdateAuthorResponseDto } from './dtos';
 import {

@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { RecipesRepository } from './recipes.repository';
-import { RatingsRepository } from './ratings.repository';
-import { RateRecipeRequestDto } from './dtos/rate.recipe.request.dto';
-import { RateStats } from './recipes.types';
+import { RecipesRepository } from '../repositories/recipes.repository';
+import { RatingsRepository } from '../repositories/ratings.repository';
+import { RateRecipeRequestDto } from '../dtos/requests/rate.recipe.request.dto';
+import { RateStats } from '../recipes.types';
 import { Rating, Recipe } from 'src/generated/prisma/client';
 
 @Injectable()

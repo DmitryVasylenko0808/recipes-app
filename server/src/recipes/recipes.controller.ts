@@ -12,7 +12,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { RecipesService } from './recipes.service';
+import { RecipesService } from './services/recipes.service';
 import { PrivateAuthGuard } from 'src/common/private-auth.guard';
 import { CurrentUser } from 'src/common/current-user.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -44,12 +44,12 @@ import { GetCommentsQueryDto } from 'src/comments/dtos/get.comments.query.dto';
 import { CommentResponseDto } from 'src/comments/dtos/comment.response.dto';
 import { PostCommentRequestDto } from 'src/comments/dtos/post.comment.request.dto';
 import { CommentsService } from 'src/comments/comments.service';
-import { RateRecipeRequestDto } from './dtos/rate.recipe.request.dto';
-import { RatingsService } from './ratings.service';
-import { RatingDto } from './dtos/rating.response.dto';
-import { GetPopularRecipesResponseDto } from './dtos/get.popular.recipes.response.dto';
-import { GetTrendingRecipesResponseDto } from './dtos/get.trending.recipes.response.dto';
-import { GetSimilarRecipesResponseDto } from './dtos/get.similar.recipes.response.dto';
+import { RateRecipeRequestDto } from './dtos/requests/rate.recipe.request.dto';
+import { RatingsService } from './services/ratings.service';
+import { RatingDto } from './dtos/responses/rating.response.dto';
+import { GetPopularRecipesResponseDto } from './dtos/responses/get.popular.recipes.response.dto';
+import { GetTrendingRecipesResponseDto } from './dtos/responses/get.trending.recipes.response.dto';
+import { GetSimilarRecipesResponseDto } from './dtos/responses/get.similar.recipes.response.dto';
 
 @ApiTags('Recipes')
 @Controller('recipes')

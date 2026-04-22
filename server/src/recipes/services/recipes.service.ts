@@ -1,13 +1,13 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { RecipesRepository } from './recipes.repository';
+import { RecipesRepository } from '../repositories/recipes.repository';
 import {
   GetRecipesQueryDto,
   GetAuthorRecipesQueryDto,
   CreateRecipeRequestDto,
   UpdateRecipeRequestDto,
-} from './dtos';
-import { RecipeFindManyItem, RecipeFindOneResult, RecipePreview } from './recipes.types';
-import { getMonthRange } from './utils/get.months.range';
+} from '../dtos';
+import { RecipeFindManyItem, RecipeFindOneResult, RecipePreview } from '../recipes.types';
+import { getMonthRange } from '../utils/get.months.range';
 
 @Injectable()
 export class RecipesService {

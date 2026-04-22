@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IRatingsRepository } from './interfaces';
+import { IRatingsRepository } from '../interfaces';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Rating } from 'src/generated/prisma/client';
 

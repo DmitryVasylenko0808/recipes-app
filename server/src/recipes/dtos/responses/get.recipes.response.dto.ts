@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { RecipeFindManyResult } from '../recipes.types';
+import { RecipeFindManyResult } from '../../recipes.types';
 import { PaginatedResponseDto } from './paginated.response.dto';
 import { RecipePreviewResponseDto } from './recipe.preview.response.dto';
 

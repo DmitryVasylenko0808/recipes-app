@@ -1,5 +1,5 @@
 import { Exclude } from 'class-transformer';
-import { RecipeIngredientDetails } from '../recipes.types';
+import { RecipeIngredientDetails } from '../../recipes.types';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class RecipeIngredientDetailsDto {

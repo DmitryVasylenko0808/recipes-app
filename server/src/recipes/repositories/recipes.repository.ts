@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { IRecipesRepository } from './interfaces';
+import { IRecipesRepository } from '../interfaces';
 import {
   RangeDate,
   RateStats,
   RecipeFindManyItem,
   RecipeFindManyResult,
   RecipeFindOneResult,
-} from './recipes.types';
+} from '../recipes.types';
 import { Recipe } from 'src/generated/prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RecipeWhereInput } from 'src/generated/prisma/models';
@@ -15,7 +15,7 @@ import {
   GetAuthorRecipesQueryDto,
   GetRecipesQueryDto,
   UpdateRecipeRequestDto,
-} from './dtos';
+} from '../dtos';
 
 @Injectable()
 export class RecipesRepository implements IRecipesRepository {

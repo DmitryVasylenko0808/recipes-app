@@ -10,7 +10,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Difficulty } from 'src/generated/prisma/enums';
-import { RecipeIngredientDto } from './recipe.ingredient.dto';
+import { RecipeIngredientDto } from '../responses/recipe.ingredient.dto';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UpdateRecipeRequestDto {

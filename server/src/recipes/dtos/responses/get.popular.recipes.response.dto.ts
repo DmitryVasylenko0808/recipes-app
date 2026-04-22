@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { RecipeFindManyItem } from '../recipes.types';
+import { RecipeFindManyItem } from '../../recipes.types';
 import { RecipePreviewResponseDto } from './recipe.preview.response.dto';
 
-export class GetSimilarRecipesResponseDto {
+export class GetPopularRecipesResponseDto {
   @ApiProperty({ type: [RecipePreviewResponseDto] })
   data: RecipePreviewResponseDto[];
 

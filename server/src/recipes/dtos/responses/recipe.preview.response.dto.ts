@@ -1,6 +1,6 @@
 import { Exclude, Transform } from 'class-transformer';
 import { Difficulty } from 'src/generated/prisma/enums';
-import { FavoriteEntryItem, RecipePreview } from '../recipes.types';
+import { FavoriteEntryItem, RecipePreview } from '../../recipes.types';
 import { RecipeTagDto } from './recipe.tag.dto';
 import { CategoryDto } from 'src/categories/dtos';
 import { RecipeIngredientDetailsDto } from './recipe.ingredient.details.dto';
