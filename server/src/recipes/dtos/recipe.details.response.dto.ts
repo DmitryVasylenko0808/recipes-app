@@ -6,6 +6,7 @@ import { CategoryDto } from 'src/categories/dtos';
 import { RecipeIngredientDetailsDto } from './recipe.ingredient.details.dto';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Exclude, Transform } from 'class-transformer';
+import { Rating } from 'src/generated/prisma/client';
 
 export class RecipeDetailsResponseDto {
   @ApiProperty({
@@ -88,6 +89,12 @@ export class RecipeDetailsResponseDto {
   ratingsAvg: number;
 
   @ApiProperty({
+    description: 'Rate value of recipe rated by user',
+    example: 4,
+  })
+  userRating?: number;
+
+  @ApiProperty({
     description: 'Published date of recipe',
     example: '2024-11-01T02:14:34.244Z',
   })
@@ -116,6 +123,9 @@ export class RecipeDetailsResponseDto {
 
   @Exclude()
   favoriteEntries?: FavoriteEntryItem[];
+
+  @Exclude()
+  ratings?: Rating[];
 
   constructor(partial: RecipeDetails) {
     const { category, recipeTags, recipeIngredients, author, isFavorite, ...data } = partial;

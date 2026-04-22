@@ -43,7 +43,11 @@ export class RecipesService {
 
     if (!recipe) throw new NotFoundException('Recipe is not found');
 
-    return { ...recipe, isFavorite: this.isFavorite(recipe) };
+    return {
+      ...recipe,
+      isFavorite: this.isFavorite(recipe),
+      userRating: recipe.ratings?.[0]?.value,
+    };
   }
 
   async create(authorId: string, dto: CreateRecipeRequestDto, previewImageFilename: string) {

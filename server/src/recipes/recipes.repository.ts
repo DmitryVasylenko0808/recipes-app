@@ -27,6 +27,11 @@ export class RecipesRepository implements IRecipesRepository {
               select: { userId: true },
             }
           : undefined,
+        ratings: userId
+          ? {
+              where: { userId },
+            }
+          : undefined,
         recipeTags: {
           include: { tag: true },
         },

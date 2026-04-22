@@ -6,6 +6,7 @@ import {
   RecipeIngredient,
   Ingredient,
   Category,
+  Rating,
 } from 'src/generated/prisma/client';
 
 export type RecipeTagDetails = RecipeTag & { tag: Tag };
@@ -27,6 +28,7 @@ export type RecipeFindOneResult = Recipe & {
   category: Category;
   author: Author;
   favoriteEntries?: FavoriteEntryItem[];
+  ratings?: Rating[];
   recipeTags: Array<RecipeTagDetails>;
   recipeIngredients: Array<RecipeIngredientDetails>;
 };
