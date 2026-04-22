@@ -5,11 +5,17 @@ import {
   CreateRecipeRequestDto,
   UpdateRecipeRequestDto,
 } from '../dtos';
-import { RateStats, RecipeFindManyResult, RecipeFindOneResult } from '../recipes.types';
+import {
+  RateStats,
+  RecipeFindManyItem,
+  RecipeFindManyResult,
+  RecipeFindOneResult,
+} from '../recipes.types';
 
 export interface IRecipesRepository {
   findById(id: string): Promise<RecipeFindOneResult | null>;
   findMany(options: GetRecipesQueryDto, userId?: string): Promise<RecipeFindManyResult>;
+  findPopular(limit: number, userId?: string): Promise<RecipeFindManyItem[]>;
   findManyByAuthorId(
     authorId: string,
     options: GetAuthorRecipesQueryDto

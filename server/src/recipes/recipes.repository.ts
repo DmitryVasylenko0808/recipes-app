@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { IRecipesRepository } from './interfaces';
-import { RateStats, RecipeFindManyResult, RecipeFindOneResult } from './recipes.types';
+import {
+  RateStats,
+  RecipeFindManyItem,
+  RecipeFindManyResult,
+  RecipeFindOneResult,
+} from './recipes.types';
 import { Recipe } from 'src/generated/prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RecipeWhereInput } from 'src/generated/prisma/models';
@@ -104,6 +109,28 @@ export class RecipesRepository implements IRecipesRepository {
     ]);
 
     return { data, totalCount };
+  }
+
+  async findPopular(limit: number, userId?: string): Promise<RecipeFindManyItem[]> {
+    return await this.prisma.recipe.findMany({
+      include: {
+        category: true,
+        favoriteEntries: userId
+          ? {
+              where: { userId },
+              select: { userId: true },
+            }
+          : undefined,
+        recipeTags: {
+          include: { tag: true },
+        },
+        recipeIngredients: {
+          include: { ingredient: true },
+        },
+      },
+      orderBy: { ratingsAvg: 'desc' },
+      take: limit,
+    });
   }
 
   async findManyByAuthorId(

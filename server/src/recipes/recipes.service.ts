@@ -23,6 +23,12 @@ export class RecipesService {
     };
   }
 
+  async getPopular(userId?: string) {
+    const data = await this.recipesRepository.findPopular(4, userId);
+
+    return data.map((r) => ({ ...r, isFavorite: this.isFavorite(r) }));
+  }
+
   async getByAuthorId(authorId: string, options: GetAuthorRecipesQueryDto, userId?: string) {
     const { data, totalCount } = await this.recipesRepository.findManyByAuthorId(
       authorId,

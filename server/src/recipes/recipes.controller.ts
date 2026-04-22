@@ -47,6 +47,7 @@ import { CommentsService } from 'src/comments/comments.service';
 import { RateRecipeRequestDto } from './dtos/rate.recipe.request.dto';
 import { RatingsService } from './ratings.service';
 import { RatingDto } from './dtos/rating.response.dto';
+import { GetPopularRecipesResponseDto } from './dtos/get.popular.recipes.response.dto';
 
 @ApiTags('Recipes')
 @Controller('recipes')
@@ -63,6 +64,13 @@ export class RecipesController {
   async getAll(@Query() queryDto: GetRecipesQueryDto, @CurrentUser('id') userId?: string) {
     const recipes = await this.recipesService.getAll(queryDto, userId);
     return new GetRecipesResponseDto(recipes);
+  }
+
+  @Get('popular')
+  @UseGuards(OptionalAuthGuard)
+  async getPopular(@CurrentUser('id') userId?: string) {
+    const recipes = await this.recipesService.getPopular(userId);
+    return new GetPopularRecipesResponseDto(recipes);
   }
 
   @Get(':id')
