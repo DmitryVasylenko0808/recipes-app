@@ -68,6 +68,7 @@ export class RecipesController {
 
   @Get('popular')
   @UseGuards(OptionalAuthGuard)
+  @ApiOkResponse({ type: GetPopularRecipesResponseDto })
   async getPopular(@CurrentUser('id') userId?: string) {
     const recipes = await this.recipesService.getPopular(userId);
     return new GetPopularRecipesResponseDto(recipes);
