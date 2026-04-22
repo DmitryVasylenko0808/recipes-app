@@ -49,6 +49,7 @@ import { RatingsService } from './ratings.service';
 import { RatingDto } from './dtos/rating.response.dto';
 import { GetPopularRecipesResponseDto } from './dtos/get.popular.recipes.response.dto';
 import { GetTrendingRecipesResponseDto } from './dtos/get.trending.recipes.response.dto';
+import { GetSimilarRecipesResponseDto } from './dtos/get.similar.recipes.response.dto';
 
 @ApiTags('Recipes')
 @Controller('recipes')
@@ -157,6 +158,13 @@ export class RecipesController {
   ) {
     const result = await this.ratingsService.rateRecipe(userId, id, dto);
     return new RatingDto(result);
+  }
+
+  @Get(':id/similar')
+  @UseGuards(OptionalAuthGuard)
+  async getSimilar(@Param('id') id: string, @CurrentUser('id') userId?: string) {
+    const recipes = await this.recipesService.getSimilar(id, userId);
+    return new GetSimilarRecipesResponseDto(recipes);
   }
 
   @Get(':id/comments')

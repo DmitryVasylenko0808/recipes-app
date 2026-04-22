@@ -205,6 +205,27 @@ export class RecipesRepository implements IRecipesRepository {
     return { data, totalCount };
   }
 
+  async findByCategoryId(categoryId: string, userId?: string): Promise<RecipeFindManyItem[]> {
+    return await this.prisma.recipe.findMany({
+      where: { categoryId },
+      include: {
+        category: true,
+        favoriteEntries: userId
+          ? {
+              where: { userId },
+              select: { userId: true },
+            }
+          : false,
+        recipeTags: {
+          include: { tag: true },
+        },
+        recipeIngredients: {
+          include: { ingredient: true },
+        },
+      },
+    });
+  }
+
   async create(
     authorId: string,
     data: CreateRecipeRequestDto,

@@ -6,7 +6,7 @@ import {
   CreateRecipeRequestDto,
   UpdateRecipeRequestDto,
 } from './dtos';
-import { RecipeFindManyItem, RecipeFindOneResult } from './recipes.types';
+import { RecipeFindManyItem, RecipeFindOneResult, RecipePreview } from './recipes.types';
 import { getMonthRange } from './utils/get.months.range';
 
 @Injectable()
@@ -63,6 +63,52 @@ export class RecipesService {
       isFavorite: this.isFavorite(recipe),
       userRating: recipe.ratings?.[0]?.value,
     };
+  }
+
+  async getSimilar(id: string, userId?: string) {
+    const recipe = await this.recipesRepository.findById(id);
+
+    if (!recipe) return [];
+
+    const recipesByCategory = await this.recipesRepository.findByCategoryId(
+      recipe.categoryId,
+      userId
+    );
+
+    const similarRecipes = this.getMostSimilar(recipe, recipesByCategory, 3);
+
+    return similarRecipes.map((r) => ({ ...r, isFavorite: this.isFavorite(r) }));
+  }
+
+  private getMostSimilar(
+    recipe: RecipeFindManyItem | RecipeFindOneResult,
+    recipesByCategory: RecipeFindManyItem[],
+    limit: number
+  ): RecipeFindManyItem[] {
+    const recipeTagIds = new Set(recipe.recipeTags.map((t) => t.tagId));
+    const recipeIngredientIds = new Set(recipe.recipeIngredients.map((ing) => ing.ingredientId));
+
+    const result = recipesByCategory.map((r) => {
+      const tagsSimilarity = r.recipeTags.reduce(
+        (acc, curr) => (acc += recipeTagIds.has(curr.tagId) ? 0.5 : 0),
+        0
+      );
+      const ingredientsSimilarity = r.recipeIngredients.reduce(
+        (acc, curr) => (acc += recipeIngredientIds.has(curr.ingredientId) ? 1 : 0),
+        0
+      );
+
+      return { ...r, similarity: tagsSimilarity + ingredientsSimilarity };
+    });
+
+    return result
+      .sort((a, b) => b.similarity - a.similarity)
+      .filter((r) => r.id !== recipe.id)
+      .splice(0, limit)
+      .map((r) => {
+        const { similarity, ...rest } = r;
+        return rest;
+      });
   }
 
   async create(authorId: string, dto: CreateRecipeRequestDto, previewImageFilename: string) {

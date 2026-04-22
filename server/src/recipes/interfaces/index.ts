@@ -22,6 +22,7 @@ export interface IRecipesRepository {
     authorId: string,
     options: GetAuthorRecipesQueryDto
   ): Promise<RecipeFindManyResult>;
+  findByCategoryId(categoryId: string, userId?: string): Promise<RecipeFindManyItem[]>;
   create(
     authorId: string,
     data: CreateRecipeRequestDto,
