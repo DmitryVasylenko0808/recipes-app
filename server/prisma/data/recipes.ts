@@ -560,7 +560,7 @@ inpune, *digitosque genua*. **Sustulit abstinet**!
   authorId: faker.helpers.arrayElement(authorsIds),
   previewImage: `${index}.jpg`,
   viewsCount: faker.number.int({ min: 50, max: 150 }),
-  createdAt: faker.date.past({ years: 2 }),
+  createdAt: faker.date.recent({ days: 120 }),
   ratingsCount: 0,
   ratingsSum: 0,
   ratingsAvg: 0,
