@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { Clock, Eye } from 'lucide-react';
 import type { ReactNode } from 'react';
 import type { RecipePreview } from '../model/types/recipe-preview';
+import { Rating } from './rating';
 
 export type RecipeCardProps = {
   recipe: RecipePreview;
@@ -44,11 +45,12 @@ export const RecipeCard = ({ recipe, actionsSlot }: RecipeCardProps) => {
               {recipe.description}
             </Typograpghy>
           </div>
-          <div className="mb-2">
+          <div className="mb-2 flex justify-between">
             <Typograpghy tagVariant="span" className="inline-flex">
               <Eye size={16} className="mr-1" />
               {recipe.viewsCount} views
             </Typograpghy>
+            <Rating maxRating={5} rating={recipe.ratingsAvg} ratingsCount={recipe.ratingsCount} />
           </div>
           <div className="mb-1.5 flex flex-wrap gap-1.5">
             {recipe.recipeTags.map((t) => (

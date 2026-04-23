@@ -29,9 +29,7 @@ export const Rating = ({ rating, maxRating, ratingsCount }: RatingProps) => {
   return (
     <div className="flex items-center gap-2">
       <div className="flex gap-0.5">{renderRatings}</div>
-      <Typograpghy tagVariant="span">
-        {rating} ({ratingsCount})
-      </Typograpghy>
+      <Typograpghy tagVariant="span">({ratingsCount})</Typograpghy>
     </div>
   );
 };
