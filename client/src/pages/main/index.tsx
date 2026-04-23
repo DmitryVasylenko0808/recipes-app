@@ -1,5 +1,5 @@
 import { PopularRecipes } from './ui/popular-recipes';
-import { Recipes } from './ui/recipes';
+import { RecentRecipes } from './ui/recent-recipes';
 import { TrendingRecipes } from './ui/trending-recipes';
 
 const MainPage = () => {
@@ -7,7 +7,7 @@ const MainPage = () => {
     <>
       <TrendingRecipes />
       <PopularRecipes />
-      <Recipes />
+      <RecentRecipes />
     </>
   );
 };

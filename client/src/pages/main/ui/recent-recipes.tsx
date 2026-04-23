@@ -14,8 +14,9 @@ import {
   RecipeFilters,
   useFilterRecipes,
 } from '@/features/recipe/filter';
-import { useDebounce } from '@/shared';
+import { Typograpghy, useDebounce } from '@/shared';
 import { ToggleFavoriteRecipeButton } from '@/features/favorites/toggle';
+import { Clock } from 'lucide-react';
 
 const COOKING_TIMES: CookingTimeFilterItem[] = [
   { label: 'Any time' },
@@ -39,7 +40,7 @@ const COOKING_TIMES: CookingTimeFilterItem[] = [
 const DIFFICULTIES: Difficulty[] = ['easy', 'medium', 'hard'];
 const INITIAL_LIMIT = 9;
 
-export const Recipes = () => {
+export const RecentRecipes = () => {
   const { data: categories } = useGetCategories();
   const { data: tags } = useGetTags();
   const { data: ingredients } = useGetIngredients();
@@ -85,46 +86,56 @@ export const Recipes = () => {
   });
 
   return (
-    <div className="mx-auto flex max-w-7xl gap-8 px-4 py-8">
-      <aside>
-        <RecipeFilters
-          search={search}
-          onSearch={handleSearch}
-          cookingTimes={COOKING_TIMES}
-          selectedCookingTime={selectedCookingTime}
-          onSelectCookingTime={handleSelectCookingTime}
-          difficulties={DIFFICULTIES}
-          selectedDifficulties={selectedDifficulties}
-          onSelectDifficulty={handleSelectDifficulty}
-          avialableCategories={categories}
-          selectedCategories={selectedCategories}
-          onSelectCategory={handleSelectCategory}
-          avialableTags={tags}
-          selectedTags={selectedTags}
-          onSelectTag={handleSelectTag}
-          avialableIngredients={ingredients}
-          selectedIngredients={selectedIngredients}
-          onSelectIngredient={handleSelectIngredient}
-          onResetFilters={handleResetFilters}
-        />
-      </aside>
-      <div className="flex-1">
-        {isPending ? (
-          <RecipesGridSkeleton />
-        ) : (
-          <RecipesGrid
-            isFetching={isFetching}
-            recipes={data?.data}
-            renderItems={(r) => (
-              <RecipeCard
-                recipe={r}
-                key={r.id}
-                actionsSlot={<ToggleFavoriteRecipeButton recipe={r} />}
-              />
-            )}
+    <div className="mx-auto max-w-7xl px-4 py-8">
+      <div className="mb-6 flex items-center gap-2">
+        <Clock className="text-primary" />
+        <Typograpghy tagVariant="h2">Recent Recipes</Typograpghy>
+      </div>
+      <div className="flex gap-8">
+        <aside>
+          <RecipeFilters
+            search={search}
+            onSearch={handleSearch}
+            cookingTimes={COOKING_TIMES}
+            selectedCookingTime={selectedCookingTime}
+            onSelectCookingTime={handleSelectCookingTime}
+            difficulties={DIFFICULTIES}
+            selectedDifficulties={selectedDifficulties}
+            onSelectDifficulty={handleSelectDifficulty}
+            avialableCategories={categories}
+            selectedCategories={selectedCategories}
+            onSelectCategory={handleSelectCategory}
+            avialableTags={tags}
+            selectedTags={selectedTags}
+            onSelectTag={handleSelectTag}
+            avialableIngredients={ingredients}
+            selectedIngredients={selectedIngredients}
+            onSelectIngredient={handleSelectIngredient}
+            onResetFilters={handleResetFilters}
           />
-        )}
-        <Pagination totalPages={data?.totalPages} currentPage={page} onPageChange={onPageChange} />
+        </aside>
+        <div className="flex-1">
+          {isPending ? (
+            <RecipesGridSkeleton />
+          ) : (
+            <RecipesGrid
+              isFetching={isFetching}
+              recipes={data?.data}
+              renderItems={(r) => (
+                <RecipeCard
+                  recipe={r}
+                  key={r.id}
+                  actionsSlot={<ToggleFavoriteRecipeButton recipe={r} />}
+                />
+              )}
+            />
+          )}
+          <Pagination
+            totalPages={data?.totalPages}
+            currentPage={page}
+            onPageChange={onPageChange}
+          />
+        </div>
       </div>
     </div>
   );
