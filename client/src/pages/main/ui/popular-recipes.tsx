@@ -2,20 +2,20 @@ import {
   RecipeCardHorizontal,
   RecipesGrid,
   RecipesGridSkeleton,
-  useGetTrendingRecipes,
+  useGetPopularRecipes,
 } from '@/entities/recipes';
 import { ToggleFavoriteRecipeButton } from '@/features/favorites/toggle';
 import { Typograpghy } from '@/shared';
-import { TrendingUp } from 'lucide-react';
+import { Star } from 'lucide-react';
 
-export const TrendingRecipes = () => {
-  const { data, isPending } = useGetTrendingRecipes();
+export const PopularRecipes = () => {
+  const { data, isPending } = useGetPopularRecipes();
 
   return (
     <section className="mx-auto my-12 max-w-7xl px-4">
       <div className="mb-6 flex items-center gap-2">
-        <TrendingUp className="text-primary" />
-        <Typograpghy tagVariant="h2">Trending Recipes</Typograpghy>
+        <Star className="text-primary fill-primary" />
+        <Typograpghy tagVariant="h2">Popular Recipes</Typograpghy>
       </div>
       {isPending ? (
         <RecipesGridSkeleton countItems={4} cols={2} horizontal />

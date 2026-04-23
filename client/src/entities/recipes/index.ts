@@ -3,6 +3,7 @@ export * from './model/types/recipe';
 export * from './model/hooks/use-get-recipes';
 export * from './model/hooks/use-get-one-recipe';
 export * from './model/hooks/use-get-trending-recipes';
+export * from './model/hooks/use-get-popular-recipes';
 export * from './model/hooks/use-get-author-recipes';
 export * from './api';
 

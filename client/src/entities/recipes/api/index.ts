@@ -35,6 +35,12 @@ export const getTrendingRecipes = async () => {
   return response.data;
 };
 
+export const getPopularRecipes = async () => {
+  const response = await apiClient.get<GetRecipesDto>(`${API_URL}/recipes/popular`);
+
+  return response.data;
+};
+
 export type GetOneRecipeDto = Recipe;
 
 export const getOneRecipe = async (id?: string) => {
