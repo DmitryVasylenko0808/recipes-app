@@ -1,8 +1,10 @@
 import { Typograpghy, AvatarFallback, Badge, Card, Markdown, pathKeys, Avatar } from '@/shared';
-import type { ReactNode, ComponentProps } from 'react';
+import { type ReactNode, type ComponentProps } from 'react';
 import { Link } from 'react-router';
 import type { Recipe } from '../model/types/recipe';
 import { ChefHat, Clock, Eye, type LucideIcon } from 'lucide-react';
+import { Rating } from './rating';
+import { RateRecipe } from '@/features/recipe/rate';
 
 type RecipeDetailsViewProps = { recipe: Recipe; actionsSlot?: ReactNode };
 
@@ -91,6 +93,33 @@ export const RecipeDetailsView = ({ recipe, actionsSlot }: RecipeDetailsViewProp
             </Badge>
           ))}
         </div>
+      </div>
+
+      <div className="mb-6">
+        <div className="flex justify-between pb-6">
+          <div>
+            <Typograpghy tagVariant="span" className="mb-2 inline-block text-sm">
+              Recipe rating
+            </Typograpghy>
+            <Rating
+              maxRating={5}
+              rating={recipe.ratingsAvg}
+              ratingsCount={recipe.ratingsCount}
+              size="lg"
+            >
+              <Typograpghy tagVariant="span" className="text-foreground text-lg font-medium">
+                {recipe.ratingsAvg ? recipe.ratingsAvg : 'No ratings'}
+              </Typograpghy>
+              {recipe.ratingsCount && (
+                <Typograpghy tagVariant="span" className="text-sm">
+                  ({recipe.ratingsCount} ratings)
+                </Typograpghy>
+              )}
+            </Rating>
+          </div>
+          <RateRecipe recipeId={recipe.id} maxRating={5} rating={recipe.userRating} />
+        </div>
+        <div className="bg-ring/30 h-px" />
       </div>
 
       <Card className="mb-8 p-6">
