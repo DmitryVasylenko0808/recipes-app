@@ -5,4 +5,5 @@ export type Recipe = RecipePreview & {
   content: string;
   authorId: string;
   author: AuthorPreview;
+  userRating?: number;
 };

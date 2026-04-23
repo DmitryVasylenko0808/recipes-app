@@ -4,7 +4,7 @@ import { Clock, Eye } from 'lucide-react';
 import type { ReactNode } from 'react';
 import type { RecipePreview } from '../model/types/recipe-preview';
 
-type RecipeCardProps = {
+export type RecipeCardProps = {
   recipe: RecipePreview;
   actionsSlot?: ReactNode;
 };

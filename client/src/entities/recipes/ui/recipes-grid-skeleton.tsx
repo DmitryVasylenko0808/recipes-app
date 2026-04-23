@@ -1,8 +1,12 @@
 import { cn } from '@/shared/lib/utils/cn';
 
-type RecipesGridSkeletonProps = { countItems?: number; cols?: number };
+type RecipesGridSkeletonProps = { countItems?: number; cols?: number; horizontal?: boolean };
 
-export const RecipesGridSkeleton = ({ countItems = 9, cols = 3 }: RecipesGridSkeletonProps) => {
+export const RecipesGridSkeleton = ({
+  countItems = 9,
+  cols = 3,
+  horizontal,
+}: RecipesGridSkeletonProps) => {
   return (
     <div
       className={cn('grid gap-6', {
@@ -15,7 +19,13 @@ export const RecipesGridSkeleton = ({ countItems = 9, cols = 3 }: RecipesGridSke
       })}
     >
       {Array.from({ length: countItems }).map((_, i) => (
-        <div className="bg-accent h-110 animate-pulse rounded-md" key={i} />
+        <div
+          className={cn('bg-accent h-110 animate-pulse rounded-md', {
+            'h-40': horizontal,
+            'h-110': !horizontal,
+          })}
+          key={i}
+        />
       ))}
     </div>
   );

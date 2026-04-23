@@ -11,6 +11,8 @@ export type RecipePreview = {
   cookingTime: number;
   difficulty: Difficulty;
   viewsCount: number;
+  ratingsCount: number;
+  ratingsAvg: number;
   isFavorite?: boolean;
   createdAt: Date;
   recipeTags: Tag[];
