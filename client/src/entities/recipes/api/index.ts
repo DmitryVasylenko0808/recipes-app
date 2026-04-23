@@ -30,13 +30,13 @@ export const getRecipes = async (args: GetRecipesArgs) => {
 };
 
 export const getTrendingRecipes = async () => {
-  const response = await apiClient.get<GetRecipesDto>(`${API_URL}/recipes/trending`);
+  const response = await apiClient.get<Pick<GetRecipesDto, 'data'>>(`${API_URL}/recipes/trending`);
 
   return response.data;
 };
 
 export const getPopularRecipes = async () => {
-  const response = await apiClient.get<GetRecipesDto>(`${API_URL}/recipes/popular`);
+  const response = await apiClient.get<Pick<GetRecipesDto, 'data'>>(`${API_URL}/recipes/popular`);
 
   return response.data;
 };
@@ -50,7 +50,9 @@ export const getOneRecipe = async (id?: string) => {
 };
 
 export const getSimilarRecipes = async (id?: string) => {
-  const response = await apiClient.get<GetRecipesDto>(`${API_URL}/recipes/${id}/similar`);
+  const response = await apiClient.get<Pick<GetRecipesDto, 'data'>>(
+    `${API_URL}/recipes/${id}/similar`
+  );
 
   return response.data;
 };
