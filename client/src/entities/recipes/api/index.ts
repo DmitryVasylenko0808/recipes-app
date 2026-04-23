@@ -49,6 +49,12 @@ export const getOneRecipe = async (id?: string) => {
   return response.data;
 };
 
+export const getSimilarRecipes = async (id?: string) => {
+  const response = await apiClient.get<GetRecipesDto>(`${API_URL}/recipes/${id}/similar`);
+
+  return response.data;
+};
+
 export type GetAuthorRecipesDto = {
   data: RecipePreview[];
   totalCount: number;
