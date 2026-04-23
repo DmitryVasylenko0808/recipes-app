@@ -39,7 +39,12 @@ export const RecipeCardHorizontal = ({ recipe, actionsSlot }: RecipeCardProps) =
               <ChefHat size={14} /> {recipe.difficulty}
             </Typograpghy>
           </div>
-          <Rating rating={recipe.ratingsAvg} maxRating={5} ratingsCount={recipe.ratingsCount} />
+          <Rating
+            rating={recipe.ratingsAvg}
+            maxRating={5}
+            ratingsCount={recipe.ratingsCount}
+            showCount
+          />
         </div>
       </div>
     </Card>

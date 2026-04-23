@@ -50,7 +50,12 @@ export const RecipeCard = ({ recipe, actionsSlot }: RecipeCardProps) => {
               <Eye size={16} className="mr-1" />
               {recipe.viewsCount} views
             </Typograpghy>
-            <Rating maxRating={5} rating={recipe.ratingsAvg} ratingsCount={recipe.ratingsCount} />
+            <Rating
+              maxRating={5}
+              rating={recipe.ratingsAvg}
+              ratingsCount={recipe.ratingsCount}
+              showCount
+            />
           </div>
           <div className="mb-1.5 flex flex-wrap gap-1.5">
             {recipe.recipeTags.map((t) => (
