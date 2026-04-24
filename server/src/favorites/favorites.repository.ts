@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { IFavoritesRepository } from './interfaces';
-import { FindManyFavoritesResult } from './types';
+import { FavoriteList } from './types';
 import { FavoriteRecipe } from 'src/generated/prisma/client';
 import { PaginationQueryDto } from 'src/recipes/dtos';
 import { FavoriteRecipeWhereInput } from 'src/generated/prisma/models';
@@ -10,10 +10,7 @@ import { FavoriteRecipeWhereInput } from 'src/generated/prisma/models';
 export class FavoritesRepository implements IFavoritesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findManyByUserId(
-    userId: string,
-    options: PaginationQueryDto
-  ): Promise<FindManyFavoritesResult> {
+  async findManyByUserId(userId: string, options: PaginationQueryDto): Promise<FavoriteList> {
     const { page, limit } = options;
 
     const [data, totalCount] = await this.prisma.$transaction([

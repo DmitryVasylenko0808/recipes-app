@@ -1,5 +1,5 @@
 import { PaginatedResponseDto, RecipePreviewResponseDto } from 'src/recipes/dtos';
-import { Favorite } from '../types';
+import { FavoriteListItem } from '../types';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class GetFavoriteRecipesItemDto {
@@ -30,7 +30,7 @@ export class GetFavoriteRecipesItemDto {
   @ApiProperty({ type: RecipePreviewResponseDto, description: 'Details of favorited recipe' })
   recipe: RecipePreviewResponseDto;
 
-  constructor(partial: Partial<Favorite>) {
+  constructor(partial: Partial<FavoriteListItem>) {
     const { recipe, ...rest } = partial;
 
     Object.assign(this, rest);
@@ -54,7 +54,7 @@ export class GetFavoriteRecipesDto implements PaginatedResponseDto<GetFavoriteRe
   @ApiProperty({ description: 'Current page of favorited recipe', example: 1 })
   currentPage: number;
 
-  constructor(partial: PaginatedResponseDto<Favorite>) {
+  constructor(partial: PaginatedResponseDto<FavoriteListItem>) {
     const { data, ...rest } = partial;
 
     Object.assign(this, rest);

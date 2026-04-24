@@ -1,8 +1,23 @@
-import { FavoriteRecipe } from 'src/generated/prisma/client';
-import { RecipeFindManyItem } from 'src/recipes/recipes.types';
+import { Prisma } from 'src/generated/prisma/client';
 
-export type Favorite = FavoriteRecipe & { recipe: RecipeFindManyItem };
-export type FindManyFavoritesResult = {
-  data: Favorite[];
+const favoriteListQuery = {
+  include: {
+    recipe: {
+      include: {
+        category: true,
+        recipeIngredients: {
+          include: { ingredient: true },
+        },
+        recipeTags: {
+          include: { tag: true },
+        },
+      },
+    },
+  },
+} satisfies Prisma.FavoriteRecipeDefaultArgs;
+export type FavoriteListItem = Prisma.FavoriteRecipeGetPayload<typeof favoriteListQuery>;
+
+export type FavoriteList = {
+  data: FavoriteListItem[];
   totalCount: number;
 };

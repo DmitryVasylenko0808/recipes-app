@@ -7,7 +7,6 @@ import { GetFavoriteRecipesDto } from './dtos/get.favorite.recipes';
 import { FavoriteRecipeDto } from './dtos/favorite.recipe.dto';
 import {
   ApiBearerAuth,
-  ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiUnauthorizedResponse,
@@ -26,8 +25,7 @@ export class FavoritesController {
     @CurrentUser('id') userId: string,
     @Query() queryDto: PaginationQueryDto
   ) {
-    const result = await this.favoritesService.getFavoriteRecipesByUserId(userId, queryDto);
-    return new GetFavoriteRecipesDto(result);
+    return this.favoritesService.getFavoriteRecipesByUserId(userId, queryDto);
   }
 
   @Post()
@@ -36,9 +34,7 @@ export class FavoritesController {
   @ApiOkResponse({ type: FavoriteRecipeDto })
   @ApiUnauthorizedResponse({ description: 'Unathorized' })
   async addFavoriteRecipe(@CurrentUser('id') userId: string, @Body('recipeId') recipeId: string) {
-    console.log(recipeId);
-    const data = await this.favoritesService.addFavoriteRecipe(userId, recipeId);
-    return new FavoriteRecipeDto(data);
+    return this.favoritesService.addFavoriteRecipe(userId, recipeId);
   }
 
   @Delete()
@@ -51,8 +47,6 @@ export class FavoritesController {
     @CurrentUser('id') userId: string,
     @Body('recipeId') recipeId: string
   ) {
-    console.log(recipeId);
-    const data = await this.favoritesService.deleteFavoriteRecipe(userId, recipeId);
-    return new FavoriteRecipeDto(data);
+    return this.favoritesService.deleteFavoriteRecipe(userId, recipeId);
   }
 }
