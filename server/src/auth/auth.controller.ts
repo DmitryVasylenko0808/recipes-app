@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
   GetMeDto,
@@ -28,17 +28,16 @@ export class AuthController {
   @ApiCreatedResponse({ description: 'Successfully registered', type: RegisterAuthorResponseDto })
   @ApiConflictResponse({ description: 'Author with inputed email is already exists' })
   async registerAuthor(@Body() dto: RegisterAuthorRequestDto) {
-    const data = await this.authService.registerAuthor(dto);
-    return new RegisterAuthorResponseDto(data);
+    return this.authService.registerAuthor(dto);
   }
 
   @Post('sign-in')
+  @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ description: 'Successfully signed in', type: SignInAuthorResponseDto })
   @ApiNotFoundResponse({ description: "Author with inputed email doesn't exist" })
   @ApiBadRequestResponse({ description: 'Invalid password' })
   async signInAuthor(@Body() dto: SignInAuthorRequestDto) {
-    const data = await this.authService.signInAuthor(dto);
-    return new SignInAuthorResponseDto(data);
+    return this.authService.signInAuthor(dto);
   }
 
   @Get('me')
@@ -47,7 +46,6 @@ export class AuthController {
   @ApiOkResponse({ type: GetMeDto })
   @ApiNotFoundResponse({ description: 'Author is not found' })
   async getMe(@CurrentUser('id') authorId: string) {
-    const data = await this.authService.getMe(authorId);
-    return new GetMeDto(data);
+    return this.authService.getMe(authorId);
   }
 }

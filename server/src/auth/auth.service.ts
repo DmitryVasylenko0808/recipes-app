@@ -1,6 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { AuthorsService } from 'src/authors/authors.service';
-import { RegisterAuthorRequestDto, SignInAuthorRequestDto } from './dtos';
+import {
+  GetMeDto,
+  RegisterAuthorRequestDto,
+  RegisterAuthorResponseDto,
+  SignInAuthorRequestDto,
+  SignInAuthorResponseDto,
+} from './dtos';
 import { Author } from 'src/generated/prisma/client';
 import { AccessTokenPayload } from './types';
 import { JwtService } from '@nestjs/jwt';
@@ -15,8 +21,9 @@ export class AuthService {
 
   async registerAuthor(data: RegisterAuthorRequestDto) {
     const registeredAuthor = await this.authorsService.createAuthor(data);
+    const accessToken = await this.generateAccesToken(registeredAuthor);
 
-    return await this.generateAccesToken(registeredAuthor);
+    return new RegisterAuthorResponseDto(accessToken);
   }
 
   async signInAuthor(data: SignInAuthorRequestDto) {
@@ -24,7 +31,9 @@ export class AuthService {
 
     await this.verifyPasswords(data.password, author.passwordHash);
 
-    return await this.generateAccesToken(author);
+    const accessToken = await this.generateAccesToken(author);
+
+    return new SignInAuthorResponseDto(accessToken);
   }
 
   async generateAccesToken(author: Author) {
@@ -41,6 +50,8 @@ export class AuthService {
   }
 
   async getMe(id: string) {
-    return await this.authorsService.getAuthorById(id);
+    const me = await this.authorsService.getAuthorById(id);
+
+    return new GetMeDto(me);
   }
 }
