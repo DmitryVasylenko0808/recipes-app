@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Tag } from 'src/generated/prisma/client';
 
-export class TagDto implements Tag {
+export class TagDto {
   @ApiProperty({
     description: 'Unique identifier for tag',
     example: '43dff760-fe8e-4f60-9dda-e593e924ebda',
