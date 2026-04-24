@@ -170,8 +170,7 @@ export class RecipesController {
   @Get(':id/comments')
   @ApiOkResponse({ type: GetCommentsResponseDto })
   async getCommentsByRecipeId(@Param('id') id: string, @Query() queryDto: GetCommentsQueryDto) {
-    const result = await this.commentsService.getCommentsByRecipeId(id, queryDto);
-    return new GetCommentsResponseDto(result);
+    return this.commentsService.getCommentsByRecipeId(id, queryDto);
   }
 
   @Post(':id/comments')
@@ -184,7 +183,6 @@ export class RecipesController {
     @CurrentUser('id') userId: string,
     @Body() dto: PostCommentRequestDto
   ) {
-    const result = await this.commentsService.postComment(id, userId, dto);
-    return new CommentResponseDto(result);
+    return this.commentsService.postComment(id, userId, dto);
   }
 }

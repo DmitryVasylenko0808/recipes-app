@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { FindManyCommentsResults, ICommentsRepository } from './interfaces';
+import { ICommentsRepository } from './interfaces';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { GetCommentsQueryDto } from './dtos/get.comments.query.dto';
 import {
@@ -8,15 +8,13 @@ import {
   CommentWhereInput,
 } from 'src/generated/prisma/models';
 import { Comment } from 'src/generated/prisma/client';
+import { CommentList } from './types';
 
 @Injectable()
 export class CommentRepository implements ICommentsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findManyByRecipeId(
-    recipeId: string,
-    options: GetCommentsQueryDto
-  ): Promise<FindManyCommentsResults> {
+  async findManyByRecipeId(recipeId: string, options: GetCommentsQueryDto): Promise<CommentList> {
     const { page, limit } = options;
 
     const [data, totalCount] = await this.prisma.$transaction([

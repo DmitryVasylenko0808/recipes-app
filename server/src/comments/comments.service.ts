@@ -3,6 +3,8 @@ import { CommentRepository } from './comment.repository';
 import { GetCommentsQueryDto } from './dtos/get.comments.query.dto';
 import { PostCommentRequestDto } from './dtos/post.comment.request.dto';
 import { UpdateCommentRequestDto } from './dtos/update.comment.request.dto';
+import { CommentResponseDto } from './dtos/comment.response.dto';
+import { GetCommentsResponseDto } from './dtos/get.comments.response.dto';
 
 @Injectable()
 export class CommentsService {
@@ -14,16 +16,18 @@ export class CommentsService {
       options
     );
 
-    return {
+    return new GetCommentsResponseDto({
       data,
       totalCount,
       totalPages: Math.ceil(totalCount / options.limit),
       currentPage: options.page,
-    };
+    });
   }
 
   async postComment(recipeId: string, userId: string, dto: PostCommentRequestDto) {
-    return await this.commentsRepository.create({ recipeId, userId, ...dto });
+    const comment = await this.commentsRepository.create({ recipeId, userId, ...dto });
+
+    return new CommentResponseDto(comment);
   }
 
   async updateComment(id: string, userId: string, dto: UpdateCommentRequestDto) {
@@ -31,7 +35,9 @@ export class CommentsService {
 
     if (!comment) throw new NotFoundException('Comment is not found');
 
-    return await this.commentsRepository.update(id, { userId, ...dto });
+    const data = await this.commentsRepository.update(id, { userId, ...dto });
+
+    return new CommentResponseDto(data);
   }
 
   async deleteComment(id: string) {
@@ -39,6 +45,8 @@ export class CommentsService {
 
     if (!comment) throw new NotFoundException('Comment is not found');
 
-    return await this.commentsRepository.delete(id);
+    const data = await this.commentsRepository.delete(id);
+
+    return new CommentResponseDto(data);
   }
 }

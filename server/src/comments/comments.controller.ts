@@ -36,8 +36,7 @@ export class CommentsController {
     @CurrentUser('id') userId: string,
     @Body() dto: UpdateCommentRequestDto
   ) {
-    const result = await this.commentsService.updateComment(id, userId, dto);
-    return new CommentResponseDto(result);
+    return this.commentsService.updateComment(id, userId, dto);
   }
 
   @Delete(':id')
@@ -47,7 +46,6 @@ export class CommentsController {
   @ApiUnauthorizedResponse({ description: 'Unathorized' })
   @ApiNotFoundResponse({ description: 'Comment is not found' })
   async deleteComment(@Param('id') id: string) {
-    const result = await this.commentsService.deleteComment(id);
-    return new CommentResponseDto(result);
+    return this.commentsService.deleteComment(id);
   }
 }
