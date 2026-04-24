@@ -16,7 +16,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/common/multer.config';
 import { RecipesService } from 'src/recipes/services/recipes.service';
 import { GetAuthorRecipesQueryDto, GetRecipesResponseDto } from 'src/recipes/dtos';
-import { GetAuthorRequestDto, UpdateAuthorRequestDto, UpdateAuthorResponseDto } from './dtos';
+import { GetAuthorResponseDto, UpdateAuthorRequestDto, UpdateAuthorResponseDto } from './dtos';
 import {
   ApiBearerAuth,
   ApiConsumes,
@@ -36,11 +36,10 @@ export class AuthorsController {
   ) {}
 
   @Get(':id')
-  @ApiOkResponse({ type: GetAuthorRequestDto })
+  @ApiOkResponse({ type: GetAuthorResponseDto })
   @ApiNotFoundResponse({ description: 'Author is not found' })
   async getAuthorById(@Param('id') id: string) {
-    const author = await this.authorsService.getAuthorById(id);
-    return new GetAuthorRequestDto(author);
+    return this.authorsService.getAuthorById(id);
   }
 
   @Patch()
@@ -55,8 +54,7 @@ export class AuthorsController {
     @Body() dto: UpdateAuthorRequestDto,
     @UploadedFile() avatarFile?: Express.Multer.File
   ) {
-    const author = await this.authorsService.updateAuthor(userId, dto, avatarFile?.filename);
-    return new UpdateAuthorResponseDto(author);
+    return this.authorsService.updateAuthor(userId, dto, avatarFile?.filename);
   }
 
   @Get(':id/recipes')

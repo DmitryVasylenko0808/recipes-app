@@ -1,3 +1,3 @@
 import { AuthorDetailsDto } from './author.details.dto';
 
-export class GetAuthorRequestDto extends AuthorDetailsDto {}
+export class GetAuthorResponseDto extends AuthorDetailsDto {}

@@ -1,7 +1,12 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { AuthorsRepository } from './authors.repository';
 import * as bcrypt from 'bcrypt';
-import { CreateAuthorRequestDto, UpdateAuthorRequestDto } from './dtos';
+import {
+  CreateAuthorRequestDto,
+  GetAuthorResponseDto,
+  UpdateAuthorRequestDto,
+  UpdateAuthorResponseDto,
+} from './dtos';
 
 @Injectable()
 export class AuthorsService {
@@ -12,7 +17,7 @@ export class AuthorsService {
 
     if (!author) throw new NotFoundException('Author is not found');
 
-    return author;
+    return new GetAuthorResponseDto(author);
   }
 
   async getAuthorByEmail(email: string) {
@@ -38,6 +43,11 @@ export class AuthorsService {
   }
 
   async updateAuthor(authorId: string, data: UpdateAuthorRequestDto, avatarFilename?: string) {
-    return await this.authorsRepository.update(authorId, { ...data, avatar: avatarFilename });
+    const author = await this.authorsRepository.update(authorId, {
+      ...data,
+      avatar: avatarFilename,
+    });
+
+    return new UpdateAuthorResponseDto(author);
   }
 }
