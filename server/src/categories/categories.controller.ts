@@ -11,7 +11,6 @@ export class CategoriesController {
   @Get()
   @ApiOkResponse({ type: [CategoryDto] })
   async getAll() {
-    const categories = await this.categoriesService.getAll();
-    return categories.map((c) => new CategoryDto(c));
+    return this.categoriesService.getAll();
   }
 }

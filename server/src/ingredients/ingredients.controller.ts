@@ -11,7 +11,6 @@ export class IngredientsController {
   @Get()
   @ApiOkResponse({ type: [IngredientDto] })
   async getAll() {
-    const ingredients = await this.ingredientsService.getAll();
-    return ingredients.map((ingredient) => new IngredientDto(ingredient));
+    return this.ingredientsService.getAll();
   }
 }

@@ -11,7 +11,6 @@ export class TagsController {
   @Get()
   @ApiOkResponse({ type: [TagDto] })
   async getAll() {
-    const tags = await this.tagsService.getAll();
-    return tags.map((tag) => new TagDto(tag));
+    return this.tagsService.getAll();
   }
 }
