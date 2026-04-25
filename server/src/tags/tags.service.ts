@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { TagsRepository } from './tags.repository';
-import { TagDto } from './dtos';
+import { TagsMapper } from './mappers/tags.mapper';
 
 @Injectable()
 export class TagsService {
-  constructor(private readonly tagsRepository: TagsRepository) {}
+  constructor(
+    private readonly tagsRepository: TagsRepository,
+    private readonly tagsMapper: TagsMapper
+  ) {}
 
   async getAll() {
     const tags = await this.tagsRepository.findMany();
-    return tags.map((tag) => new TagDto(tag));
+
+    return tags.map((t) => this.tagsMapper.toDto(t));
   }
 }
