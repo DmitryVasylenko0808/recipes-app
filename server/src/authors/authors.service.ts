@@ -7,17 +7,21 @@ import {
   UpdateAuthorRequestDto,
   UpdateAuthorResponseDto,
 } from './dtos';
+import { AuthorsMapper } from './mappers/authors.mapper';
 
 @Injectable()
 export class AuthorsService {
-  constructor(private readonly authorsRepository: AuthorsRepository) {}
+  constructor(
+    private readonly authorsRepository: AuthorsRepository,
+    private readonly authorsMapper: AuthorsMapper
+  ) {}
 
   async getAuthorById(id: string) {
     const author = await this.authorsRepository.findById(id);
 
     if (!author) throw new NotFoundException('Author is not found');
 
-    return new GetAuthorResponseDto(author);
+    return this.authorsMapper.toDetailsDto(author);
   }
 
   async getAuthorByEmail(email: string) {
@@ -48,6 +52,6 @@ export class AuthorsService {
       avatar: avatarFilename,
     });
 
-    return new UpdateAuthorResponseDto(author);
+    return this.authorsMapper.toDetailsDto(author);
   }
 }

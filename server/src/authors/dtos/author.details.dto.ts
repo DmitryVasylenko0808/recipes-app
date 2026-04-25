@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Exclude, Transform } from 'class-transformer';
+import { Transform } from 'class-transformer';
 
 export class AuthorDetailsDto {
   @ApiProperty({
@@ -13,9 +13,6 @@ export class AuthorDetailsDto {
     example: 'authoremail@mail.com',
   })
   email: string;
-
-  @Exclude()
-  passwordHash: string;
 
   @ApiProperty({
     description: "Author's firstname",
@@ -52,8 +49,4 @@ export class AuthorDetailsDto {
     example: '2026-03-17T13:21:11.617Z',
   })
   createdAt: Date;
-
-  constructor(partial: Partial<AuthorDetailsDto>) {
-    Object.assign(this, partial);
-  }
 }

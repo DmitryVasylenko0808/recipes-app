@@ -37,10 +37,7 @@ export class RecipesMapper {
         id: author.id,
         firstname: author.firstname,
         secondname: author.secondname,
-        avatar: author.secondname,
-        bio: author.bio,
-        email: author.email,
-        createdAt: author.createdAt,
+        avatar: author.avatar ? `${process.env.SERVER_UPLOADS_URL}/${author.avatar}` : null,
       },
       category: {
         id: category.id,

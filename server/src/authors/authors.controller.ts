@@ -16,7 +16,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/common/multer.config';
 import { RecipesService } from 'src/recipes/services/recipes.service';
 import { GetAuthorRecipesQueryDto, GetRecipesResponseDto } from 'src/recipes/dtos';
-import { GetAuthorResponseDto, UpdateAuthorRequestDto, UpdateAuthorResponseDto } from './dtos';
+import { AuthorDetailsDto, UpdateAuthorRequestDto } from './dtos';
 import {
   ApiBearerAuth,
   ApiConsumes,
@@ -36,7 +36,7 @@ export class AuthorsController {
   ) {}
 
   @Get(':id')
-  @ApiOkResponse({ type: GetAuthorResponseDto })
+  @ApiOkResponse({ type: AuthorDetailsDto })
   @ApiNotFoundResponse({ description: 'Author is not found' })
   async getAuthorById(@Param('id') id: string) {
     return this.authorsService.getAuthorById(id);
@@ -47,7 +47,7 @@ export class AuthorsController {
   @UseInterceptors(FileInterceptor('avatar', multerOptions))
   @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
-  @ApiOkResponse({ type: UpdateAuthorResponseDto })
+  @ApiOkResponse({ type: AuthorDetailsDto })
   @ApiUnauthorizedResponse({ description: 'Unathorized' })
   async updateAuthor(
     @CurrentUser('id') userId: string,

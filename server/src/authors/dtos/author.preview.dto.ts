@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Exclude, Transform } from 'class-transformer';
+import { Exclude } from 'class-transformer';
 
 export class AuthorPreviewDto {
   @ApiProperty({
@@ -7,9 +7,6 @@ export class AuthorPreviewDto {
     example: '43dff760-fe8e-4f60-9dda-e593e924ebda',
   })
   id: string;
-
-  @Exclude()
-  email: string;
 
   @Exclude()
   passwordHash?: string;
@@ -29,14 +26,7 @@ export class AuthorPreviewDto {
   @ApiProperty({
     description: "Author's avatar",
   })
-  @Transform(({ value }) => (value ? `${process.env.SERVER_UPLOADS_URL}/${value}` : null))
   avatar: string | null;
-
-  @Exclude()
-  bio: string | null;
-
-  @Exclude()
-  createdAt: Date;
 
   constructor(partial: Partial<AuthorPreviewDto>) {
     Object.assign(this, partial);
