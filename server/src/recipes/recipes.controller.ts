@@ -152,6 +152,7 @@ export class RecipesController {
 
   @Get(':id/similar')
   @UseGuards(OptionalAuthGuard)
+  @ApiOkResponse({ type: [RecipePreviewResponseDto] })
   async getSimilar(@Param('id') id: string, @CurrentUser('id') userId?: string) {
     return this.recipesService.getSimilar(id, userId);
   }
