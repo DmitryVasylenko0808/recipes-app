@@ -3,11 +3,12 @@ import { CommentsService } from './comments.service';
 import { CommentsController } from './comments.controller';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { CommentRepository } from './comment.repository';
+import { CommentsMapper } from './mappers/comments.mapper';
 
 @Module({
   imports: [PrismaModule],
   controllers: [CommentsController],
-  providers: [CommentsService, CommentRepository],
+  providers: [CommentsService, CommentRepository, CommentsMapper],
   exports: [CommentsService],
 })
 export class CommentsModule {}

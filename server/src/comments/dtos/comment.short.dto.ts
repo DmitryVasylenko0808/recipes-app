@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CommentResponseDto {
+export class CommentShortDto {
   @ApiProperty({
     description: 'Unique identifier of comment',
     example: 'b3c87e2b-235d-4d6c-9949-971ec4cc7aa7',
@@ -37,8 +37,4 @@ export class CommentResponseDto {
     example: '2025-08-31T11:49:01.306Z',
   })
   updatedAt: Date;
-
-  constructor(partial: Partial<CommentResponseDto>) {
-    Object.assign(this, partial);
-  }
 }

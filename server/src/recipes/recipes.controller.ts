@@ -42,7 +42,7 @@ import {
 import { OptionalAuthGuard } from 'src/common/optional-auth.guard';
 import { GetCommentsResponseDto } from 'src/comments/dtos/get.comments.response.dto';
 import { GetCommentsQueryDto } from 'src/comments/dtos/get.comments.query.dto';
-import { CommentResponseDto } from 'src/comments/dtos/comment.response.dto';
+import { CommentShortDto } from 'src/comments/dtos/comment.short.dto';
 import { PostCommentRequestDto } from 'src/comments/dtos/post.comment.request.dto';
 import { CommentsService } from 'src/comments/comments.service';
 import { RateRecipeRequestDto } from './dtos/requests/rate.recipe.request.dto';
@@ -165,7 +165,7 @@ export class RecipesController {
   @Post(':id/comments')
   @UseGuards(PrivateAuthGuard)
   @ApiBearerAuth()
-  @ApiOkResponse({ type: CommentResponseDto })
+  @ApiOkResponse({ type: CommentShortDto })
   @ApiUnauthorizedResponse({ description: 'Unathorized' })
   async postComment(
     @Param('id') id: string,

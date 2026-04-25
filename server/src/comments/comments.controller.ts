@@ -12,7 +12,7 @@ import {
 import { CommentsService } from './comments.service';
 import { PrivateAuthGuard } from 'src/common/private-auth.guard';
 import { CurrentUser } from 'src/common/current-user.decorator';
-import { CommentResponseDto } from './dtos/comment.response.dto';
+import { CommentShortDto } from './dtos/comment.short.dto';
 import { UpdateCommentRequestDto } from './dtos/update.comment.request.dto';
 import {
   ApiBearerAuth,
@@ -28,7 +28,7 @@ export class CommentsController {
   @Patch(':id')
   @UseGuards(PrivateAuthGuard)
   @ApiBearerAuth()
-  @ApiOkResponse({ type: CommentResponseDto })
+  @ApiOkResponse({ type: CommentShortDto })
   @ApiUnauthorizedResponse({ description: 'Unathorized' })
   @ApiNotFoundResponse({ description: 'Comment is not found' })
   async updateComment(
@@ -42,7 +42,7 @@ export class CommentsController {
   @Delete(':id')
   @UseGuards(PrivateAuthGuard)
   @ApiBearerAuth()
-  @ApiOkResponse({ type: CommentResponseDto })
+  @ApiOkResponse({ type: CommentShortDto })
   @ApiUnauthorizedResponse({ description: 'Unathorized' })
   @ApiNotFoundResponse({ description: 'Comment is not found' })
   async deleteComment(@Param('id') id: string) {

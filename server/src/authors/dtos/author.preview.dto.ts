@@ -27,8 +27,4 @@ export class AuthorPreviewDto {
     description: "Author's avatar",
   })
   avatar: string | null;
-
-  constructor(partial: Partial<AuthorPreviewDto>) {
-    Object.assign(this, partial);
-  }
 }

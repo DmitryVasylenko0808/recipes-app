@@ -3,12 +3,14 @@ import { CommentRepository } from './comment.repository';
 import { GetCommentsQueryDto } from './dtos/get.comments.query.dto';
 import { PostCommentRequestDto } from './dtos/post.comment.request.dto';
 import { UpdateCommentRequestDto } from './dtos/update.comment.request.dto';
-import { CommentResponseDto } from './dtos/comment.response.dto';
-import { GetCommentsResponseDto } from './dtos/get.comments.response.dto';
+import { CommentsMapper } from './mappers/comments.mapper';
 
 @Injectable()
 export class CommentsService {
-  constructor(private readonly commentsRepository: CommentRepository) {}
+  constructor(
+    private readonly commentsRepository: CommentRepository,
+    private readonly commentsMapper: CommentsMapper
+  ) {}
 
   async getCommentsByRecipeId(recipeId: string, options: GetCommentsQueryDto) {
     const { data, totalCount } = await this.commentsRepository.findManyByRecipeId(
@@ -16,18 +18,18 @@ export class CommentsService {
       options
     );
 
-    return new GetCommentsResponseDto({
-      data,
+    return {
+      data: data.map((c) => this.commentsMapper.toDto(c)),
       totalCount,
       totalPages: Math.ceil(totalCount / options.limit),
       currentPage: options.page,
-    });
+    };
   }
 
   async postComment(recipeId: string, userId: string, dto: PostCommentRequestDto) {
     const comment = await this.commentsRepository.create({ recipeId, userId, ...dto });
 
-    return new CommentResponseDto(comment);
+    return this.commentsMapper.toShortDto(comment);
   }
 
   async updateComment(id: string, userId: string, dto: UpdateCommentRequestDto) {
@@ -37,7 +39,7 @@ export class CommentsService {
 
     const data = await this.commentsRepository.update(id, { userId, ...dto });
 
-    return new CommentResponseDto(data);
+    return this.commentsMapper.toShortDto(data);
   }
 
   async deleteComment(id: string) {
@@ -47,6 +49,6 @@ export class CommentsService {
 
     const data = await this.commentsRepository.delete(id);
 
-    return new CommentResponseDto(data);
+    return this.commentsMapper.toShortDto(data);
   }
 }
