@@ -12,8 +12,4 @@ export class IngredientDto {
     example: 'eggs',
   })
   name: string;
-
-  constructor(partial: Partial<IngredientDto>) {
-    Object.assign(this, partial);
-  }
 }

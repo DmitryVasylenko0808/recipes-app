@@ -1,14 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { IngredientsRepository } from './ingredients.repository';
-import { IngredientDto } from './dtos';
+import { IngredientsMapper } from './mappers/ingredients.mappet';
 
 @Injectable()
 export class IngredientsService {
-  constructor(private readonly ingredientsRepository: IngredientsRepository) {}
+  constructor(
+    private readonly ingredientsRepository: IngredientsRepository,
+    private readonly ingredientsMapper: IngredientsMapper
+  ) {}
 
   async getAll() {
     const ingredients = await this.ingredientsRepository.findMany();
 
-    return ingredients.map((ingredient) => new IngredientDto(ingredient));
+    return ingredients.map((i) => this.ingredientsMapper.toDto(i));
   }
 }
