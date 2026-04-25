@@ -4,7 +4,7 @@ import { CurrentUser } from 'src/common/current-user.decorator';
 import { PrivateAuthGuard } from 'src/common/private-auth.guard';
 import { PaginationQueryDto } from 'src/recipes/dtos';
 import { GetFavoriteRecipesDto } from './dtos/get.favorite.recipes';
-import { FavoriteRecipeDto } from './dtos/favorite.recipe.dto';
+import { FavoriteRecipeShortDto } from './dtos/favorite.recipe.dto';
 import {
   ApiBearerAuth,
   ApiNotFoundResponse,
@@ -31,7 +31,7 @@ export class FavoritesController {
   @Post()
   @UseGuards(PrivateAuthGuard)
   @ApiBearerAuth()
-  @ApiOkResponse({ type: FavoriteRecipeDto })
+  @ApiOkResponse({ type: FavoriteRecipeShortDto })
   @ApiUnauthorizedResponse({ description: 'Unathorized' })
   async addFavoriteRecipe(@CurrentUser('id') userId: string, @Body('recipeId') recipeId: string) {
     return this.favoritesService.addFavoriteRecipe(userId, recipeId);
@@ -40,7 +40,7 @@ export class FavoritesController {
   @Delete()
   @UseGuards(PrivateAuthGuard)
   @ApiBearerAuth()
-  @ApiOkResponse({ type: FavoriteRecipeDto })
+  @ApiOkResponse({ type: FavoriteRecipeShortDto })
   @ApiUnauthorizedResponse({ description: 'Unathorized' })
   @ApiNotFoundResponse({ description: 'Favorite recipe is not found' })
   async deleteFavoriteRecipe(

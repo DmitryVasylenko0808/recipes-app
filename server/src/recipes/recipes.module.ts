@@ -20,6 +20,6 @@ import { RatingsMapper } from './mappers/ratings.mapper';
     RecipesMapper,
     RatingsMapper,
   ],
-  exports: [RecipesService],
+  exports: [RecipesService, RecipesMapper],
 })
 export class RecipesModule {}

@@ -1,8 +1,7 @@
 import { PaginatedResponseDto, RecipePreviewResponseDto } from 'src/recipes/dtos';
-import { FavoriteListItem } from '../types';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class GetFavoriteRecipesItemDto {
+export class FavoriteRecipeDto {
   @ApiProperty({
     description: 'Unique identifier of favorite recipe',
     example: '1f4c3917-4df2-46c5-9730-96c6f30bf5be',
@@ -29,21 +28,11 @@ export class GetFavoriteRecipesItemDto {
 
   @ApiProperty({ type: RecipePreviewResponseDto, description: 'Details of favorited recipe' })
   recipe: RecipePreviewResponseDto;
-
-  // constructor(partial: Partial<any>) {
-  //   const { recipe, ...rest } = partial;
-
-  //   Object.assign(this, rest);
-
-  //   if (recipe) {
-  //     this.recipe = new RecipePreviewResponseDto(recipe);
-  //   }
-  // }
 }
 
-export class GetFavoriteRecipesDto implements PaginatedResponseDto<GetFavoriteRecipesItemDto> {
-  @ApiProperty({ type: [GetFavoriteRecipesItemDto], description: 'Favorited recipes' })
-  data: GetFavoriteRecipesItemDto[];
+export class GetFavoriteRecipesDto implements PaginatedResponseDto<FavoriteRecipeDto> {
+  @ApiProperty({ type: [FavoriteRecipeDto], description: 'Favorited recipes' })
+  data: FavoriteRecipeDto[];
 
   @ApiProperty({ description: 'Total count of favorited recipe', example: 20 })
   totalCount: number;
@@ -53,12 +42,4 @@ export class GetFavoriteRecipesDto implements PaginatedResponseDto<GetFavoriteRe
 
   @ApiProperty({ description: 'Current page of favorited recipe', example: 1 })
   currentPage: number;
-
-  // constructor(partial: PaginatedResponseDto<FavoriteListItem>) {
-  //   const { data, ...rest } = partial;
-
-  //   Object.assign(this, rest);
-
-  //   this.data = data.map((item) => new GetFavoriteRecipesItemDto(item));
-  // }
 }
