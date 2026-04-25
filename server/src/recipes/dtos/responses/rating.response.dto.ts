@@ -24,8 +24,4 @@ export class RatingDto {
     example: 4,
   })
   value: number;
-
-  constructor(partial: Partial<RatingDto>) {
-    Object.assign(this, partial);
-  }
 }

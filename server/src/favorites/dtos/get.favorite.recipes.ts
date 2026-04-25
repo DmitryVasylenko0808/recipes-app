@@ -30,15 +30,15 @@ export class GetFavoriteRecipesItemDto {
   @ApiProperty({ type: RecipePreviewResponseDto, description: 'Details of favorited recipe' })
   recipe: RecipePreviewResponseDto;
 
-  constructor(partial: Partial<FavoriteListItem>) {
-    const { recipe, ...rest } = partial;
+  // constructor(partial: Partial<any>) {
+  //   const { recipe, ...rest } = partial;
 
-    Object.assign(this, rest);
+  //   Object.assign(this, rest);
 
-    if (recipe) {
-      this.recipe = new RecipePreviewResponseDto(recipe);
-    }
-  }
+  //   if (recipe) {
+  //     this.recipe = new RecipePreviewResponseDto(recipe);
+  //   }
+  // }
 }
 
 export class GetFavoriteRecipesDto implements PaginatedResponseDto<GetFavoriteRecipesItemDto> {
@@ -54,11 +54,11 @@ export class GetFavoriteRecipesDto implements PaginatedResponseDto<GetFavoriteRe
   @ApiProperty({ description: 'Current page of favorited recipe', example: 1 })
   currentPage: number;
 
-  constructor(partial: PaginatedResponseDto<FavoriteListItem>) {
-    const { data, ...rest } = partial;
+  // constructor(partial: PaginatedResponseDto<FavoriteListItem>) {
+  //   const { data, ...rest } = partial;
 
-    Object.assign(this, rest);
+  //   Object.assign(this, rest);
 
-    this.data = data.map((item) => new GetFavoriteRecipesItemDto(item));
-  }
+  //   this.data = data.map((item) => new GetFavoriteRecipesItemDto(item));
+  // }
 }

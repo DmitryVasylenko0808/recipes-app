@@ -26,6 +26,7 @@ import {
   UpdateRecipeRequestDto,
   CreateRecipeRequestMultipartDto,
   UpdateRecipeRequestMultipartDto,
+  RecipePreviewResponseDto,
 } from './dtos';
 import {
   ApiBadRequestResponse,
@@ -47,9 +48,6 @@ import { CommentsService } from 'src/comments/comments.service';
 import { RateRecipeRequestDto } from './dtos/requests/rate.recipe.request.dto';
 import { RatingsService } from './services/ratings.service';
 import { RatingDto } from './dtos/responses/rating.response.dto';
-import { GetPopularRecipesResponseDto } from './dtos/responses/get.popular.recipes.response.dto';
-import { GetTrendingRecipesResponseDto } from './dtos/responses/get.trending.recipes.response.dto';
-import { GetSimilarRecipesResponseDto } from './dtos/responses/get.similar.recipes.response.dto';
 
 @ApiTags('Recipes')
 @Controller('recipes')
@@ -64,24 +62,21 @@ export class RecipesController {
   @UseGuards(OptionalAuthGuard)
   @ApiOkResponse({ type: GetRecipesResponseDto })
   async getAll(@Query() queryDto: GetRecipesQueryDto, @CurrentUser('id') userId?: string) {
-    const recipes = await this.recipesService.getAll(queryDto, userId);
-    return new GetRecipesResponseDto(recipes);
+    return this.recipesService.getAll(queryDto, userId);
   }
 
   @Get('trending')
   @UseGuards(OptionalAuthGuard)
-  @ApiOkResponse({ type: GetTrendingRecipesResponseDto })
+  @ApiOkResponse({ type: [RecipePreviewResponseDto] })
   async getTrending(@CurrentUser('id') userId?: string) {
-    const recipes = await this.recipesService.getTrending(userId);
-    return new GetTrendingRecipesResponseDto(recipes);
+    return this.recipesService.getTrending(userId);
   }
 
   @Get('popular')
   @UseGuards(OptionalAuthGuard)
-  @ApiOkResponse({ type: GetPopularRecipesResponseDto })
+  @ApiOkResponse({ type: [RecipePreviewResponseDto] })
   async getPopular(@CurrentUser('id') userId?: string) {
-    const recipes = await this.recipesService.getPopular(userId);
-    return new GetPopularRecipesResponseDto(recipes);
+    return this.recipesService.getPopular(userId);
   }
 
   @Get(':id')
@@ -89,8 +84,7 @@ export class RecipesController {
   @ApiOkResponse({ type: RecipeDetailsResponseDto })
   @ApiNotFoundResponse({ description: 'Recipe is not found' })
   async getOneById(@Param('id') id: string, @CurrentUser('id') userId?: string) {
-    const recipe = await this.recipesService.getOneById(id, userId);
-    return new RecipeDetailsResponseDto(recipe);
+    return this.recipesService.getOneById(id, userId);
   }
 
   @Post()
@@ -106,8 +100,7 @@ export class RecipesController {
     @Body() dto: CreateRecipeRequestDto,
     @UploadedFile() previewImageFile: Express.Multer.File
   ) {
-    const recipe = await this.recipesService.create(authorId, dto, previewImageFile.filename);
-    return new RecipeDto(recipe);
+    return this.recipesService.create(authorId, dto, previewImageFile.filename);
   }
 
   @Patch(':id')
@@ -126,8 +119,7 @@ export class RecipesController {
     @Body() dto: UpdateRecipeRequestDto,
     @UploadedFile() previewImageFile?: Express.Multer.File
   ) {
-    const recipe = await this.recipesService.update(id, userId, dto, previewImageFile?.filename);
-    return new RecipeDto(recipe);
+    return this.recipesService.update(id, userId, dto, previewImageFile?.filename);
   }
 
   @Delete(':id')
@@ -136,8 +128,7 @@ export class RecipesController {
   @ApiOkResponse({ type: RecipeDto })
   @ApiNotFoundResponse({ description: 'Cannot delete non-existed recipe' })
   async deleteRecipe(@Param('id') id: string) {
-    const recipe = await this.recipesService.delete(id);
-    return new RecipeDto(recipe);
+    return this.recipesService.delete(id);
   }
 
   @Patch(':id/views')
@@ -156,15 +147,13 @@ export class RecipesController {
     @CurrentUser('id') userId: string,
     @Body() dto: RateRecipeRequestDto
   ) {
-    const result = await this.ratingsService.rateRecipe(userId, id, dto);
-    return new RatingDto(result);
+    return this.ratingsService.rateRecipe(userId, id, dto);
   }
 
   @Get(':id/similar')
   @UseGuards(OptionalAuthGuard)
   async getSimilar(@Param('id') id: string, @CurrentUser('id') userId?: string) {
-    const recipes = await this.recipesService.getSimilar(id, userId);
-    return new GetSimilarRecipesResponseDto(recipes);
+    return this.recipesService.getSimilar(id, userId);
   }
 
   @Get(':id/comments')

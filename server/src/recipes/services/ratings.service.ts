@@ -4,12 +4,14 @@ import { RatingsRepository } from '../repositories/ratings.repository';
 import { RateRecipeRequestDto } from '../dtos/requests/rate.recipe.request.dto';
 import { RateStats } from '../recipes.types';
 import { Rating, Recipe } from 'src/generated/prisma/client';
+import { RatingsMapper } from '../mappers/ratings.mapper';
 
 @Injectable()
 export class RatingsService {
   constructor(
     private readonly recipesRepository: RecipesRepository,
-    private readonly ratingsRepository: RatingsRepository
+    private readonly ratingsRepository: RatingsRepository,
+    private readonly ratingsMapper: RatingsMapper
   ) {}
 
   async rateRecipe(userId: string, recipeId: string, data: RateRecipeRequestDto) {
@@ -26,7 +28,7 @@ export class RatingsService {
       this.ratingsRepository.upsert(userId, recipeId, data.value),
     ]);
 
-    return result;
+    return this.ratingsMapper.toDto(result);
   }
 
   private updateRateStats(

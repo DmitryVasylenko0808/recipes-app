@@ -1,12 +1,9 @@
 import { AuthorPreviewDto } from 'src/authors/dtos/author.preview.dto';
 import { Difficulty } from 'src/generated/prisma/enums';
-import { FavoriteEntryItem, RecipeDetails } from '../../recipes.types';
 import { RecipeTagDto } from './recipe.tag.dto';
 import { CategoryDto } from 'src/categories/dtos';
 import { RecipeIngredientDetailsDto } from './recipe.ingredient.details.dto';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Exclude, Transform } from 'class-transformer';
-import { Rating } from 'src/generated/prisma/client';
 
 export class RecipeDetailsResponseDto {
   @ApiProperty({
@@ -36,10 +33,7 @@ export class RecipeDetailsResponseDto {
   })
   description: string;
 
-  @ApiProperty({
-    description: 'Preview image of recipe',
-  })
-  @Transform(({ value }) => `${process.env.SERVER_UPLOADS_URL}/${value}`)
+  @ApiProperty({ description: 'Preview image of recipe' })
   previewImage: string;
 
   @ApiProperty({
@@ -78,21 +72,11 @@ export class RecipeDetailsResponseDto {
   })
   ratingsCount: number;
 
-  @Exclude()
-  ratingsSum: number;
-
   @ApiProperty({
     description: 'Average rating of recipe',
     example: 4.5,
   })
-  @Transform(({ value }) => Math.round(value * 10) / 10)
   ratingsAvg: number;
-
-  @ApiProperty({
-    description: 'Rate value of recipe rated by user',
-    example: 4,
-  })
-  userRating?: number;
 
   @ApiProperty({
     description: 'Published date of recipe',
@@ -105,6 +89,12 @@ export class RecipeDetailsResponseDto {
     example: '43dff760-fe8e-4f60-9dda-e593e924ebda',
   })
   authorId: string;
+
+  @ApiPropertyOptional({
+    description: 'Rate value of recipe rated by user',
+    example: 4,
+  })
+  userRating?: number;
 
   @ApiPropertyOptional({
     description: 'Determines if recipe is favorited by current user',
@@ -120,22 +110,4 @@ export class RecipeDetailsResponseDto {
 
   @ApiProperty({ type: [RecipeIngredientDetailsDto] })
   recipeIngredients: RecipeIngredientDetailsDto[];
-
-  @Exclude()
-  favoriteEntries?: FavoriteEntryItem[];
-
-  @Exclude()
-  ratings?: Rating[];
-
-  constructor(partial: RecipeDetails) {
-    const { category, recipeTags, recipeIngredients, author, isFavorite, ...data } = partial;
-
-    Object.assign(this, data);
-
-    this.category = new CategoryDto(category);
-    this.author = new AuthorPreviewDto(author);
-    this.isFavorite = isFavorite;
-    this.recipeTags = recipeTags.map((rt) => new RecipeTagDto(rt));
-    this.recipeIngredients = recipeIngredients.map((ing) => new RecipeIngredientDetailsDto(ing));
-  }
 }

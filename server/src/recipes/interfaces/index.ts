@@ -5,24 +5,15 @@ import {
   CreateRecipeRequestDto,
   UpdateRecipeRequestDto,
 } from '../dtos';
-import {
-  RangeDate,
-  RateStats,
-  RecipeFindManyItem,
-  RecipeFindManyResult,
-  RecipeFindOneResult,
-} from '../recipes.types';
+import { RangeDate, RateStats, RecipeListItem, RecipeList, RecipeFull } from '../recipes.types';
 
 export interface IRecipesRepository {
-  findById(id: string): Promise<RecipeFindOneResult | null>;
-  findMany(options: GetRecipesQueryDto, userId?: string): Promise<RecipeFindManyResult>;
-  findTrending(limit: number, rangeDate: RangeDate, userId?: string): Promise<RecipeFindManyItem[]>;
-  findPopular(limit: number, userId?: string): Promise<RecipeFindManyItem[]>;
-  findManyByAuthorId(
-    authorId: string,
-    options: GetAuthorRecipesQueryDto
-  ): Promise<RecipeFindManyResult>;
-  findByCategoryId(categoryId: string, userId?: string): Promise<RecipeFindManyItem[]>;
+  findById(id: string): Promise<RecipeFull | null>;
+  findMany(options: GetRecipesQueryDto, userId?: string): Promise<RecipeList>;
+  findTrending(limit: number, rangeDate: RangeDate, userId?: string): Promise<RecipeListItem[]>;
+  findPopular(limit: number, userId?: string): Promise<RecipeListItem[]>;
+  findManyByAuthorId(authorId: string, options: GetAuthorRecipesQueryDto): Promise<RecipeList>;
+  findByCategoryId(categoryId: string, userId?: string): Promise<RecipeListItem[]>;
   create(
     authorId: string,
     data: CreateRecipeRequestDto,

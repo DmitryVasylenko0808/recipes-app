@@ -1,53 +1,53 @@
+import { Recipe, Prisma } from 'src/generated/prisma/client';
 import {
-  RecipeTag,
-  Tag,
-  Recipe,
-  Author,
-  RecipeIngredient,
-  Ingredient,
-  Category,
-  Rating,
-} from 'src/generated/prisma/client';
+  RecipeDefaultArgs,
+  RecipeIngredientDefaultArgs,
+  RecipeTagDefaultArgs,
+} from 'src/generated/prisma/models';
 
 export type RangeDate = { from: Date; to: Date };
 
-export type RecipeTagDetails = RecipeTag & { tag: Tag };
-export type RecipeIngredientDetails = RecipeIngredient & { ingredient: Ingredient };
-export type FavoriteEntryItem = { userId: string };
+const recipeTagDetailsQuery = {
+  include: { tag: true },
+} satisfies RecipeTagDefaultArgs;
+export type RecipeTagDetails = Prisma.RecipeTagGetPayload<typeof recipeTagDetailsQuery>;
 
-export type RecipeFindManyItem = Recipe & {
-  category: Category;
-  favoriteEntries?: FavoriteEntryItem[];
-  recipeTags: Array<RecipeTagDetails>;
-  recipeIngredients: Array<RecipeIngredientDetails>;
-};
-export type RecipeFindManyResult = {
-  data: RecipeFindManyItem[];
-  totalCount: number;
-};
+const recipeIngredientDetailsQuery = {
+  include: { ingredient: true },
+} satisfies RecipeIngredientDefaultArgs;
+export type RecipeIngredientDetails = Prisma.RecipeIngredientGetPayload<
+  typeof recipeIngredientDetailsQuery
+>;
 
-export type RecipeFindOneResult = Recipe & {
-  category: Category;
-  author: Author;
-  favoriteEntries?: FavoriteEntryItem[];
-  ratings?: Rating[];
-  recipeTags: Array<RecipeTagDetails>;
-  recipeIngredients: Array<RecipeIngredientDetails>;
-};
+const recipeListQuery = {
+  include: {
+    category: true,
+    favoriteEntries: true,
+    recipeTags: {
+      include: { tag: true },
+    },
+    recipeIngredients: {
+      include: { ingredient: true },
+    },
+  },
+} satisfies RecipeDefaultArgs;
+export type RecipeListItem = Prisma.RecipeGetPayload<typeof recipeListQuery>;
+export type RecipeList = { data: RecipeListItem[]; totalCount: number };
 
-export type RecipePreview = {
-  category: Category;
-  isFavorite?: boolean;
-  recipeTags: Array<RecipeTagDetails>;
-  recipeIngredients: Array<RecipeIngredientDetails>;
-};
-
-export type RecipeDetails = Recipe & {
-  category: Category;
-  author: Author;
-  isFavorite?: boolean;
-  recipeTags: Array<RecipeTagDetails>;
-  recipeIngredients: Array<RecipeIngredientDetails>;
-};
+const recipeFullQuery = {
+  include: {
+    category: true,
+    author: true,
+    favoriteEntries: true,
+    ratings: true,
+    recipeTags: {
+      include: { tag: true },
+    },
+    recipeIngredients: {
+      include: { ingredient: true },
+    },
+  },
+} satisfies RecipeDefaultArgs;
+export type RecipeFull = Prisma.RecipeGetPayload<typeof recipeFullQuery>;
 
 export type RateStats = Pick<Recipe, 'ratingsCount' | 'ratingsSum' | 'ratingsAvg'>;

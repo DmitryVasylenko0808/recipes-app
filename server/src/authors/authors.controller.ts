@@ -65,7 +65,6 @@ export class AuthorsController {
     @Query() queryDto: GetAuthorRecipesQueryDto,
     @CurrentUser('id') userId?: string
   ) {
-    const recipes = await this.recipesService.getByAuthorId(id, queryDto, userId);
-    return new GetRecipesResponseDto(recipes);
+    return this.recipesService.getByAuthorId(id, queryDto, userId);
   }
 }

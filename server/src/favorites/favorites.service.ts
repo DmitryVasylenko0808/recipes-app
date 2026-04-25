@@ -11,12 +11,19 @@ export class FavoritesService {
   async getFavoriteRecipesByUserId(userId: string, options: PaginationQueryDto) {
     const { data, totalCount } = await this.favoritesRepository.findManyByUserId(userId, options);
 
-    return new GetFavoriteRecipesDto({
+    // return new GetFavoriteRecipesDto({
+    //   data,
+    //   totalCount,
+    //   totalPages: Math.ceil(totalCount / options.limit),
+    //   currentPage: options.page,
+    // });
+
+    return {
       data,
       totalCount,
       totalPages: Math.ceil(totalCount / options.limit),
       currentPage: options.page,
-    });
+    };
   }
 
   async addFavoriteRecipe(userId: string, recipeId: string) {

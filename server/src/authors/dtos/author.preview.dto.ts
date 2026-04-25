@@ -12,7 +12,7 @@ export class AuthorPreviewDto {
   email: string;
 
   @Exclude()
-  passwordHash: string;
+  passwordHash?: string;
 
   @ApiProperty({
     description: "Author's firstname",

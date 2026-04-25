@@ -1,12 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IRecipesRepository } from '../interfaces';
-import {
-  RangeDate,
-  RateStats,
-  RecipeFindManyItem,
-  RecipeFindManyResult,
-  RecipeFindOneResult,
-} from '../recipes.types';
+import { RangeDate, RateStats, RecipeListItem, RecipeList, RecipeFull } from '../recipes.types';
 import { Recipe } from 'src/generated/prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RecipeWhereInput } from 'src/generated/prisma/models';
@@ -21,7 +15,7 @@ import {
 export class RecipesRepository implements IRecipesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findById(id: string, userId?: string): Promise<RecipeFindOneResult | null> {
+  async findById(id: string, userId?: string): Promise<RecipeFull | null> {
     return await this.prisma.recipe.findUnique({
       where: { id },
       include: {
@@ -48,7 +42,7 @@ export class RecipesRepository implements IRecipesRepository {
     });
   }
 
-  async findMany(options: GetRecipesQueryDto, userId?: string): Promise<RecipeFindManyResult> {
+  async findMany(options: GetRecipesQueryDto, userId?: string): Promise<RecipeList> {
     const {
       page,
       limit,
@@ -116,7 +110,7 @@ export class RecipesRepository implements IRecipesRepository {
     limit: number,
     rangeDate: RangeDate,
     userId?: string
-  ): Promise<RecipeFindManyItem[]> {
+  ): Promise<RecipeListItem[]> {
     const { from, to } = rangeDate;
 
     return await this.prisma.recipe.findMany({
@@ -146,7 +140,7 @@ export class RecipesRepository implements IRecipesRepository {
     });
   }
 
-  async findPopular(limit: number, userId?: string): Promise<RecipeFindManyItem[]> {
+  async findPopular(limit: number, userId?: string): Promise<RecipeListItem[]> {
     return await this.prisma.recipe.findMany({
       include: {
         category: true,
@@ -172,7 +166,7 @@ export class RecipesRepository implements IRecipesRepository {
     authorId: string,
     options: GetAuthorRecipesQueryDto,
     userId?: string
-  ): Promise<RecipeFindManyResult> {
+  ): Promise<RecipeList> {
     const { page, limit } = options;
 
     const [data, totalCount] = await this.prisma.$transaction([
@@ -205,7 +199,7 @@ export class RecipesRepository implements IRecipesRepository {
     return { data, totalCount };
   }
 
-  async findByCategoryId(categoryId: string, userId?: string): Promise<RecipeFindManyItem[]> {
+  async findByCategoryId(categoryId: string, userId?: string): Promise<RecipeListItem[]> {
     return await this.prisma.recipe.findMany({
       where: { categoryId },
       include: {

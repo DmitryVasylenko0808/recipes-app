@@ -23,8 +23,4 @@ export class RecipeIngredientDto {
   })
   @IsString()
   unit: string;
-
-  constructor(partial: Partial<RecipeIngredientDto>) {
-    Object.assign(this, partial);
-  }
 }

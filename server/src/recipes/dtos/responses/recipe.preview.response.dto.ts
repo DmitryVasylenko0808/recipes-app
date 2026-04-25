@@ -1,6 +1,5 @@
 import { Exclude, Transform } from 'class-transformer';
 import { Difficulty } from 'src/generated/prisma/enums';
-import { FavoriteEntryItem, RecipePreview } from '../../recipes.types';
 import { RecipeTagDto } from './recipe.tag.dto';
 import { CategoryDto } from 'src/categories/dtos';
 import { RecipeIngredientDetailsDto } from './recipe.ingredient.details.dto';
@@ -40,9 +39,6 @@ export class RecipePreviewResponseDto {
   @Transform(({ value }) => `${process.env.SERVER_UPLOADS_URL}/${value}`)
   previewImage: string;
 
-  @Exclude()
-  content: string;
-
   @ApiProperty({
     description: 'Cookint time of recipe. In minutes',
     example: 30,
@@ -68,14 +64,10 @@ export class RecipePreviewResponseDto {
   })
   ratingsCount: number;
 
-  @Exclude()
-  ratingsSum: number;
-
   @ApiProperty({
     description: 'Average rating of recipe',
     example: 4.5,
   })
-  @Transform(({ value }) => Math.round(value * 10) / 10)
   ratingsAvg: number;
 
   @ApiProperty({
@@ -101,18 +93,4 @@ export class RecipePreviewResponseDto {
 
   @ApiProperty({ type: [RecipeIngredientDetailsDto] })
   recipeIngredients: RecipeIngredientDetailsDto[];
-
-  @Exclude()
-  favoriteEntries?: FavoriteEntryItem[];
-
-  constructor(partial: RecipePreview) {
-    const { recipeTags, recipeIngredients, category, isFavorite, ...data } = partial;
-
-    Object.assign(this, data);
-
-    this.category = new CategoryDto(category);
-    this.isFavorite = isFavorite;
-    this.recipeTags = recipeTags.map((rt) => new RecipeTagDto(rt));
-    this.recipeIngredients = recipeIngredients.map((ri) => new RecipeIngredientDetailsDto(ri));
-  }
 }
