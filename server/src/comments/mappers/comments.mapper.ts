@@ -25,7 +25,9 @@ export class CommentsMapper {
         id: comment.user.id,
         firstname: comment.user.firstname,
         secondname: comment.user.secondname,
-        avatar: comment.user.avatar,
+        avatar: comment.user.avatar
+          ? `${process.env.SERVER_UPLOADS_URL}/${comment.user.avatar}`
+          : null,
       },
       recipeId: comment.recipeId,
       content: comment.content,
