@@ -10,6 +10,6 @@ import { AuthorsMapper } from './mappers/authors.mapper';
   imports: [PrismaModule, RecipesModule],
   providers: [AuthorsService, AuthorsRepository, AuthorsMapper],
   controllers: [AuthorsController],
-  exports: [AuthorsService],
+  exports: [AuthorsService, AuthorsMapper, AuthorsRepository],
 })
 export class AuthorsModule {}

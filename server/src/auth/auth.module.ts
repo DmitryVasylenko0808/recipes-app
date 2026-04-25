@@ -5,10 +5,11 @@ import { AuthorsModule } from 'src/authors/authors.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtRegisterOptions } from './utils/jwt-register-options';
 import { JwtStrategy } from './jwt-strategy';
+import { AuthMapper } from './mappers/auth.mapper';
 
 @Module({
   imports: [AuthorsModule, JwtModule.registerAsync(jwtRegisterOptions)],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, AuthMapper, JwtStrategy],
 })
 export class AuthModule {}

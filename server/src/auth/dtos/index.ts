@@ -64,22 +64,11 @@ export class GetMeDto {
     example: 'https://avatars.githubusercontent.com/u/96959575',
     nullable: true,
   })
-  @Transform(({ value }) => (value ? `${process.env.SERVER_UPLOADS_URL}/${value}` : null))
   avatar: string | null;
 
-  @Exclude()
+  @ApiProperty({
+    description: "Author's email",
+    example: 'ellis.dibert@mail.com',
+  })
   email: string;
-
-  @Exclude()
-  passwordHash: string;
-
-  @Exclude()
-  bio: string | null;
-
-  @Exclude()
-  createdAt: Date;
-
-  constructor(partial: Partial<GetMeDto>) {
-    Object.assign(this, partial);
-  }
 }
