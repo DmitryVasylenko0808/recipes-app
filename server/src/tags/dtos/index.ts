@@ -12,8 +12,4 @@ export class TagDto {
     example: 'ukrainian',
   })
   name: string;
-
-  constructor(partial: Partial<TagDto>) {
-    Object.assign(this, partial);
-  }
 }
