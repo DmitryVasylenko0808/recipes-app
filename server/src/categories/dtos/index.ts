@@ -12,8 +12,4 @@ export class CategoryDto {
     example: 'dinner',
   })
   name: string;
-
-  constructor(partial: Partial<CategoryDto>) {
-    Object.assign(this, partial);
-  }
 }
