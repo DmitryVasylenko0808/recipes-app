@@ -9,7 +9,7 @@ export class AuthorsRepository implements IAuthorsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findById(id: string): Promise<Author | null> {
-    return await this.prisma.author.findUnique({
+    return this.prisma.author.findUnique({
       where: { id },
     });
   }
@@ -18,17 +18,17 @@ export class AuthorsRepository implements IAuthorsRepository {
     key: K,
     value: V
   ): Promise<Author | null> {
-    return await this.prisma.author.findFirst({
+    return this.prisma.author.findFirst({
       where: { [key]: value },
     });
   }
 
   async create(data: AuthorCreateInput): Promise<Author> {
-    return await this.prisma.author.create({ data });
+    return this.prisma.author.create({ data });
   }
 
   async update(id: string, data: AuthorUpdateInput): Promise<Author> {
-    return await this.prisma.author.update({
+    return this.prisma.author.update({
       where: { id },
       data,
     });

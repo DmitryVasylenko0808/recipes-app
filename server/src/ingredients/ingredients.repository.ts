@@ -8,6 +8,6 @@ export class IngredientsRepository implements IIngredientsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findMany(): Promise<Ingredient[]> {
-    return await this.prisma.ingredient.findMany();
+    return this.prisma.ingredient.findMany();
   }
 }

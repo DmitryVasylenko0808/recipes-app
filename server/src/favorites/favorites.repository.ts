@@ -40,7 +40,7 @@ export class FavoritesRepository implements IFavoritesRepository {
   }
 
   async findOne(userId: string, recipeId: string): Promise<FavoriteRecipe | null> {
-    return await this.prisma.favoriteRecipe.findUnique({
+    return this.prisma.favoriteRecipe.findUnique({
       where: {
         userId_recipeId: {
           userId,
@@ -51,7 +51,7 @@ export class FavoritesRepository implements IFavoritesRepository {
   }
 
   async create(userId: string, recipeId: string): Promise<FavoriteRecipe> {
-    return await this.prisma.favoriteRecipe.create({
+    return this.prisma.favoriteRecipe.create({
       data: {
         recipeId,
         userId,
@@ -60,7 +60,7 @@ export class FavoritesRepository implements IFavoritesRepository {
   }
 
   async deleteOne(userId: string, recipeId: string): Promise<FavoriteRecipe> {
-    return await this.prisma.favoriteRecipe.delete({
+    return this.prisma.favoriteRecipe.delete({
       where: {
         userId_recipeId: {
           userId,
@@ -71,6 +71,6 @@ export class FavoritesRepository implements IFavoritesRepository {
   }
 
   async count(filter: FavoriteRecipeWhereInput): Promise<number> {
-    return await this.prisma.favoriteRecipe.count({ where: filter });
+    return this.prisma.favoriteRecipe.count({ where: filter });
   }
 }

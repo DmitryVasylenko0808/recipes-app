@@ -36,25 +36,25 @@ export class CommentRepository implements ICommentsRepository {
   }
 
   async findOneById(id: string): Promise<Comment | null> {
-    return await this.prisma.comment.findUnique({ where: { id } });
+    return this.prisma.comment.findUnique({ where: { id } });
   }
 
   async create(data: CommentUncheckedCreateInput): Promise<Comment> {
-    return await this.prisma.comment.create({ data });
+    return this.prisma.comment.create({ data });
   }
 
   async update(id: string, data: CommentUncheckedUpdateInput): Promise<Comment> {
-    return await this.prisma.comment.update({
+    return this.prisma.comment.update({
       where: { id },
       data,
     });
   }
 
   async delete(id: string): Promise<Comment> {
-    return await this.prisma.comment.delete({ where: { id } });
+    return this.prisma.comment.delete({ where: { id } });
   }
 
   async count(filter?: CommentWhereInput): Promise<number> {
-    return await this.prisma.comment.count({ where: filter });
+    return this.prisma.comment.count({ where: filter });
   }
 }

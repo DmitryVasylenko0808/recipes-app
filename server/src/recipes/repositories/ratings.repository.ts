@@ -8,7 +8,7 @@ export class RatingsRepository implements IRatingsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findOne(userId: string, recipeId: string): Promise<Rating | null> {
-    return await this.prisma.rating.findUnique({
+    return this.prisma.rating.findUnique({
       where: {
         userId_recipeId: { userId, recipeId },
       },
@@ -16,7 +16,7 @@ export class RatingsRepository implements IRatingsRepository {
   }
 
   async upsert(userId: string, recipeId: string, value: number): Promise<Rating> {
-    return await this.prisma.rating.upsert({
+    return this.prisma.rating.upsert({
       create: {
         userId,
         recipeId,

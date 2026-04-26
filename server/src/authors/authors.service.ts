@@ -40,7 +40,7 @@ export class AuthorsService {
 
     const { password, ...authorData } = data;
 
-    return await this.authorsRepository.create({
+    return this.authorsRepository.create({
       ...authorData,
       passwordHash: await bcrypt.hash(password, 5),
     });

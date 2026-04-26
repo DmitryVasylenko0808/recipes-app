@@ -16,7 +16,7 @@ export class RecipesRepository implements IRecipesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findById(id: string, userId?: string): Promise<RecipeFull | null> {
-    return await this.prisma.recipe.findUnique({
+    return this.prisma.recipe.findUnique({
       where: { id },
       include: {
         category: true,
@@ -113,7 +113,7 @@ export class RecipesRepository implements IRecipesRepository {
   ): Promise<RecipeListItem[]> {
     const { from, to } = rangeDate;
 
-    return await this.prisma.recipe.findMany({
+    return this.prisma.recipe.findMany({
       where: {
         createdAt: {
           gte: from,
@@ -141,7 +141,7 @@ export class RecipesRepository implements IRecipesRepository {
   }
 
   async findPopular(limit: number, userId?: string): Promise<RecipeListItem[]> {
-    return await this.prisma.recipe.findMany({
+    return this.prisma.recipe.findMany({
       include: {
         category: true,
         favoriteEntries: userId
@@ -200,7 +200,7 @@ export class RecipesRepository implements IRecipesRepository {
   }
 
   async findByCategoryId(categoryId: string, userId?: string): Promise<RecipeListItem[]> {
-    return await this.prisma.recipe.findMany({
+    return this.prisma.recipe.findMany({
       where: { categoryId },
       include: {
         category: true,
@@ -227,7 +227,7 @@ export class RecipesRepository implements IRecipesRepository {
   ): Promise<Recipe> {
     const { recipeTagIds, recipeIngredients, ...restData } = data;
 
-    return await this.prisma.recipe.create({
+    return this.prisma.recipe.create({
       data: {
         ...restData,
         authorId,
@@ -245,7 +245,7 @@ export class RecipesRepository implements IRecipesRepository {
   ): Promise<Recipe> {
     const { recipeTagIds, recipeIngredients, ...restData } = data;
 
-    return await this.prisma.recipe.update({
+    return this.prisma.recipe.update({
       where: { id },
       data: {
         ...restData,
@@ -260,14 +260,14 @@ export class RecipesRepository implements IRecipesRepository {
   }
 
   async updateRateStats(id: string, rateStats: Partial<RateStats>): Promise<Recipe> {
-    return await this.prisma.recipe.update({
+    return this.prisma.recipe.update({
       where: { id },
       data: rateStats,
     });
   }
 
   async delete(id: string): Promise<Recipe> {
-    return await this.prisma.recipe.delete({
+    return this.prisma.recipe.delete({
       where: { id },
     });
   }

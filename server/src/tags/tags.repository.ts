@@ -8,6 +8,6 @@ export class TagsRepository implements ITagsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findMany(): Promise<Tag[]> {
-    return await this.prisma.tag.findMany();
+    return this.prisma.tag.findMany();
   }
 }

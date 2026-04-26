@@ -8,6 +8,6 @@ export class CategoriesRepository implements ICategoriesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findMany(): Promise<Category[]> {
-    return await this.prisma.category.findMany();
+    return this.prisma.category.findMany();
   }
 }
