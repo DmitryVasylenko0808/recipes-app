@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CommentListItem } from '../types';
-import { CommentResponseDto } from '../dtos/get.comments.response.dto';
+import { CommentResponseDto } from '../dtos/comment.response.dto';
 import { Comment } from 'src/generated/prisma/client';
 import { CommentShortDto } from '../dtos/comment.short.dto';
 import { transformImage } from 'src/common/utils/transform-image';

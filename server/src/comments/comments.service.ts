@@ -4,6 +4,7 @@ import { GetCommentsQueryDto } from './dtos/get.comments.query.dto';
 import { PostCommentRequestDto } from './dtos/post.comment.request.dto';
 import { UpdateCommentRequestDto } from './dtos/update.comment.request.dto';
 import { CommentsMapper } from './mappers/comments.mapper';
+import { paginated } from 'src/common/utils/paginated';
 
 @Injectable()
 export class CommentsService {
@@ -13,17 +14,19 @@ export class CommentsService {
   ) {}
 
   async getCommentsByRecipeId(recipeId: string, options: GetCommentsQueryDto) {
+    const { limit, page } = options;
+
     const { data, totalCount } = await this.commentsRepository.findManyByRecipeId(
       recipeId,
       options
     );
 
-    return {
+    return paginated({
       data: data.map((c) => this.commentsMapper.toDto(c)),
+      limit,
       totalCount,
-      totalPages: Math.ceil(totalCount / options.limit),
-      currentPage: options.page,
-    };
+      page,
+    });
   }
 
   async postComment(recipeId: string, userId: string, dto: PostCommentRequestDto) {

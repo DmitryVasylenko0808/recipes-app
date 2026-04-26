@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { FavoritesRepository } from './favorites.repository';
 import { PaginationQueryDto } from 'src/recipes/dtos';
 import { FavoritesMapper } from './mappers/favorites.mapper';
+import { paginated } from 'src/common/utils/paginated';
 
 @Injectable()
 export class FavoritesService {
@@ -11,14 +12,16 @@ export class FavoritesService {
   ) {}
 
   async getFavoriteRecipesByUserId(userId: string, options: PaginationQueryDto) {
+    const { limit, page } = options;
+
     const { data, totalCount } = await this.favoritesRepository.findManyByUserId(userId, options);
 
-    return {
+    return paginated({
       data: data.map((f) => this.favoritesMapper.toDto(f)),
+      limit,
       totalCount,
-      totalPages: Math.ceil(totalCount / options.limit),
-      currentPage: options.page,
-    };
+      page,
+    });
   }
 
   async addFavoriteRecipe(userId: string, recipeId: string) {

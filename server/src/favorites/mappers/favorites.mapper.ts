@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { FavoriteListItem } from '../types';
 import { FavoriteRecipe } from 'src/generated/prisma/client';
-import { FavoriteRecipeShortDto } from '../dtos/favorite.recipe.dto';
-import { FavoriteRecipeDto } from '../dtos/get.favorite.recipes';
+import { FavoriteRecipeShortDto } from '../dtos/favorite.recipe.short.dto';
+import { FavoriteRecipeDto } from '../dtos/favorite.recipe.dto';
 import { RecipesMapper } from 'src/recipes/mappers/recipes.mapper';
 
 @Injectable()

@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { RecipePreviewResponseDto } from 'src/recipes/dtos';
 
-export class FavoriteRecipeDto {
+export class FavoriteRecipeShortDto {
   @ApiProperty({
     description: 'Unique identifier of favorite recipe',
     example: '1f4c3917-4df2-46c5-9730-96c6f30bf5be',
@@ -25,7 +24,4 @@ export class FavoriteRecipeDto {
     example: '2025-11-01T02:14:34.244Z',
   })
   favoritedAt: Date;
-
-  @ApiProperty({ type: RecipePreviewResponseDto, description: 'Details of favorited recipe' })
-  recipe: RecipePreviewResponseDto;
 }

@@ -15,7 +15,7 @@ import { CurrentUser } from 'src/common/current-user.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/common/multer.config';
 import { RecipesService } from 'src/recipes/services/recipes.service';
-import { GetAuthorRecipesQueryDto, GetRecipesResponseDto } from 'src/recipes/dtos';
+import { GetAuthorRecipesQueryDto, RecipePreviewResponseDto } from 'src/recipes/dtos';
 import { AuthorDetailsDto, UpdateAuthorRequestDto } from './dtos';
 import {
   ApiBearerAuth,
@@ -26,6 +26,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { OptionalAuthGuard } from 'src/common/optional-auth.guard';
+import { ApiPaginatedResponse } from 'src/common/api-paginated-response.decorator';
 
 @ApiTags('Authors')
 @Controller('authors')
@@ -59,7 +60,7 @@ export class AuthorsController {
 
   @Get(':id/recipes')
   @UseGuards(OptionalAuthGuard)
-  @ApiOkResponse({ type: GetRecipesResponseDto })
+  @ApiPaginatedResponse(RecipePreviewResponseDto)
   async getRecipesByAuthorId(
     @Param('id') id: string,
     @Query() queryDto: GetAuthorRecipesQueryDto,

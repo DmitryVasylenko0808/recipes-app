@@ -48,6 +48,8 @@ import { CommentsService } from 'src/comments/comments.service';
 import { RateRecipeRequestDto } from './dtos/requests/rate.recipe.request.dto';
 import { RatingsService } from './services/ratings.service';
 import { RatingDto } from './dtos/responses/rating.response.dto';
+import { ApiPaginatedResponse } from 'src/common/api-paginated-response.decorator';
+import { CommentResponseDto } from 'src/comments/dtos/comment.response.dto';
 
 @ApiTags('Recipes')
 @Controller('recipes')
@@ -60,7 +62,7 @@ export class RecipesController {
 
   @Get()
   @UseGuards(OptionalAuthGuard)
-  @ApiOkResponse({ type: GetRecipesResponseDto })
+  @ApiPaginatedResponse(RecipePreviewResponseDto)
   async getAll(@Query() queryDto: GetRecipesQueryDto, @CurrentUser('id') userId?: string) {
     return this.recipesService.getAll(queryDto, userId);
   }
@@ -158,7 +160,7 @@ export class RecipesController {
   }
 
   @Get(':id/comments')
-  @ApiOkResponse({ type: GetCommentsResponseDto })
+  @ApiPaginatedResponse(CommentResponseDto)
   async getCommentsByRecipeId(@Param('id') id: string, @Query() queryDto: GetCommentsQueryDto) {
     return this.commentsService.getCommentsByRecipeId(id, queryDto);
   }
