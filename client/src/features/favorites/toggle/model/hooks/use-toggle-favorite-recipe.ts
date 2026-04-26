@@ -22,14 +22,19 @@ export const useToggleFavoriteRecipe = () => {
           }
       );
       queryClient.setQueriesData({ queryKey: ['recipes'] }, (oldData: any) => {
-        if (!oldData?.data) return oldData;
+        if (Array.isArray(oldData.data)) {
+          return {
+            ...oldData,
+            data: oldData.data.map((item: any) =>
+              item.id === variables.id ? { ...item, isFavorite: !item.isFavorite } : item
+            ),
+          };
+        }
 
-        return {
-          ...oldData,
-          data: oldData.data.map((item: any) =>
+        if (Array.isArray(oldData))
+          return oldData.map((item: any) =>
             item.id === variables.id ? { ...item, isFavorite: !item.isFavorite } : item
-          ),
-        };
+          );
       });
 
       return { previous };
