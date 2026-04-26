@@ -67,6 +67,12 @@ export class RecipeDto {
   createdAt: Date;
 
   @ApiProperty({
+    description: 'Unique identifier of category',
+    example: '43dff760-fe8e-4f60-9dda-e593e924ebda',
+  })
+  categoryId: string;
+
+  @ApiProperty({
     description: 'Unique identifier of author',
     example: '43dff760-fe8e-4f60-9dda-e593e924ebda',
   })

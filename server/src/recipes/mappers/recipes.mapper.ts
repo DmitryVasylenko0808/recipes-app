@@ -7,39 +7,49 @@ import { transformImage } from 'src/common/utils/transform-image';
 @Injectable()
 export class RecipesMapper {
   toDto(recipe: Recipe): RecipeDto {
-    const { previewImage, ratingsSum, ...data } = recipe;
-
-    return { ...data, previewImage: transformImage(previewImage) };
+    return {
+      id: recipe.id,
+      title: recipe.title,
+      description: recipe.description,
+      difficulty: recipe.difficulty,
+      cookingTime: recipe.cookingTime,
+      content: recipe.content,
+      authorId: recipe.authorId,
+      categoryId: recipe.categoryId,
+      previewImage: transformImage(recipe.previewImage),
+      viewsCount: recipe.viewsCount,
+      ratingsCount: recipe.ratingsCount,
+      ratingsAvg: Math.round(recipe.ratingsAvg * 10) / 10,
+      createdAt: recipe.createdAt,
+    };
   }
 
   toDetailsDto(
     recipe: RecipeFull,
     context: { isFavorite?: boolean; userRating?: number }
   ): RecipeDetailsResponseDto {
-    const {
-      favoriteEntries,
-      category,
-      recipeTags,
-      recipeIngredients,
-      ratingsSum,
-      ratingsAvg,
-      previewImage,
-      author,
-      ratings,
-      ...data
-    } = recipe;
+    const { category, recipeTags, recipeIngredients, author } = recipe;
 
     return {
-      ...data,
-      ...context,
-      previewImage: transformImage(previewImage),
-      ratingsAvg: Math.round(ratingsAvg * 10) / 10,
+      id: recipe.id,
+      title: recipe.title,
+      description: recipe.description,
+      difficulty: recipe.difficulty,
+      cookingTime: recipe.cookingTime,
+      content: recipe.content,
+      previewImage: transformImage(recipe.previewImage),
+      viewsCount: recipe.viewsCount,
+      ratingsCount: recipe.ratingsCount,
+      ratingsAvg: Math.round(recipe.ratingsAvg * 10) / 10,
+      createdAt: recipe.createdAt,
+      authorId: recipe.authorId,
       author: {
         id: author.id,
         firstname: author.firstname,
         secondname: author.secondname,
-        avatar: author.avatar ? `${process.env.SERVER_UPLOADS_URL}/${author.avatar}` : null,
+        avatar: transformImage(author.avatar),
       },
+      categoryId: recipe.categoryId,
       category: {
         id: category.id,
         name: category.name,
@@ -47,17 +57,14 @@ export class RecipesMapper {
       recipeTags: recipeTags.map((rt) => ({
         id: rt.tag.id,
         name: rt.tag.name,
-        tagId: rt.tagId,
-        recipeId: rt.recipeId,
       })),
       recipeIngredients: recipeIngredients.map((ri) => ({
-        id: ri.id,
         ingredientId: ri.ingredientId,
-        recipeId: ri.recipeId,
         name: ri.ingredient.name,
         amount: ri.amount,
         unit: ri.unit,
       })),
+      ...context,
     };
   }
 
@@ -65,23 +72,21 @@ export class RecipesMapper {
     recipe: RecipeListItem,
     context?: { isFavorite?: boolean }
   ): RecipePreviewResponseDto {
-    const {
-      favoriteEntries,
-      category,
-      recipeTags,
-      recipeIngredients,
-      previewImage,
-      content,
-      ratingsSum,
-      ratingsAvg,
-      ...data
-    } = recipe;
+    const { category, recipeTags, recipeIngredients } = recipe;
 
     return {
-      ...data,
-      ...context,
-      previewImage: transformImage(previewImage),
-      ratingsAvg: Math.round(ratingsAvg * 10) / 10,
+      id: recipe.id,
+      title: recipe.title,
+      description: recipe.description,
+      difficulty: recipe.difficulty,
+      cookingTime: recipe.cookingTime,
+      authorId: recipe.authorId,
+      previewImage: transformImage(recipe.previewImage),
+      viewsCount: recipe.viewsCount,
+      ratingsCount: recipe.ratingsCount,
+      ratingsAvg: Math.round(recipe.ratingsAvg * 10) / 10,
+      createdAt: recipe.createdAt,
+      categoryId: recipe.categoryId,
       category: {
         id: category.id,
         name: category.name,
@@ -89,17 +94,14 @@ export class RecipesMapper {
       recipeTags: recipeTags.map((rt) => ({
         id: rt.tag.id,
         name: rt.tag.name,
-        tagId: rt.tagId,
-        recipeId: rt.recipeId,
       })),
       recipeIngredients: recipeIngredients.map((ri) => ({
-        id: ri.id,
         ingredientId: ri.ingredientId,
-        recipeId: ri.recipeId,
         name: ri.ingredient.name,
         amount: ri.amount,
         unit: ri.unit,
       })),
+      ...context,
     };
   }
 }

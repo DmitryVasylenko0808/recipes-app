@@ -1,13 +1,6 @@
-import { Exclude } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class RecipeIngredientDetailsDto {
-  @Exclude()
-  id: string;
-
-  @Exclude()
-  recipeId: string;
-
   @ApiProperty({
     description: 'Unique identifier of recipe ingredient',
     example: '43dff760-fe8e-4f60-9dda-e593e924ebda',
