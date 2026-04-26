@@ -13,7 +13,7 @@ export const SimilarRecipes = () => {
   const { id } = useParams();
   const { data, isPending } = useGetSimilarRecipes(id);
 
-  if (data && !data.data.length) return null;
+  if (data && !data.length) return null;
 
   return (
     <section className="mx-auto max-w-4xl px-4 py-8">
@@ -25,7 +25,7 @@ export const SimilarRecipes = () => {
         <RecipesGridSkeleton countItems={3} cols={3} />
       ) : (
         <RecipesGrid
-          recipes={data?.data}
+          recipes={data}
           cols={3}
           renderItems={(r) => (
             <RecipeCard

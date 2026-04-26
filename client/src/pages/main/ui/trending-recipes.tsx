@@ -21,7 +21,7 @@ export const TrendingRecipes = () => {
         <RecipesGridSkeleton countItems={4} cols={2} horizontal />
       ) : (
         <RecipesGrid
-          recipes={data?.data}
+          recipes={data}
           cols={2}
           renderItems={(r) => (
             <RecipeCardHorizontal
