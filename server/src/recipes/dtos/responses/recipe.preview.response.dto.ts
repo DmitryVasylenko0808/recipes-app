@@ -36,8 +36,7 @@ export class RecipePreviewResponseDto {
   @ApiProperty({
     description: 'Preview image of recipe',
   })
-  @Transform(({ value }) => `${process.env.SERVER_UPLOADS_URL}/${value}`)
-  previewImage: string;
+  previewImage: string | null;
 
   @ApiProperty({
     description: 'Cookint time of recipe. In minutes',

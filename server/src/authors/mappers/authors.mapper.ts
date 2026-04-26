@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Author } from 'src/generated/prisma/client';
 import { AuthorDetailsDto, AuthorPreviewDto } from '../dtos';
+import { transformImage } from 'src/common/utils/transform-image';
 
 @Injectable()
 export class AuthorsMapper {
@@ -9,7 +10,7 @@ export class AuthorsMapper {
       id: author.id,
       firstname: author.firstname,
       secondname: author.secondname,
-      avatar: author.avatar ? `${process.env.SERVER_UPLOADS_URL}/${author.avatar}` : null,
+      avatar: transformImage(author.avatar),
     };
   }
 
@@ -20,7 +21,7 @@ export class AuthorsMapper {
       firstname: author.firstname,
       secondname: author.secondname,
       bio: author.bio,
-      avatar: author.avatar ? `${process.env.SERVER_UPLOADS_URL}/${author.avatar}` : null,
+      avatar: transformImage(author.avatar),
       createdAt: author.createdAt,
     };
   }

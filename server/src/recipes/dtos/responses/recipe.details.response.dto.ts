@@ -34,7 +34,7 @@ export class RecipeDetailsResponseDto {
   description: string;
 
   @ApiProperty({ description: 'Preview image of recipe' })
-  previewImage: string;
+  previewImage: string | null;
 
   @ApiProperty({
     description: 'Content of recipe in markdown (.md)',

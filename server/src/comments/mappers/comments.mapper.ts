@@ -3,6 +3,7 @@ import { CommentListItem } from '../types';
 import { CommentResponseDto } from '../dtos/get.comments.response.dto';
 import { Comment } from 'src/generated/prisma/client';
 import { CommentShortDto } from '../dtos/comment.short.dto';
+import { transformImage } from 'src/common/utils/transform-image';
 
 @Injectable()
 export class CommentsMapper {
@@ -25,9 +26,7 @@ export class CommentsMapper {
         id: comment.user.id,
         firstname: comment.user.firstname,
         secondname: comment.user.secondname,
-        avatar: comment.user.avatar
-          ? `${process.env.SERVER_UPLOADS_URL}/${comment.user.avatar}`
-          : null,
+        avatar: transformImage(comment.user.avatar),
       },
       recipeId: comment.recipeId,
       content: comment.content,

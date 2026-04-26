@@ -2,13 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { Recipe } from 'src/generated/prisma/client';
 import { RecipeDto, RecipeDetailsResponseDto, RecipePreviewResponseDto } from '../dtos';
 import { RecipeFull, RecipeListItem } from '../recipes.types';
+import { transformImage } from 'src/common/utils/transform-image';
 
 @Injectable()
 export class RecipesMapper {
   toDto(recipe: Recipe): RecipeDto {
     const { previewImage, ratingsSum, ...data } = recipe;
 
-    return { ...data, previewImage: `${process.env.SERVER_UPLOADS_URL}/${previewImage}` };
+    return { ...data, previewImage: transformImage(previewImage) };
   }
 
   toDetailsDto(
@@ -31,7 +32,7 @@ export class RecipesMapper {
     return {
       ...data,
       ...context,
-      previewImage: `${process.env.SERVER_UPLOADS_URL}/${previewImage}`,
+      previewImage: transformImage(previewImage),
       ratingsAvg: Math.round(ratingsAvg * 10) / 10,
       author: {
         id: author.id,
@@ -79,7 +80,7 @@ export class RecipesMapper {
     return {
       ...data,
       ...context,
-      previewImage: `${process.env.SERVER_UPLOADS_URL}/${previewImage}`,
+      previewImage: transformImage(previewImage),
       ratingsAvg: Math.round(ratingsAvg * 10) / 10,
       category: {
         id: category.id,
