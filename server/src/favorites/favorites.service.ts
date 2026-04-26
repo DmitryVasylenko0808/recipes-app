@@ -35,6 +35,8 @@ export class FavoritesService {
 
     if (!favoriteRecipe) throw new NotFoundException('Favorite recipe is not found');
 
-    return this.favoritesMapper.toShortDto(favoriteRecipe);
+    const deletedFavoriteRecipe = await this.favoritesRepository.deleteOne(userId, recipeId);
+
+    return this.favoritesMapper.toShortDto(deletedFavoriteRecipe);
   }
 }
