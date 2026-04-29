@@ -10,6 +10,7 @@ export type UpdateRecipeArgs = {
   categoryId?: string;
   difficulty?: Difficulty;
   cookingTime?: number;
+  recipeSteps?: string[];
   recipeTagIds?: string[];
   recipeIngredients?: {
     ingredientId: string;
@@ -20,11 +21,12 @@ export type UpdateRecipeArgs = {
 export type UpdateRecipeDto = RecipePreview;
 
 export const patchUpdateRecipe = async (args: UpdateRecipeArgs) => {
-  const { id, cookingTime, recipeTagIds, recipeIngredients, ...postData } = args;
+  const { id, cookingTime, recipeSteps, recipeTagIds, recipeIngredients, ...postData } = args;
 
   const formData = new FormData();
   Object.entries(postData).forEach(([k, v]) => formData.append(k, v));
   formData.append('cookingTime', String(cookingTime));
+  formData.append('recipeSteps', JSON.stringify(recipeSteps));
   formData.append('recipeTagIds', JSON.stringify(recipeTagIds));
   formData.append('recipeIngredients', JSON.stringify(recipeIngredients));
 

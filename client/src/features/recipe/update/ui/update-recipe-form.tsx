@@ -41,12 +41,25 @@ export const UpdateRecipeForm = ({ recipe, onSubmit }: UpdateRecipeFormProps) =>
       categoryId: recipe.categoryId,
       difficulty: recipe.difficulty,
       cookingTime: recipe.cookingTime,
-      content: recipe.content,
+      recipeSteps: recipe.recipeSteps.map((rs) => ({ content: rs })),
       recipeTagIds: recipe.recipeTags.map((rt) => rt.id),
       recipeIngredients: recipe.recipeIngredients,
     },
   });
-  const { fields, append } = useFieldArray({ name: 'recipeIngredients', control });
+  const { fields: stepFields, append: appendStep } = useFieldArray<
+    UpdateRecipeFormFields,
+    'recipeSteps'
+  >({
+    name: 'recipeSteps',
+    control,
+  });
+  const { fields: ingredientFields, append: appendIngredient } = useFieldArray<
+    UpdateRecipeFormFields,
+    'recipeIngredients'
+  >({
+    name: 'recipeIngredients',
+    control,
+  });
   const { mutateAsync, isPending } = useUpdateRecipe();
 
   const selectedTagIds = watch('recipeTagIds');
@@ -61,10 +74,14 @@ export const UpdateRecipeForm = ({ recipe, onSubmit }: UpdateRecipeFormProps) =>
     setValue('recipeTagIds', [...selectedTagIds, tag.id], { shouldValidate: true });
   };
 
-  const handleClickAddIngredient = () => append({ ingredientId: '', amount: 0, unit: '' });
+  const handleClickAddStep = () => appendStep({ content: '' });
+  const handleClickAddIngredient = () =>
+    appendIngredient({ ingredientId: '', amount: 0, unit: '' });
 
   const submitHandler = (fields: UpdateRecipeFormFields) => {
-    mutateAsync({ id: recipe.id, ...fields })
+    const { recipeSteps, ...data } = fields;
+
+    mutateAsync({ id: recipe.id, ...data, recipeSteps: recipeSteps.map((rs) => rs.content) })
       .then(onSubmit)
       .catch((err) => alert(err.message));
   };
@@ -194,7 +211,7 @@ export const UpdateRecipeForm = ({ recipe, onSubmit }: UpdateRecipeFormProps) =>
         <Typograpghy tagVariant="h4" className="mb-6">
           Ingredients
         </Typograpghy>
-        {fields.map((field, index) => (
+        {ingredientFields.map((field, index) => (
           <div className="mb-3 flex gap-4" key={field.id}>
             <Selector
               options={ingredients?.map((ing) => ({ label: ing.name, value: ing.id }))}
@@ -228,7 +245,29 @@ export const UpdateRecipeForm = ({ recipe, onSubmit }: UpdateRecipeFormProps) =>
         <Typograpghy tagVariant="h4" className="mb-6">
           Instructions
         </Typograpghy>
-        <TextArea rows={7} error={errors.content?.message} {...register('content')} />
+        {stepFields.map((field, index) => (
+          <div className="mb-3 flex gap-1" key={field.id}>
+            <div className="bg-secondary flex h-7 w-7 items-center justify-center rounded-full font-semibold">
+              {index + 1}
+            </div>
+            <TextArea
+              rows={2}
+              className="flex-1"
+              placeholder={`Step ${index + 1}: Describe this cooking step in detail...`}
+              error={errors.recipeSteps?.[index]?.content?.message}
+              {...register(`recipeSteps.${index}.content`)}
+            />
+          </div>
+        ))}
+        <Button
+          as="button"
+          type="button"
+          variant="secondary"
+          onClick={handleClickAddStep}
+          fullWidth
+        >
+          Add step
+        </Button>
       </Card>
       <Button
         as="button"
