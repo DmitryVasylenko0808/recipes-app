@@ -17,14 +17,6 @@ import { type CreateRecipeFormFields, createRecipeSchema } from '../model/valida
 import { useCreateRecipe } from '../model/hooks/use-create-recipe';
 import type { RecipePreview } from '@/entities/recipes';
 
-const INSTRUCTIONS_PLACEHOLDER = `Write your recipe instructions here. You can use Markdown formatting:
-
-## Step 1
-Start by preparing...
-
-## Step 2
-Next, combine...`;
-
 type CreateRecipeFormProps = { onSubmit?: (data: RecipePreview) => void };
 
 export const CreateRecipeForm = ({ onSubmit }: CreateRecipeFormProps) => {
@@ -41,11 +33,25 @@ export const CreateRecipeForm = ({ onSubmit }: CreateRecipeFormProps) => {
   } = useForm<CreateRecipeFormFields>({
     resolver: zodResolver(createRecipeSchema),
     defaultValues: {
+      recipeSteps: [{ content: '' }],
       recipeTagIds: [],
       recipeIngredients: [{ ingredientId: '', amount: 0, unit: '' }],
     },
   });
-  const { fields, append } = useFieldArray({ name: 'recipeIngredients', control });
+  const { fields: stepFields, append: appendStep } = useFieldArray<
+    CreateRecipeFormFields,
+    'recipeSteps'
+  >({
+    name: 'recipeSteps',
+    control,
+  });
+  const { fields: ingredientFields, append: appendIngredient } = useFieldArray<
+    CreateRecipeFormFields,
+    'recipeIngredients'
+  >({
+    name: 'recipeIngredients',
+    control,
+  });
   const { mutateAsync, isPending } = useCreateRecipe();
 
   const selectedTagIds = watch('recipeTagIds');
@@ -60,10 +66,14 @@ export const CreateRecipeForm = ({ onSubmit }: CreateRecipeFormProps) => {
     setValue('recipeTagIds', [...selectedTagIds, tag.id], { shouldValidate: true });
   };
 
-  const handleClickAddIngredient = () => append({ ingredientId: '', amount: 0, unit: '' });
+  const handleClickAddStep = () => appendStep({ content: '' });
+  const handleClickAddIngredient = () =>
+    appendIngredient({ ingredientId: '', amount: 0, unit: '' });
 
   const submitHandler = (fields: CreateRecipeFormFields) => {
-    mutateAsync(fields)
+    const { recipeSteps, ...data } = fields;
+
+    mutateAsync({ ...data, recipeSteps: recipeSteps.map((rs) => rs.content) })
       .then(onSubmit)
       .catch((err) => alert(err.message));
   };
@@ -193,7 +203,7 @@ export const CreateRecipeForm = ({ onSubmit }: CreateRecipeFormProps) => {
         <Typograpghy tagVariant="h4" className="mb-6">
           Ingredients
         </Typograpghy>
-        {fields.map((field, index) => (
+        {ingredientFields.map((field, index) => (
           <div className="mb-3 flex gap-4" key={field.id}>
             <Selector
               options={ingredients?.map((ing) => ({ label: ing.name, value: ing.id }))}
@@ -227,12 +237,29 @@ export const CreateRecipeForm = ({ onSubmit }: CreateRecipeFormProps) => {
         <Typograpghy tagVariant="h4" className="mb-6">
           Instructions
         </Typograpghy>
-        <TextArea
-          rows={7}
-          placeholder={INSTRUCTIONS_PLACEHOLDER}
-          error={errors.content?.message}
-          {...register('content')}
-        />
+        {stepFields.map((field, index) => (
+          <div className="mb-3 flex gap-1" key={field.id}>
+            <div className="bg-secondary flex h-7 w-7 items-center justify-center rounded-full font-semibold">
+              {index + 1}
+            </div>
+            <TextArea
+              rows={2}
+              className="flex-1"
+              placeholder={`Step ${index + 1}: Describe this cooking step in detail...`}
+              error={errors.recipeSteps?.[index]?.content?.message}
+              {...register(`recipeSteps.${index}.content`)}
+            />
+          </div>
+        ))}
+        <Button
+          as="button"
+          type="button"
+          variant="secondary"
+          onClick={handleClickAddStep}
+          fullWidth
+        >
+          Add step
+        </Button>
       </Card>
       <Button
         as="button"

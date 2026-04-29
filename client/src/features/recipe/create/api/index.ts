@@ -5,10 +5,10 @@ export type CreateRecipeArgs = {
   title: string;
   description: string;
   previewImage: File;
-  content: string;
   categoryId: string;
   difficulty: Difficulty;
   cookingTime: number;
+  recipeSteps: string[];
   recipeTagIds: string[];
   recipeIngredients: {
     ingredientId: string;
@@ -18,11 +18,12 @@ export type CreateRecipeArgs = {
 };
 export type CreateRecipeDto = RecipePreview;
 export const postCreateRecipe = async (args: CreateRecipeArgs) => {
-  const { cookingTime, recipeTagIds, recipeIngredients, ...postData } = args;
+  const { cookingTime, recipeSteps, recipeTagIds, recipeIngredients, ...postData } = args;
 
   const formData = new FormData();
   Object.entries(postData).forEach(([k, v]) => formData.append(k, v));
   formData.append('cookingTime', String(cookingTime));
+  formData.append('recipeSteps', JSON.stringify(recipeSteps));
   formData.append('recipeTagIds', JSON.stringify(recipeTagIds));
   formData.append('recipeIngredients', JSON.stringify(recipeIngredients));
 

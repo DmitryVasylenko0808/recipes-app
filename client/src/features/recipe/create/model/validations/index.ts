@@ -1,5 +1,9 @@
 import z from 'zod';
 
+export const recipeStepSchema = z.object({
+  content: z.string().min(1, 'Content is required'),
+});
+
 export const recipeIngredientSchema = z.object({
   ingredientId: z.string().min(1, 'Ingredient is required'),
   amount: z.number({ error: 'Invalid value' }).min(1, 'Amount must be more than 0'),
@@ -15,12 +19,12 @@ export const createRecipeSchema = z.object({
       (file) => ['image/jpeg', 'image/png'].includes(file.type),
       'Only supported .jpeg and .png formats'
     ),
-  content: z.string().min(1, 'Instruction is required'),
   categoryId: z.string().min(1, 'Category is required'),
   difficulty: z.enum(['easy', 'medium', 'hard'], { error: 'Invalid difficulty' }),
   cookingTime: z
     .number({ error: 'Invalid value' })
     .min(1, 'Cooking time must be more than 1 minutes'),
+  recipeSteps: z.array(recipeStepSchema).min(1, 'Recipe must contains at least 1 step'),
   recipeTagIds: z.array(z.string()).min(1, 'Recipe must containt at least 1 tag'),
   recipeIngredients: z
     .array(recipeIngredientSchema)

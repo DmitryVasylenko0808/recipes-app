@@ -1,4 +1,4 @@
-import { Typograpghy, AvatarFallback, Badge, Card, Markdown, pathKeys, Avatar } from '@/shared';
+import { Typograpghy, AvatarFallback, Badge, Card, pathKeys, Avatar } from '@/shared';
 import { type ReactNode, type ComponentProps } from 'react';
 import { Link } from 'react-router';
 import type { Recipe } from '../model/types/recipe';
