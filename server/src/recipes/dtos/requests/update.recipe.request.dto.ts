@@ -73,6 +73,18 @@ export class UpdateRecipeRequestDto {
   @IsEnum(Difficulty, { message: 'Invalid difficulty' })
   readonly difficulty?: Difficulty;
 
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsString({ each: true })
+  @Transform(({ value }) => {
+    try {
+      return JSON.parse(value);
+    } catch {
+      return [];
+    }
+  })
+  readonly recipeSteps: string[];
+
   @ApiPropertyOptional({
     description: 'Tag ids of recipe',
     examples: ['43dff760-fe8e-4f60-9dda-e593e924ebda', '811909ef-1ac8-4197-b674-05737d68b4a6'],
@@ -104,5 +116,5 @@ export class UpdateRecipeRequestDto {
     if (value === undefined) return undefined;
     return JSON.parse(value);
   })
-  recipeIngredients?: RecipeIngredientDto[];
+  readonly recipeIngredients?: RecipeIngredientDto[];
 }

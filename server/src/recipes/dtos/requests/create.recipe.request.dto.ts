@@ -37,19 +37,6 @@ export class CreateRecipeRequestDto {
   @MinLength(1, { message: 'Description must contain at least $constraint1 characters' })
   readonly description: string;
 
-  // @ApiProperty({
-  //   description: 'Content of recipe in markdown (.md)',
-  //   example: `# Meo veniam requirere adesto
-  //             ## Se et dixit Andraemone
-  //             Lorem markdownum **in imagine dives**. Da vocat, praebet vanos virgineumque.
-  //           Intonuit attritas deae; adspice *catulus matremque questus* metallis ponit
-  //           dicitur crinem! Quanto cornibus aliquid dixit imis inpetus mora declivibus
-  //           vires.`,
-  // })
-  // @IsString({ message: 'Invalid content' })
-  // @MinLength(1, { message: 'Description must contain at least $constraint1 characters' })
-  // readonly content: string;
-
   @ApiProperty({
     description: 'Cooking time of recipe. In minutes',
     example: 30,

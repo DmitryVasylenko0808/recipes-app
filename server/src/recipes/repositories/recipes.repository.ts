@@ -245,13 +245,17 @@ export class RecipesRepository implements IRecipesRepository {
     data: UpdateRecipeRequestDto,
     previewImageFilename?: string
   ): Promise<Recipe> {
-    const { recipeTagIds, recipeIngredients, ...restData } = data;
+    const { recipeSteps, recipeTagIds, recipeIngredients, ...restData } = data;
 
     return this.prisma.recipe.update({
       where: { id },
       data: {
         ...restData,
         previewImage: previewImageFilename,
+        recipeSteps: recipeSteps && {
+          deleteMany: {},
+          create: recipeSteps.map((rs) => ({ content: rs })),
+        },
         recipeTags: recipeTagIds && {
           deleteMany: {},
           create: recipeTagIds?.map((id) => ({ tagId: id })),
