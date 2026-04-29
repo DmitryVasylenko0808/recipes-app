@@ -226,7 +226,7 @@ export class RecipesRepository implements IRecipesRepository {
     data: CreateRecipeRequestDto,
     previewImageFilename: string
   ): Promise<Recipe> {
-    const { recipeTagIds, recipeIngredients, ...restData } = data;
+    const { recipeSteps, recipeTagIds, recipeIngredients, ...restData } = data;
 
     return this.prisma.recipe.create({
       data: {

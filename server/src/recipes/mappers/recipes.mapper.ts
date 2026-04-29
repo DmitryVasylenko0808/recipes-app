@@ -52,11 +52,7 @@ export class RecipesMapper {
         id: category.id,
         name: category.name,
       },
-      recipeSteps: recipeSteps.map((rStep) => ({
-        id: rStep.id,
-        recipeId: rStep.recipeId,
-        content: rStep.content,
-      })),
+      recipeSteps: recipeSteps.map((rStep) => rStep.content),
       recipeTags: recipeTags.map((rt) => ({
         id: rt.tag.id,
         name: rt.tag.name,

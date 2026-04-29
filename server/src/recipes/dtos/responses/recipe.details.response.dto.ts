@@ -4,7 +4,6 @@ import { RecipeTagDto } from './recipe.tag.dto';
 import { CategoryDto } from 'src/categories/dtos';
 import { RecipeIngredientDetailsDto } from './recipe.ingredient.details.dto';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { RecipeStepDto } from './recipe.step.dto';
 
 export class RecipeDetailsResponseDto {
   @ApiProperty({
@@ -95,8 +94,8 @@ export class RecipeDetailsResponseDto {
   @ApiProperty({ type: AuthorPreviewDto })
   author: AuthorPreviewDto;
 
-  @ApiProperty({ type: [RecipeStepDto] })
-  recipeSteps: RecipeStepDto[];
+  @ApiProperty({ type: [String], description: 'Steps of cooking recipe' })
+  recipeSteps: string[];
 
   @ApiProperty({ type: [RecipeTagDto] })
   recipeTags: RecipeTagDto[];
