@@ -136,10 +136,19 @@ export const RecipeDetailsView = ({ recipe, actionsSlot }: RecipeDetailsViewProp
       </Card>
 
       <Card className="p-6">
-        <Typograpghy tagVariant="h2" className="mb-4">
-          Instructions
+        <Typograpghy tagVariant="h2" className="mb-5">
+          Cooking steps
         </Typograpghy>
-        <Markdown>{recipe.content}</Markdown>
+        <div className="space-y-5">
+          {recipe.recipeSteps.map((step, i) => (
+            <div>
+              <Typograpghy tagVariant="h3" className="mb-2 font-semibold">
+                Step {i + 1}
+              </Typograpghy>
+              <Typograpghy tagVariant="p">{step}</Typograpghy>
+            </div>
+          ))}
+        </div>
       </Card>
     </div>
   );
