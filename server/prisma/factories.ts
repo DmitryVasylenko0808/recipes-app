@@ -41,7 +41,6 @@ export const createRecipe = (
     title = faker.lorem.words({ min: 1, max: 4 }),
     description = faker.lorem.paragraph({ min: 1, max: 5 }),
     previewImage = faker.image.dataUri(),
-    content = faker.lorem.paragraphs({ min: 1, max: 20 }),
     cookingTime = faker.helpers.rangeToNumber({ min: 5, max: 360 }),
     difficulty = faker.helpers.enumValue(Difficulty),
   } = overwrites;
@@ -53,7 +52,6 @@ export const createRecipe = (
     description,
     previewImage,
     categoryId: category.id,
-    content,
     cookingTime,
     difficulty,
     createdAt,

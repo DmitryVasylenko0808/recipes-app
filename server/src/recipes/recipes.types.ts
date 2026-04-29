@@ -40,6 +40,7 @@ const recipeFullQuery = {
     author: true,
     favoriteEntries: true,
     ratings: true,
+    recipeSteps: true,
     recipeTags: {
       include: { tag: true },
     },

@@ -6,7 +6,7 @@ import { faker } from '@faker-js/faker';
 import { categories } from './data/categories';
 import { tags } from './data/tags';
 import { ingredients } from './data/ingredients';
-import { ratings, recipeIngredients, recipes, recipeTags } from './data/recipes';
+import { ratings, recipeIngredients, recipes, recipeSteps, recipeTags } from './data/recipes';
 import { authors } from './data/authors';
 import { comments } from './data/comments';
 
@@ -36,6 +36,9 @@ async function main() {
   });
   await prisma.recipe.createMany({
     data: recipes.map((r) => ({ ...r, difficulty: r.difficulty as Difficulty })),
+  });
+  await prisma.recipeStep.createMany({
+    data: recipeSteps,
   });
   await prisma.recipeTag.createMany({
     data: recipeTags,

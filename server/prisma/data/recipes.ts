@@ -14,46 +14,6 @@ export const recipes = [
     categoryId: categories[0].id,
     description: 'Traditional Ukrainian beet soup with beef',
     previewImage: 'https://example.com/images/borscht.jpg',
-    content: `# Quo ille hostis non
-
-## Quam quae sed
-
-Lorem markdownum urbem et nymphas Phoebo est tegmine, mutanda cingebat pectus,
-sua neu, est, per Dryopen. Medea **me error**, et aliena se Molossa spargere
-dixit et est; mihi. Redeunt si priore inplumes fecit utiliter vellet, vocatur
-gurgite Typhoea vocem retinacula et. Tene tenebrosa steterant nam videt cortice
-vidit te vela orbem gradibus: Alcides nihil undas Crete mali fecit undis. Ni
-plangebat harena spirantis relanguit corpora abstuleris horrendum flectitur
-labores.
-
-## Avis corpore mergit
-
-Facerent Cypriae annis. Carinam flet a ululatibus, [miseri cadit
-matris](#nec-corvo-aevum-aetas) errans parentali protinus et *dixit* domino.
-Iussae **Apollinis pertulit sedes**!
-
-- Tenui sub Panes sed Haec Apidani sua
-- Oceano nunc medio meditata periere
-- Pyramus animi dulcique
-- Et huius opesque sua proles
-
-## Res monte sanguine auctor
-
-Herbis illa et montis vinctum, virgine staret. Sis **vertor solum nunc** vertice
-Aricinae sidera: ferro tu traxit mentior tellure in, quae, claudit? Pingues haud
-cupidine saturatos lampadibus horret Bacchi, diruerent acclinata non sit nec.
-
-## Nec corvo aevum aetas
-
-Cum dote blanditus inmedicabile neque communemque dinumerat, poma sed, in
-profugi tamen. Sint conciliumque inque tamen quem quid legit, sui deieci latus.
-Nec pleno de etiam tibi, post vulnere. Aut Diomede saltus, ire se visus,
-deprensa, *fuerat*. Voce pascere nomine de arma premebat: quoque sua plura [viam
-lactis ausus](#quam-quae-sed) quiescere inponit, spatiis, furentem.
-
-> Taedasque corpusque domos in superas videri, fugae iusto. Non et humanum
-> facundia, tandem paruerit mea **possem nostris cum** torum.
-`,
     cookingTime: 60,
     difficulty: 'medium',
   },
@@ -62,7 +22,6 @@ lactis ausus](#quam-quae-sed) quiescere inponit, spatiis, furentem.
     categoryId: categories[2].id,
     description: 'Fresh salad with chicken and croutons',
     previewImage: 'https://example.com/images/caesar.jpg',
-    content: 'Grill chicken, chop lettuce, add dressing and croutons.',
     cookingTime: 20,
     difficulty: 'easy',
   },
@@ -71,7 +30,6 @@ lactis ausus](#quam-quae-sed) quiescere inponit, spatiis, furentem.
     categoryId: categories[12].id,
     description: 'Italian pasta with bacon and creamy sauce',
     previewImage: 'https://example.com/images/carbonara.jpg',
-    content: 'Cook pasta, fry bacon, mix with sauce and serve.',
     cookingTime: 30,
     difficulty: 'medium',
   },
@@ -80,7 +38,6 @@ lactis ausus](#quam-quae-sed) quiescere inponit, spatiis, furentem.
     categoryId: categories[3].id,
     description: 'Rich chocolate dessert',
     previewImage: 'https://example.com/images/chocolate_cake.jpg',
-    content: 'Mix ingredients, bake at 180°C for 35 minutes, cool and serve.',
     cookingTime: 50,
     difficulty: 'hard',
   },
@@ -89,7 +46,6 @@ lactis ausus](#quam-quae-sed) quiescere inponit, spatiis, furentem.
     categoryId: categories[4].id,
     description: 'Refreshing drink with lemon and mint',
     previewImage: 'https://example.com/images/lemonade.jpg',
-    content: 'Mix lemon juice, water, sugar, add mint leaves.',
     cookingTime: 10,
     difficulty: 'easy',
   },
@@ -98,42 +54,6 @@ lactis ausus](#quam-quae-sed) quiescere inponit, spatiis, furentem.
     categoryId: categories[11].id,
     description: 'Juicy grilled chicken with spices',
     previewImage: 'https://example.com/images/grilled_chicken.jpg',
-    content: `# Se solane
-
-## Quae mea
-
-Lorem markdownum rediit ut exclamat accipe: cavis videntur, init nemus nigraque
-Philyreius. Thermodontiaco victoris. Pectora Sidonius et animosque inque
-liberiore fiducia, visibus per adopertaque.
-
-- Molimine origine equae
-- Nam Cinyreius mentique audierat
-- Uti ipse regna
-
-Umbra hanc movebere haec Ioles fervidus, tandem dabit ubi **pro digitis**
-matris! Unde [posuit](#se-solane) populi intermittuntque [uberibus exitiabile
-currum](#se-solane) Adonis. Ausa iacent periturus celebrant. Phoebus Herculis
-mearum laniarat felix! Et caelumque alterius tua cui saepe, pectora ferarum,
-per.
-
-## Annis tremit
-
-Altis est, ibat facies negat reverentia pressit cuiquam. Corpus esset et qui
-condit candida [una demisso](#se-solane) miratur sanguine missus. Tum
-[pectusque](#quae-mea) dedit; Tyrrhenus ipse, ante regia, aequorei in pedibus!
-Quodsi Marmaridae **ardet**, est semper spreta non: tu. Vitae refert, mariti: in
-veros coepisse adit; nam quid his.
-
-> Ducebat tota honorem *occidit et* cornix rapuitque iam arbore pectoribus parte
-> gradus texerat sua addidit cura de! Patet concipit est cretus ab aere? Pontus
-> haec atque; ense iuvat pars, [animisque laevam Meleagros](#quae-mea) et
-> liberat! *Ab erat prodit*, cuspidis annis, dedissent populi acumine inlatum
-> Stygias dum!
-
-Pignus corde [inclusaque herbis fragor](#se-solane) comitantibus magis. In [non
-Lotis](#annis-tremit) namque invidiosus enim *pectoribusque parvumque harundine*
-quoque scalas; credi et refert irascentemque candidus nefas!
-`,
     cookingTime: 30,
     difficulty: 'easy',
   },
@@ -142,7 +62,6 @@ quoque scalas; credi et refert irascentemque candidus nefas!
     categoryId: categories[12].id,
     description: 'Asian style beef stir fry',
     previewImage: 'https://example.com/images/beef_stirfry.jpg',
-    content: 'Fry beef, add vegetables and soy sauce.',
     cookingTime: 25,
     difficulty: 'medium',
   },
@@ -151,7 +70,6 @@ quoque scalas; credi et refert irascentemque candidus nefas!
     categoryId: categories[5].id,
     description: 'Fluffy breakfast pancakes',
     previewImage: 'https://example.com/images/pancakes.jpg',
-    content: 'Mix batter and fry on pan.',
     cookingTime: 20,
     difficulty: 'easy',
   },
@@ -160,7 +78,6 @@ quoque scalas; credi et refert irascentemque candidus nefas!
     categoryId: categories[7].id,
     description: 'Soft chocolate muffins',
     previewImage: 'https://example.com/images/muffins.jpg',
-    content: 'Mix and bake 25 minutes.',
     cookingTime: 35,
     difficulty: 'medium',
   },
@@ -169,7 +86,6 @@ quoque scalas; credi et refert irascentemque candidus nefas!
     categoryId: categories[2].id,
     description: 'Fresh vegetable salad',
     previewImage: 'https://example.com/images/greek.jpg',
-    content: 'Chop vegetables and mix.',
     cookingTime: 10,
     difficulty: 'easy',
   },
@@ -178,42 +94,6 @@ quoque scalas; credi et refert irascentemque candidus nefas!
     categoryId: categories[0].id,
     description: 'Warm and creamy tomato soup',
     previewImage: 'https://example.com/tomato_soup.jpg',
-    content: `# Tibi quis convicia
-
-## Apolline ego dicto peccavere
-
-Lorem markdownum nocte referre. Nati adde.
-
-> Vestis nutrici nostrae *aggere Peneidas* numquam parentum afuit tu infecit
-> **quondam**, aut aliquis dea Boreas labens posse? Coniunx et aratri,
-> hominemque dives Aurora temperat, vereri, simul. Pallada villosis imbres
-> labitur gentibus iamque: est retroque quam [Sabinis
-> nullus](#moriturae-in-ipsos-cum) quaerente quae, bracchiaque probabo spes
-> imagine fera.
-
-Erat senserit, potentia manus. Est summa *modo maturior*, fundamina, murice oro
-illum illa vidit potuisse restatque habuere, et una. Draconem agros navibus ab
-natos nato solo [lacertis](#moriturae-in-ipsos-cum) vestrae. Est loco mero ubi,
-annis quod vestes haec totas, aliquos, in.
-
-## Moriturae in ipsos cum
-
-Manu ventis quicumque malorum ira aede. Taenarides mundi
-[Tartara](#apolline-ego-dicto-peccavere) dentibus super Iove quem Balearica,
-visurus vel putat parte partibus nostrisque. Tibi meruistis adspicit
-[undae](#moriturae-in-ipsos-cum): numina carmine, tibi inquit? Non est venit,
-fuit. Una poni quisquis?
-
-> Pennis quo miseri, **praeterea moriuntur aevum**, misit vultu pius habenas
-> ficta nec tendere unda. A *et* dare aquae Peliacae variare similis: dant te
-> melior quoque!
-
-Certamina fieri chrysolithi tuus me premat; adit multamque procul. Opus ipse o
-per est quid taedia quem *gentibus*, Iamque in parias utrimque. Laevum
-perpetuoque neque exsecrantia erat imagine, boum at sui efficient illud qua
-medio ubi, Minos. Illa huic certe haec, clades quo ubi **tulit struxisse**,
-cruore rebellant satis Pelasgos; aequum.
-`,
     cookingTime: 35,
     difficulty: 'easy',
   },
@@ -222,7 +102,6 @@ cruore rebellant satis Pelasgos; aequum.
     categoryId: categories[1].id,
     description: 'Classic Asian fried rice',
     previewImage: 'https://example.com/fried_rice.jpg',
-    content: 'Fry rice with vegetables and soy sauce.',
     cookingTime: 25,
     difficulty: 'easy',
   },
@@ -231,7 +110,6 @@ cruore rebellant satis Pelasgos; aequum.
     categoryId: categories[5].id,
     description: 'Simple egg omelette',
     previewImage: 'https://example.com/omelette.jpg',
-    content: 'Whisk eggs and fry.',
     cookingTime: 10,
     difficulty: 'easy',
   },
@@ -240,7 +118,6 @@ cruore rebellant satis Pelasgos; aequum.
     categoryId: categories[4].id,
     description: 'Healthy banana drink',
     previewImage: 'https://example.com/smoothie.jpg',
-    content: 'Blend all ingredients.',
     cookingTime: 5,
     difficulty: 'easy',
   },
@@ -249,7 +126,6 @@ cruore rebellant satis Pelasgos; aequum.
     categoryId: categories[12].id,
     description: 'Pasta with shrimp and garlic',
     previewImage: 'https://example.com/shrimp_pasta.jpg',
-    content: 'Cook pasta and mix with shrimp.',
     cookingTime: 30,
     difficulty: 'medium',
   },
@@ -258,7 +134,6 @@ cruore rebellant satis Pelasgos; aequum.
     categoryId: categories[10].id,
     description: 'Mixed vegetables stir fry',
     previewImage: 'https://example.com/veg_stirfry.jpg',
-    content: 'Fry vegetables with sauce.',
     cookingTime: 20,
     difficulty: 'easy',
   },
@@ -267,44 +142,6 @@ cruore rebellant satis Pelasgos; aequum.
     categoryId: categories[3].id,
     description: 'Classic apple pie dessert',
     previewImage: 'https://example.com/apple_pie.jpg',
-    content: `# Illud concussaque pateat numine
-
-## Adspergine suae ego simul
-
-Lorem markdownum nostri germanae nec spatii, *dextra meris*: quaeque: sol. Huc
-quae. Ait agmina, recultae **quia**. Digitis peteret si quale Caenis loca est
-creatus feror incursu rogabo mea!
-
-Ut quod. **Ait non** refert, talia, pependit quidam, est pro? Bracchia *curvi
-has*, et virentes in catenis notavi ipsum ramos, mortales!
-
-Tenuissima procul petebamus alma: sui adhuc Hylen tectis iacet fores potiere
-luctus clara! Latuerunt spemque ruris, accepit est amor: oculisque, primordia
-animoque. **Lumina** paritura de manibus Nisus. Me scelus indefessus quem.
-
-## Dique exanimi ille
-
-Superi fuit, aemula arma venti [summa](#dique-exanimi-ille) secto gulae.
-Repugnat qui armis, herbis fame minima Minoe Atrides Laurentes misit saltus
-formatum fixa. Sonis pectore exiguam Panaque corpore, nec *corpus fuit* nil:
-viscera filia ocior splendenti eventu, sibi reddidit. Bitumen territus germanae
-verba. Me et leto gravitate locum, fugit motis, omnes terram natus Lyaeo, loci
-in finis.
-
-1. Rescindere data Hectoris insequitur metuunt cibo
-2. In paelex omni sua
-3. Contagia altera potuit ignibus
-4. Ardeat consorti coniuge leges
-5. Diu pomum notatum vulnera pontifici maior Cnosius
-6. Quoque ponderibus flamma volubilibus anilibus et caelo
-
-Tacetve illa, me fuit aras casus: *thyrsos ipse* sequenti corpora erat.
-Civilibus effugere adiacet tamen. Silvae id liquidis atria hosti et mora bis
-[revelli adest](#illud-concussaque-pateat-numine): tibi eadem hoste **magno**.
-Rustica terrae, per est regentis figit **est quasque arces** munus, haec nitente
-harenam obvertit in saxoque saxeus. Cruentas noctem parvo, nostris Tiberinaque
-raptor.
-`,
     cookingTime: 60,
     difficulty: 'hard',
   },
@@ -313,7 +150,6 @@ raptor.
     categoryId: categories[6].id,
     description: 'Crispy garlic bread',
     previewImage: 'https://example.com/garlic_bread.jpg',
-    content: 'Bake bread with garlic butter.',
     cookingTime: 15,
     difficulty: 'easy',
   },
@@ -322,7 +158,6 @@ raptor.
     categoryId: categories[8].id,
     description: 'Fresh grilled salmon fillet',
     previewImage: 'https://example.com/salmon.jpg',
-    content: 'Grill salmon with seasoning.',
     cookingTime: 25,
     difficulty: 'medium',
   },
@@ -331,7 +166,6 @@ raptor.
     categoryId: categories[4].id,
     description: 'Sweet chocolate drink',
     previewImage: 'https://example.com/milkshake.jpg',
-    content: 'Blend milk and chocolate.',
     cookingTime: 5,
     difficulty: 'easy',
   },
@@ -340,7 +174,6 @@ raptor.
     categoryId: categories[1].id,
     description: 'Spicy chicken curry with rich sauce',
     previewImage: 'https://example.com/chicken_curry.jpg',
-    content: 'Cook chicken with spices and simmer.',
     cookingTime: 40,
     difficulty: 'medium',
   },
@@ -349,7 +182,6 @@ raptor.
     categoryId: categories[6].id,
     description: 'Juicy homemade beef burger',
     previewImage: 'https://example.com/burger.jpg',
-    content: 'Grill patty and assemble burger.',
     cookingTime: 25,
     difficulty: 'easy',
   },
@@ -358,7 +190,6 @@ raptor.
     categoryId: categories[6].id,
     description: 'Juicy homemade beef burger',
     previewImage: 'https://example.com/burger.jpg',
-    content: 'Grill patty and assemble burger.',
     cookingTime: 25,
     difficulty: 'easy',
   },
@@ -367,7 +198,6 @@ raptor.
     categoryId: categories[12].id,
     description: 'Classic Italian pasta with meat sauce',
     previewImage: 'https://example.com/bolognese.jpg',
-    content: 'Cook pasta and simmer meat sauce.',
     cookingTime: 45,
     difficulty: 'medium',
   },
@@ -376,7 +206,6 @@ raptor.
     categoryId: categories[5].id,
     description: 'Sweet breakfast toast',
     previewImage: 'https://example.com/french_toast.jpg',
-    content: 'Dip bread in egg and fry.',
     cookingTime: 15,
     difficulty: 'easy',
   },
@@ -385,7 +214,6 @@ raptor.
     categoryId: categories[2].id,
     description: 'Protein-rich tuna salad',
     previewImage: 'https://example.com/tuna_salad.jpg',
-    content: 'Mix tuna with vegetables.',
     cookingTime: 10,
     difficulty: 'easy',
   },
@@ -394,7 +222,6 @@ raptor.
     categoryId: categories[12].id,
     description: 'Creamy risotto with mushrooms',
     previewImage: 'https://example.com/risotto.jpg',
-    content: 'Cook rice slowly with broth.',
     cookingTime: 40,
     difficulty: 'hard',
   },
@@ -403,7 +230,6 @@ raptor.
     categoryId: categories[6].id,
     description: 'Crispy fried chicken nuggets',
     previewImage: 'https://example.com/nuggets.jpg',
-    content: 'Bread and fry chicken pieces.',
     cookingTime: 20,
     difficulty: 'easy',
   },
@@ -412,46 +238,6 @@ raptor.
     categoryId: categories[4].id,
     description: 'Fresh berry smoothie',
     previewImage: 'https://example.com/berry_smoothie.jpg',
-    content: `# Humanas volucris haud
-
-## Manu artus gentisque ite
-
-Lorem markdownum voluptas corpore subitam bracchia sentirent Pelates numerum
-Tritonia in vipereis repellit, vindice sit: et. Hospitio minantia commissaque
-**pedicis**. Primus cum, dixit, a petis veniens; thyrso omnia stamina Caicus tu
-super si vulnera hedera. Male illo deas vinaque, nullus atra, tardantis, sero.
-*Sine armis* voluptas et litora mater, cum tetigit parabam crudeles ovantem.
-
-- Iubentem limina
-- Illac Iunonius ad ulla
-- Ex dolosae nulla quod Ericthonio locus
-- Caelo Palameden inaniter edidit mutatis iuvenis tempora
-- Tenus confundere ipsi pacali
-- Putavi adfuit non
-
-## Notis genetrix monitis moveoque
-
-Fas humo colitur aevum cursu. Ita suo tremoribus genitam *nympha*. *Pro timet*
-et notatum loqui Oriente *imago pectore admissa* diu fugit, spumeus, o. Quidem
-quarum fuere ut intima **totoque tibi**: cedere omnia Rhadamanthon avium aurea
-portis. Ora rigori viderit, cum ecce via corpore sonos.
-
-> Glaebis tantaeque nostro ludunt ferrumque dixit, fratrique spissa lacertos,
-> ire, Diana Region. Indicet Phoebus silvae, deum Scythicas caerulus iuncta,
-> ortuque, pestis. Iam reicerer vosne. Ipsi robore ceram profundi locus,
-> recursus rursus spernentem novena potuit.
-
-## Quamvis manu sed possemque
-
-Ita es, videbar tendentem conubia medias hastis aliter, ad ut alteriusque victa
-consilium pepulere: ille. Quod aequore nam habuere sumpsit orbem. **Ipse
-iuvenis** inpia.
-
-Manu arces agnovere penetrale quidque, deus flere, huc pias ferri thyrsos! Ea
-frontis tacebitur lenis refugitque canum induroque aliasque secum me tanget ab
-cuius vidisse reservant coniunx. Inpensior potiere quamvis, et utque sororia,
-inpune, *digitosque genua*. **Sustulit abstinet**!
-`,
     cookingTime: 5,
     difficulty: 'easy',
   },
@@ -460,7 +246,6 @@ inpune, *digitosque genua*. **Sustulit abstinet**!
     categoryId: categories[1].id,
     description: 'Crispy roasted potatoes',
     previewImage: 'https://example.com/potatoes.jpg',
-    content: 'Bake potatoes with oil.',
     cookingTime: 35,
     difficulty: 'easy',
   },
@@ -469,7 +254,6 @@ inpune, *digitosque genua*. **Sustulit abstinet**!
     categoryId: categories[8].id,
     description: 'Shrimp sautéed in garlic butter',
     previewImage: 'https://example.com/shrimp.jpg',
-    content: 'Cook shrimp with garlic.',
     cookingTime: 15,
     difficulty: 'easy',
   },
@@ -478,7 +262,6 @@ inpune, *digitosque genua*. **Sustulit abstinet**!
     categoryId: categories[1].id,
     description: 'Pan-fried pork chops',
     previewImage: 'https://example.com/pork.jpg',
-    content: 'Season and fry pork.',
     cookingTime: 30,
     difficulty: 'medium',
   },
@@ -487,7 +270,6 @@ inpune, *digitosque genua*. **Sustulit abstinet**!
     categoryId: categories[6].id,
     description: 'Healthy vegetable wrap',
     previewImage: 'https://example.com/wrap.jpg',
-    content: 'Wrap veggies in flatbread.',
     cookingTime: 10,
     difficulty: 'easy',
   },
@@ -496,7 +278,6 @@ inpune, *digitosque genua*. **Sustulit abstinet**!
     categoryId: categories[12].id,
     description: 'Creamy chicken pasta',
     previewImage: 'https://example.com/alfredo.jpg',
-    content: 'Cook pasta and creamy sauce.',
     cookingTime: 35,
     difficulty: 'medium',
   },
@@ -505,7 +286,6 @@ inpune, *digitosque genua*. **Sustulit abstinet**!
     categoryId: categories[2].id,
     description: 'Simple egg salad',
     previewImage: 'https://example.com/egg_salad.jpg',
-    content: 'Mix boiled eggs.',
     cookingTime: 15,
     difficulty: 'easy',
   },
@@ -514,7 +294,6 @@ inpune, *digitosque genua*. **Sustulit abstinet**!
     categoryId: categories[0].id,
     description: 'Healthy lentil soup',
     previewImage: 'https://example.com/lentil.jpg',
-    content: 'Boil lentils and spices.',
     cookingTime: 40,
     difficulty: 'easy',
   },
@@ -523,7 +302,6 @@ inpune, *digitosque genua*. **Sustulit abstinet**!
     categoryId: categories[11].id,
     description: 'Slow cooked BBQ ribs',
     previewImage: 'https://example.com/ribs.jpg',
-    content: 'Bake ribs with sauce.',
     cookingTime: 90,
     difficulty: 'hard',
   },
@@ -532,7 +310,6 @@ inpune, *digitosque genua*. **Sustulit abstinet**!
     categoryId: categories[5].id,
     description: 'Simple avocado toast',
     previewImage: 'https://example.com/avocado.jpg',
-    content: 'Spread avocado on toast.',
     cookingTime: 10,
     difficulty: 'easy',
   },
@@ -541,7 +318,6 @@ inpune, *digitosque genua*. **Sustulit abstinet**!
     categoryId: categories[5].id,
     description: 'Simple avocado toast',
     previewImage: 'https://example.com/avocado.jpg',
-    content: 'Spread avocado on toast.',
     cookingTime: 10,
     difficulty: 'easy',
   },
@@ -550,7 +326,6 @@ inpune, *digitosque genua*. **Sustulit abstinet**!
     categoryId: categories[9].id,
     description: 'Rich and fudgy chocolate brownie',
     previewImage: 'https://example.com/brownie.jpg',
-    content: 'Mix ingredients, bake until set.',
     cookingTime: 30,
     difficulty: 'easy',
   },
@@ -564,6 +339,11 @@ inpune, *digitosque genua*. **Sustulit abstinet**!
   ratingsCount: 0,
   ratingsSum: 0,
   ratingsAvg: 0,
+}));
+
+export const recipeSteps = Array.from({ length: 200 }).map(() => ({
+  recipeId: faker.helpers.arrayElement(recipes.map((r) => r.id)),
+  content: faker.lorem.sentences(),
 }));
 
 export const recipeTags = [

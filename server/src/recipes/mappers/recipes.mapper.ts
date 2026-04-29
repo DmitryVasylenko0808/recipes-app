@@ -13,7 +13,6 @@ export class RecipesMapper {
       description: recipe.description,
       difficulty: recipe.difficulty,
       cookingTime: recipe.cookingTime,
-      content: recipe.content,
       authorId: recipe.authorId,
       categoryId: recipe.categoryId,
       previewImage: transformImage(recipe.previewImage),
@@ -28,7 +27,7 @@ export class RecipesMapper {
     recipe: RecipeFull,
     context: { isFavorite?: boolean; userRating?: number }
   ): RecipeDetailsResponseDto {
-    const { category, recipeTags, recipeIngredients, author } = recipe;
+    const { category, recipeSteps, recipeTags, recipeIngredients, author } = recipe;
 
     return {
       id: recipe.id,
@@ -36,7 +35,6 @@ export class RecipesMapper {
       description: recipe.description,
       difficulty: recipe.difficulty,
       cookingTime: recipe.cookingTime,
-      content: recipe.content,
       previewImage: transformImage(recipe.previewImage),
       viewsCount: recipe.viewsCount,
       ratingsCount: recipe.ratingsCount,
@@ -54,6 +52,11 @@ export class RecipesMapper {
         id: category.id,
         name: category.name,
       },
+      recipeSteps: recipeSteps.map((rStep) => ({
+        id: rStep.id,
+        recipeId: rStep.recipeId,
+        content: rStep.content,
+      })),
       recipeTags: recipeTags.map((rt) => ({
         id: rt.tag.id,
         name: rt.tag.name,

@@ -39,7 +39,6 @@ model Recipe {
   category     Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   description  String
   previewImage String     @map("preview_image")
-  content      String
   cookingTime  Int        @map("cooking_time")
   difficulty   Difficulty
   viewsCount   Int        @default(0) @map("views_count")
@@ -51,6 +50,7 @@ model Recipe {
   authorId String @map("author_id")
   author   Author @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
+  recipeSteps       RecipeStep[]
   recipeTags        RecipeTag[]
   recipeIngredients RecipeIngredient[]
 
@@ -59,6 +59,15 @@ model Recipe {
   ratings         Rating[]
 
   @@map("recipes")
+}
+
+model RecipeStep {
+  id       String @id @default(uuid())
+  content  String
+  recipeId String @map("recipe_id")
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("recipe_steps")
 }
 
 model Rating {

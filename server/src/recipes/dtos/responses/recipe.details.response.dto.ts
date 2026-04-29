@@ -4,6 +4,7 @@ import { RecipeTagDto } from './recipe.tag.dto';
 import { CategoryDto } from 'src/categories/dtos';
 import { RecipeIngredientDetailsDto } from './recipe.ingredient.details.dto';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { RecipeStepDto } from './recipe.step.dto';
 
 export class RecipeDetailsResponseDto {
   @ApiProperty({
@@ -35,17 +36,6 @@ export class RecipeDetailsResponseDto {
 
   @ApiProperty({ description: 'Preview image of recipe' })
   previewImage: string | null;
-
-  @ApiProperty({
-    description: 'Content of recipe in markdown (.md)',
-    example: `# Meo veniam requirere adesto
-              ## Se et dixit Andraemone
-              Lorem markdownum **in imagine dives**. Da vocat, praebet vanos virgineumque.
-            Intonuit attritas deae; adspice *catulus matremque questus* metallis ponit
-            dicitur crinem! Quanto cornibus aliquid dixit imis inpetus mora declivibus
-            vires.`,
-  })
-  content: string;
 
   @ApiProperty({
     description: 'Cookint time of recipe. In minutes',
@@ -104,6 +94,9 @@ export class RecipeDetailsResponseDto {
 
   @ApiProperty({ type: AuthorPreviewDto })
   author: AuthorPreviewDto;
+
+  @ApiProperty({ type: [RecipeStepDto] })
+  recipeSteps: RecipeStepDto[];
 
   @ApiProperty({ type: [RecipeTagDto] })
   recipeTags: RecipeTagDto[];

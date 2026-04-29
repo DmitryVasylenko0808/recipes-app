@@ -32,6 +32,7 @@ export class RecipesRepository implements IRecipesRepository {
               where: { userId },
             }
           : undefined,
+        recipeSteps: true,
         recipeTags: {
           include: { tag: true },
         },

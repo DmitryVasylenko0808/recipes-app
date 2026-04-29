@@ -25,9 +25,6 @@ export class RecipeDto {
   })
   previewImage: string | null;
 
-  @Exclude()
-  content: string;
-
   @ApiProperty({
     description: 'Cookint time of recipe. In minutes',
     example: 30,
