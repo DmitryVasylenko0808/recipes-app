@@ -12,7 +12,6 @@ import {
 import { Difficulty } from 'src/generated/prisma/enums';
 import { RecipeIngredientDto } from '../responses/recipe.ingredient.dto';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { RecipeStepDto } from '../responses/recipe.step.dto';
 
 export class CreateRecipeRequestDto {
   @ApiProperty({
@@ -69,8 +68,7 @@ export class CreateRecipeRequestDto {
 
   @IsArray()
   @ArrayNotEmpty()
-  @ValidateNested({ each: true })
-  @Type(() => RecipeStepDto)
+  @IsString({ each: true })
   @Transform(({ value }) => {
     try {
       return JSON.parse(value);
@@ -78,7 +76,7 @@ export class CreateRecipeRequestDto {
       return [];
     }
   })
-  recipeSteps: RecipeStepDto[];
+  readonly recipeSteps: string[];
 
   @ApiPropertyOptional({
     description: 'Tag ids of recipe',

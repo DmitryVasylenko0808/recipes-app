@@ -233,6 +233,7 @@ export class RecipesRepository implements IRecipesRepository {
         ...restData,
         authorId,
         previewImage: previewImageFilename,
+        recipeSteps: { create: recipeSteps.map((rs) => ({ content: rs })) },
         recipeTags: { create: recipeTagIds.map((id) => ({ tagId: id })) },
         recipeIngredients: { create: recipeIngredients },
       },
