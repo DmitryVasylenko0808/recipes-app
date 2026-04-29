@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Exclude, Transform } from 'class-transformer';
+import { Transform } from 'class-transformer';
 import { Difficulty } from 'src/generated/prisma/enums';
 
 export class RecipeDto {
@@ -15,7 +15,9 @@ export class RecipeDto {
   })
   title: string;
 
-  @Exclude()
+  @ApiProperty({
+    description: 'Preview image of recipe',
+  })
   description: string;
 
   @ApiProperty({

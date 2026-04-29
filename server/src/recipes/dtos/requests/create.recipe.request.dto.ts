@@ -53,6 +53,14 @@ export class CreateRecipeRequestDto {
   @IsEnum(Difficulty, { message: 'Invalid difficulty' })
   readonly difficulty: Difficulty;
 
+  @ApiProperty({
+    type: [String],
+    description: 'Cooking steps of recipes',
+    example: [
+      'Place lettuce in a large salad bowl',
+      'Add croutons and freshly grated parmesan cheese.',
+    ],
+  })
   @IsArray()
   @ArrayNotEmpty()
   @IsString({ each: true })
@@ -82,7 +90,7 @@ export class CreateRecipeRequestDto {
   @IsString({ each: true })
   readonly recipeTagIds: string[];
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     description: 'Ingredients of recipe',
     examples: [
       { ingredientId: '20695ca1-2b44-4909-9665-4fba19af86a8', amount: 2, unit: 'pcs' },

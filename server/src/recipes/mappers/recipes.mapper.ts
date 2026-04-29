@@ -10,9 +10,9 @@ export class RecipesMapper {
     return {
       id: recipe.id,
       title: recipe.title,
-      description: recipe.description,
       difficulty: recipe.difficulty,
       cookingTime: recipe.cookingTime,
+      description: recipe.description,
       authorId: recipe.authorId,
       categoryId: recipe.categoryId,
       previewImage: transformImage(recipe.previewImage),
