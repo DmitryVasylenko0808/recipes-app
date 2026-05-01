@@ -3,12 +3,13 @@ import { ICommentsRepository } from './interfaces';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { GetCommentsQueryDto } from './dtos/get.comments.query.dto';
 import {
+  CommentOrderByWithRelationInput,
   CommentUncheckedCreateInput,
   CommentUncheckedUpdateInput,
   CommentWhereInput,
 } from 'src/generated/prisma/models';
 import { Comment } from 'src/generated/prisma/client';
-import { CommentList } from './types';
+import { CommentList, SortCommentsPreset } from './types';
 
 @Injectable()
 export class CommentRepository implements ICommentsRepository {
@@ -19,7 +20,12 @@ export class CommentRepository implements ICommentsRepository {
     options: GetCommentsQueryDto,
     userId?: string
   ): Promise<CommentList> {
-    const { page, limit } = options;
+    const { page, limit, sortPreset = 'newest' } = options;
+
+    const sortPresets: Record<SortCommentsPreset, CommentOrderByWithRelationInput> = {
+      [SortCommentsPreset.NEWEST]: { createdAt: 'desc' },
+      [SortCommentsPreset.POPULAR]: { likesCount: 'desc' },
+    };
 
     const [data, totalCount] = await this.prisma.$transaction([
       this.prisma.comment.findMany({
@@ -28,7 +34,7 @@ export class CommentRepository implements ICommentsRepository {
           user: true,
           likes: { where: { userId } },
         },
-        orderBy: { createdAt: 'desc' },
+        orderBy: sortPresets[sortPreset],
         skip: (page - 1) * limit,
         take: limit,
       }),

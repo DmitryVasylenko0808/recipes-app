@@ -10,3 +10,9 @@ export type CommentList = {
   data: CommentListItem[];
   totalCount: number;
 };
+
+export const SortCommentsPreset = {
+  NEWEST: 'newest',
+  POPULAR: 'popular',
+} as const;
+export type SortCommentsPreset = (typeof SortCommentsPreset)[keyof typeof SortCommentsPreset];
