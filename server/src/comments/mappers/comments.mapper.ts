@@ -18,7 +18,7 @@ export class CommentsMapper {
     };
   }
 
-  toDto(comment: CommentListItem): CommentResponseDto {
+  toDto(comment: CommentListItem, context?: { isLiked?: boolean }): CommentResponseDto {
     return {
       id: comment.id,
       userId: comment.userId,
@@ -30,8 +30,10 @@ export class CommentsMapper {
       },
       recipeId: comment.recipeId,
       content: comment.content,
+      likesCount: comment.likesCount,
       createdAt: comment.createdAt,
       updatedAt: comment.updatedAt,
+      ...context,
     };
   }
 }

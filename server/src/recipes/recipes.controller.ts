@@ -160,9 +160,14 @@ export class RecipesController {
   }
 
   @Get(':id/comments')
+  @UseGuards(OptionalAuthGuard)
   @ApiPaginatedResponse(CommentResponseDto)
-  async getCommentsByRecipeId(@Param('id') id: string, @Query() queryDto: GetCommentsQueryDto) {
-    return this.commentsService.getCommentsByRecipeId(id, queryDto);
+  async getCommentsByRecipeId(
+    @Param('id') id: string,
+    @Query() queryDto: GetCommentsQueryDto,
+    @CurrentUser('id') userId?: string
+  ) {
+    return this.commentsService.getCommentsByRecipeId(id, queryDto, userId);
   }
 
   @Post(':id/comments')

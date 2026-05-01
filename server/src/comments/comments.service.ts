@@ -5,6 +5,7 @@ import { PostCommentRequestDto } from './dtos/post.comment.request.dto';
 import { UpdateCommentRequestDto } from './dtos/update.comment.request.dto';
 import { CommentsMapper } from './mappers/comments.mapper';
 import { paginated } from 'src/common/utils/paginated';
+import { CommentListItem } from './types';
 
 @Injectable()
 export class CommentsService {
@@ -13,16 +14,17 @@ export class CommentsService {
     private readonly commentsMapper: CommentsMapper
   ) {}
 
-  async getCommentsByRecipeId(recipeId: string, options: GetCommentsQueryDto) {
+  async getCommentsByRecipeId(recipeId: string, options: GetCommentsQueryDto, userId?: string) {
     const { limit, page } = options;
 
     const { data, totalCount } = await this.commentsRepository.findManyByRecipeId(
       recipeId,
-      options
+      options,
+      userId
     );
 
     return paginated({
-      data: data.map((c) => this.commentsMapper.toDto(c)),
+      data: data.map((c) => this.commentsMapper.toDto(c, { isLiked: this.isLiked(c) })),
       limit,
       totalCount,
       page,
@@ -53,5 +55,9 @@ export class CommentsService {
     const data = await this.commentsRepository.delete(id);
 
     return this.commentsMapper.toShortDto(data);
+  }
+
+  private isLiked(comment: CommentListItem) {
+    return !!comment.likes.length;
   }
 }

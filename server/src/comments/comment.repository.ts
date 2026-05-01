@@ -14,13 +14,20 @@ import { CommentList } from './types';
 export class CommentRepository implements ICommentsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findManyByRecipeId(recipeId: string, options: GetCommentsQueryDto): Promise<CommentList> {
+  async findManyByRecipeId(
+    recipeId: string,
+    options: GetCommentsQueryDto,
+    userId?: string
+  ): Promise<CommentList> {
     const { page, limit } = options;
 
     const [data, totalCount] = await this.prisma.$transaction([
       this.prisma.comment.findMany({
         where: { recipeId },
-        include: { user: true },
+        include: {
+          user: true,
+          likes: { where: { userId } },
+        },
         orderBy: { createdAt: 'desc' },
         skip: (page - 1) * limit,
         take: limit,

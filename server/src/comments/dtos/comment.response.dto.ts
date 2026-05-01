@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { AuthorPreviewDto } from 'src/authors/dtos';
 
 export class CommentResponseDto {
@@ -34,6 +34,12 @@ export class CommentResponseDto {
   content: string;
 
   @ApiProperty({
+    description: 'Count of comment likes',
+    example: 5,
+  })
+  likesCount: number;
+
+  @ApiProperty({
     description: 'Date of sending comment',
     example: '2025-08-31T11:49:01.306Z',
   })
@@ -44,4 +50,9 @@ export class CommentResponseDto {
     example: '2025-08-31T11:49:01.306Z',
   })
   updatedAt: Date;
+
+  @ApiPropertyOptional({
+    description: 'Show true if user liked the comment',
+  })
+  isLiked?: boolean;
 }

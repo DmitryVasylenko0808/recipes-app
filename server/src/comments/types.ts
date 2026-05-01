@@ -2,7 +2,7 @@ import { Prisma } from 'src/generated/prisma/client';
 import { CommentDefaultArgs } from 'src/generated/prisma/models';
 
 const commentListQuery = {
-  include: { user: true },
+  include: { user: true, likes: true },
 } satisfies CommentDefaultArgs;
 export type CommentListItem = Prisma.CommentGetPayload<typeof commentListQuery>;
 
