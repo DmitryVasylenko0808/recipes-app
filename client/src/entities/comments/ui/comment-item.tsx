@@ -3,9 +3,13 @@ import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 import type { Comment } from '../model/types/comment';
 
-type CommentItemProps = { comment: Comment; actionsSlot?: ReactNode };
+type CommentItemProps = {
+  comment: Comment;
+  actionsSlot?: ReactNode;
+  bottomActionsSlot?: ReactNode;
+};
 
-export const CommentItem = ({ comment, actionsSlot }: CommentItemProps) => {
+export const CommentItem = ({ comment, actionsSlot, bottomActionsSlot }: CommentItemProps) => {
   return (
     <Card className="p-4">
       <div className="flex gap-3">
@@ -39,9 +43,10 @@ export const CommentItem = ({ comment, actionsSlot }: CommentItemProps) => {
             </div>
             <div className="flex gap-1">{actionsSlot}</div>
           </div>
-          <div>
+          <div className="mb-3">
             <Typograpghy tagVariant="p">{comment.content}</Typograpghy>
           </div>
+          <div>{bottomActionsSlot}</div>
         </div>
       </div>
     </Card>

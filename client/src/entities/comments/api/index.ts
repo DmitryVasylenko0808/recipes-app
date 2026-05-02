@@ -6,8 +6,10 @@ export type CommentDto = {
   userId: string;
   recipeId: string;
   content: string;
+  likesCount: number;
   createdAt: Date;
   updatedAt: Date;
+  isLiked?: boolean;
 };
 
 export type GetRecipeCommentsArgs = {

@@ -6,6 +6,8 @@ export type Comment = {
   user: AuthorPreview;
   recipeId: string;
   content: string;
+  likesCount: number;
   createdAt: Date;
   updatedAt: Date;
+  isLiked?: boolean;
 };

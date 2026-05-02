@@ -5,6 +5,7 @@ import {
   useGetRecipeComments,
 } from '@/entities/comments';
 import { DeleteCommentButton } from '@/features/comments/delete';
+import { ToggleLikeCommentButton } from '@/features/comments/toggle-like';
 import { UpdateCommentButton } from '@/features/comments/update';
 import { Pagination, usePagination } from '@/features/pagination';
 import { EmptyState, Typograpghy, useAuth } from '@/shared';
@@ -47,6 +48,7 @@ export const RecipeComments = () => {
                     {c.userId === currentUser?.id && <DeleteCommentButton commentId={c.id} />}
                   </>
                 }
+                bottomActionsSlot={<ToggleLikeCommentButton comment={c} />}
               />
             )}
           />
