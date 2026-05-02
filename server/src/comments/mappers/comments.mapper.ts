@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { CommentListItem } from '../types';
 import { CommentResponseDto } from '../dtos/comment.response.dto';
-import { Comment } from 'src/generated/prisma/client';
+import { Comment, CommentLike } from 'src/generated/prisma/client';
 import { CommentShortDto } from '../dtos/comment.short.dto';
 import { transformImage } from 'src/common/utils/transform-image';
+import { CommentLikeResponseDto } from '../dtos/comment.like.response.dto';
 
 @Injectable()
 export class CommentsMapper {
@@ -34,6 +35,13 @@ export class CommentsMapper {
       createdAt: comment.createdAt,
       updatedAt: comment.updatedAt,
       ...context,
+    };
+  }
+
+  toLikeDto(like: CommentLike): CommentLikeResponseDto {
+    return {
+      userId: like.userId,
+      commentId: like.commentId,
     };
   }
 }

@@ -1,4 +1,4 @@
-import { Comment } from 'src/generated/prisma/client';
+import { Comment, CommentLike } from 'src/generated/prisma/client';
 import { GetCommentsQueryDto } from './dtos/get.comments.query.dto';
 import {
   CommentUncheckedCreateInput,
@@ -14,4 +14,7 @@ export interface ICommentsRepository {
   update(id: string, data: CommentUncheckedUpdateInput): Promise<Comment>;
   delete(id: string): Promise<Comment>;
   count(filter?: CommentWhereInput): Promise<number>;
+  findLike(id: string, userId: string): Promise<CommentLike | null>;
+  addLike(id: string, userId: string): Promise<CommentLike>;
+  deleteLike(id: string, userId: string): Promise<CommentLike>;
 }

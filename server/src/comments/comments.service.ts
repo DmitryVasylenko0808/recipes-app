@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CommentRepository } from './comment.repository';
 import { GetCommentsQueryDto } from './dtos/get.comments.query.dto';
 import { PostCommentRequestDto } from './dtos/post.comment.request.dto';
@@ -55,6 +60,32 @@ export class CommentsService {
     const data = await this.commentsRepository.delete(id);
 
     return this.commentsMapper.toShortDto(data);
+  }
+
+  async addLikeComment(id: string, userId: string) {
+    const like = await this.commentsRepository.findLike(id, userId);
+
+    if (like) throw new ConflictException('This comment is already liked');
+
+    const [_, addedLike] = await Promise.all([
+      this.commentsRepository.update(id, { likesCount: { increment: 1 } }),
+      this.commentsRepository.addLike(id, userId),
+    ]);
+
+    return this.commentsMapper.toLikeDto(addedLike);
+  }
+
+  async deleteLikeComment(id: string, userId: string) {
+    const like = await this.commentsRepository.findLike(id, userId);
+
+    if (!like) throw new BadRequestException("Cannot unlike, because you didn't like this comment");
+
+    const [_, deletedLike] = await Promise.all([
+      this.commentsRepository.update(id, { likesCount: { decrement: 1 } }),
+      this.commentsRepository.deleteLike(id, userId),
+    ]);
+
+    return this.commentsMapper.toLikeDto(deletedLike);
   }
 
   private isLiked(comment: CommentListItem) {

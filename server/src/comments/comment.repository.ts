@@ -8,7 +8,7 @@ import {
   CommentUncheckedUpdateInput,
   CommentWhereInput,
 } from 'src/generated/prisma/models';
-import { Comment } from 'src/generated/prisma/client';
+import { Comment, CommentLike } from 'src/generated/prisma/client';
 import { CommentList, SortCommentsPreset } from './types';
 
 @Injectable()
@@ -69,5 +69,27 @@ export class CommentRepository implements ICommentsRepository {
 
   async count(filter?: CommentWhereInput): Promise<number> {
     return this.prisma.comment.count({ where: filter });
+  }
+
+  async findLike(commentId: string, userId: string): Promise<CommentLike | null> {
+    return this.prisma.commentLike.findUnique({
+      where: {
+        userId_commentId: { userId, commentId },
+      },
+    });
+  }
+
+  async addLike(commentId: string, userId: string): Promise<CommentLike> {
+    return this.prisma.commentLike.create({
+      data: { commentId, userId },
+    });
+  }
+
+  async deleteLike(commentId: string, userId: string): Promise<CommentLike> {
+    return this.prisma.commentLike.delete({
+      where: {
+        userId_commentId: { userId, commentId },
+      },
+    });
   }
 }
