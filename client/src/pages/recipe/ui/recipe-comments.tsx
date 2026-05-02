@@ -5,6 +5,7 @@ import {
   useGetRecipeComments,
 } from '@/entities/comments';
 import { DeleteCommentButton } from '@/features/comments/delete';
+import { SortCommentSelector, useSortComments } from '@/features/comments/sort';
 import { ToggleLikeCommentButton } from '@/features/comments/toggle-like';
 import { UpdateCommentButton } from '@/features/comments/update';
 import { Pagination, usePagination } from '@/features/pagination';
@@ -14,11 +15,16 @@ import { useParams } from 'react-router';
 export const RecipeComments = () => {
   const { id } = useParams();
   const { currentUser } = useAuth();
-  const { page, limit, onPageChange } = usePagination({ initialLimit: 15 });
+  const { sort, sortOptions, onChangeSort } = useSortComments();
+  const { page, limit, onPageChange } = usePagination({
+    initialLimit: 15,
+    resetDependecies: [sort],
+  });
   const { data, isPending, isFetching } = useGetRecipeComments({
     recipeId: id,
     page,
     limit,
+    sort,
   });
 
   return (
@@ -32,9 +38,12 @@ export const RecipeComments = () => {
         />
       ) : (
         <div>
-          <Typograpghy tagVariant="h2" className="mb-6">
-            Comments ({data?.totalCount})
-          </Typograpghy>
+          <div className="mb-6 flex justify-between">
+            <Typograpghy tagVariant="h2" className="flex-auto">
+              Comments ({data?.totalCount})
+            </Typograpghy>
+            <SortCommentSelector sortOptions={sortOptions} onChangeSort={onChangeSort} />
+          </div>
           <CommentsList
             comments={data?.data}
             isFetching={isFetching}

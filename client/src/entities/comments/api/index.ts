@@ -16,7 +16,10 @@ export type GetRecipeCommentsArgs = {
   recipeId?: string;
   page: number;
   limit: number;
+  sort?: 'newest' | 'popular';
 };
+
+export type SortPreset = 'newest' | 'popular';
 
 export type GetRecipeCommentsDto = {
   data: Comment[];
