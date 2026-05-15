@@ -6,7 +6,14 @@ import { faker } from '@faker-js/faker';
 import { categories } from './data/categories';
 import { tags } from './data/tags';
 import { ingredients } from './data/ingredients';
-import { ratings, recipeIngredients, recipes, recipeSteps, recipeTags } from './data/recipes';
+import {
+  ratings,
+  recipeIngredients,
+  recipes,
+  recipeSteps,
+  recipeTags,
+  recipeVersions,
+} from './data/recipes';
 import { authors } from './data/authors';
 import { commentLikes, comments } from './data/comments';
 
@@ -19,7 +26,7 @@ faker.seed(1);
 
 async function main() {
   await prisma.$executeRawUnsafe(
-    'TRUNCATE TABLE authors, tags, ingredients, categories, recipes, recipe_tags, recipe_ingredients RESTART IDENTITY CASCADE'
+    'TRUNCATE TABLE authors, tags, ingredients, categories, recipes, recipe_versions, recipe_steps, recipe_tags, recipe_ingredients, favorite_recipes, ratings, comments, comment_likes RESTART IDENTITY CASCADE'
   );
 
   await prisma.author.createMany({
@@ -35,8 +42,21 @@ async function main() {
     data: ingredients,
   });
   await prisma.recipe.createMany({
-    data: recipes.map((r) => ({ ...r, difficulty: r.difficulty as Difficulty })),
+    data: recipes.map((r) => ({ ...r })),
   });
+  await prisma.recipeVersion.createMany({
+    data: recipeVersions,
+  });
+  await prisma.$transaction(
+    recipes.map((r, i) =>
+      prisma.recipe.update({
+        where: { id: r.id },
+        data: {
+          currentVersionId: recipeVersions[i].id,
+        },
+      })
+    )
+  );
   await prisma.recipeStep.createMany({
     data: recipeSteps,
   });
