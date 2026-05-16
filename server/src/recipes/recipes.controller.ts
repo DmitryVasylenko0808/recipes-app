@@ -52,6 +52,7 @@ import { ApiPaginatedResponse } from 'src/common/api-paginated-response.decorato
 import { CommentResponseDto } from 'src/comments/dtos/comment.response.dto';
 import { RecipeVersionResponseDto } from './dtos/responses/recipe.versions.response.dto';
 import { RecipeVersionDetailsResponseDto } from './dtos/responses/recipe.versions.details.dto';
+import { RollbackRecipeVersionRequestDto } from './dtos/requests/rollback.recipe.version.request.dto';
 
 @ApiTags('Recipes')
 @Controller('recipes')
@@ -197,5 +198,21 @@ export class RecipesController {
   @ApiNotFoundResponse({ description: 'Recipe with this version is not found' })
   async getRecipeVersion(@Param('id') id: string, @Param('version', ParseIntPipe) version: number) {
     return this.recipesService.getRecipeVersion(id, version);
+  }
+
+  @Patch(':id/versions/rollback')
+  @UseGuards(PrivateAuthGuard)
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: RecipeDto })
+  @ApiNotFoundResponse({ description: 'Recipe is not found' })
+  @ApiBadRequestResponse({ description: 'Cannot rollback to non-existed version' })
+  @ApiUnauthorizedResponse({ description: 'Unathorized' })
+  @ApiForbiddenResponse({ description: 'Cannot rollback, you`re not author of the recipe' })
+  async rollbackRecipeVersion(
+    @Param('id') id: string,
+    @CurrentUser('id') userId: string,
+    @Body() dto: RollbackRecipeVersionRequestDto
+  ) {
+    return this.recipesService.rollbackRecipeVersion(id, userId, dto);
   }
 }

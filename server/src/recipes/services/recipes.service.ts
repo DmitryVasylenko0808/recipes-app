@@ -1,4 +1,9 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { RecipesRepository } from '../repositories/recipes.repository';
 import {
   GetRecipesQueryDto,
@@ -19,6 +24,7 @@ import { RecipesMapper } from '../mappers/recipes.mapper';
 import { assertHasCurrentVersion } from '../utils/assert-has-current-version';
 import { validRecipes } from '../utils/valid-recipes';
 import { paginated } from 'src/common/utils/paginated';
+import { RollbackRecipeVersionRequestDto } from '../dtos/requests/rollback.recipe.version.request.dto';
 
 @Injectable()
 export class RecipesService {
@@ -209,6 +215,26 @@ export class RecipesService {
     if (!recipeVersion) throw new NotFoundException('Recipe with this version is not found');
 
     return this.recipesMapper.toVersionDetailsDto(recipeVersion);
+  }
+
+  async rollbackRecipeVersion(
+    recipeId: string,
+    userId: string,
+    dto: RollbackRecipeVersionRequestDto
+  ) {
+    const recipe = await this.recipesRepository.findById(recipeId);
+
+    if (!recipe) throw new NotFoundException('Recipe is not found');
+    if (recipe.authorId !== userId)
+      throw new ForbiddenException('Cannot rollback, you`re not author of the recipe');
+
+    const recipeVersion = await this.recipesRepository.findVersion(recipeId, dto.version);
+
+    if (!recipeVersion) throw new BadRequestException('Cannot rollback to non-existed version');
+
+    const updatedRecipe = await this.recipesRepository.setVersion(recipe.id, recipeVersion.id);
+
+    return this.recipesMapper.toDto(updatedRecipe);
   }
 
   private isFavorite(r: RecipeListItem | RecipeFull) {
