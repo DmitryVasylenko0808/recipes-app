@@ -1,9 +1,10 @@
-import { Recipe, Prisma } from 'src/generated/prisma/client';
+import { Recipe, Prisma, Difficulty } from 'src/generated/prisma/client';
 import {
   RecipeDefaultArgs,
   RecipeIngredientDefaultArgs,
   RecipeTagDefaultArgs,
 } from 'src/generated/prisma/models';
+import { RecipeIngredientDto } from './dtos';
 
 export type RangeDate = { from: Date; to: Date };
 
@@ -21,14 +22,18 @@ export type RecipeIngredientDetails = Prisma.RecipeIngredientGetPayload<
 
 const recipeListQuery = {
   include: {
-    category: true,
+    currentVersion: {
+      include: {
+        category: true,
+        recipeTags: {
+          include: { tag: true },
+        },
+        recipeIngredients: {
+          include: { ingredient: true },
+        },
+      },
+    },
     favoriteEntries: true,
-    recipeTags: {
-      include: { tag: true },
-    },
-    recipeIngredients: {
-      include: { ingredient: true },
-    },
   },
 } satisfies RecipeDefaultArgs;
 export type RecipeListItem = Prisma.RecipeGetPayload<typeof recipeListQuery>;
@@ -36,19 +41,44 @@ export type RecipeList = { data: RecipeListItem[]; totalCount: number };
 
 const recipeFullQuery = {
   include: {
-    category: true,
+    currentVersion: {
+      include: {
+        category: true,
+        recipeSteps: true,
+        recipeTags: {
+          include: { tag: true },
+        },
+        recipeIngredients: {
+          include: { ingredient: true },
+        },
+      },
+    },
     author: true,
     favoriteEntries: true,
     ratings: true,
-    recipeSteps: true,
-    recipeTags: {
-      include: { tag: true },
-    },
-    recipeIngredients: {
-      include: { ingredient: true },
-    },
   },
 } satisfies RecipeDefaultArgs;
 export type RecipeFull = Prisma.RecipeGetPayload<typeof recipeFullQuery>;
 
 export type RateStats = Pick<Recipe, 'ratingsCount' | 'ratingsSum' | 'ratingsAvg'>;
+
+export type AddVersionData = {
+  readonly title: string;
+  readonly categoryId: string;
+  readonly description: string;
+  readonly cookingTime: number;
+  readonly difficulty: Difficulty;
+  readonly previewImageFilename: string;
+  readonly recipeSteps: string[];
+  readonly recipeTagIds: string[];
+  readonly recipeIngredients: RecipeIngredientDto[];
+};
+
+export type RecipeListItemSafe = RecipeListItem & {
+  currentVersion: NonNullable<RecipeListItem['currentVersion']>;
+};
+export type RecipeFullSafe = RecipeFull & {
+  currentVersion: NonNullable<RecipeFull['currentVersion']>;
+};
+
+const r: RecipeListItemSafe = {} as RecipeListItemSafe;

@@ -3,6 +3,7 @@ import { FavoritesRepository } from './favorites.repository';
 import { PaginationQueryDto } from 'src/recipes/dtos';
 import { FavoritesMapper } from './mappers/favorites.mapper';
 import { paginated } from 'src/common/utils/paginated';
+import { validFavorites } from './utils/valid-favorites';
 
 @Injectable()
 export class FavoritesService {
@@ -17,7 +18,7 @@ export class FavoritesService {
     const { data, totalCount } = await this.favoritesRepository.findManyByUserId(userId, options);
 
     return paginated({
-      data: data.map((f) => this.favoritesMapper.toDto(f)),
+      data: validFavorites(data).map((f) => this.favoritesMapper.toDto(f)),
       limit,
       totalCount,
       page,

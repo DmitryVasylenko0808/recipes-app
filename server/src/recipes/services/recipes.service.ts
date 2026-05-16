@@ -6,9 +6,11 @@ import {
   CreateRecipeRequestDto,
   UpdateRecipeRequestDto,
 } from '../dtos';
-import { RecipeListItem, RecipeFull } from '../recipes.types';
+import { RecipeListItem, RecipeFull, RecipeFullSafe, RecipeListItemSafe } from '../recipes.types';
 import { getMonthRange } from '../utils/get.months.range';
 import { RecipesMapper } from '../mappers/recipes.mapper';
+import { assertHasCurrentVersion } from '../utils/assert-has-current-version';
+import { validRecipes } from '../utils/valid-recipes';
 
 @Injectable()
 export class RecipesService {
@@ -21,7 +23,9 @@ export class RecipesService {
     const { data, totalCount } = await this.recipesRepository.findMany(options, userId);
 
     return {
-      data: data.map((r) => this.recipesMapper.toPreviewDto(r, { isFavorite: this.isFavorite(r) })),
+      data: validRecipes(data).map((r) =>
+        this.recipesMapper.toPreviewDto(r, { isFavorite: this.isFavorite(r) })
+      ),
       totalCount,
       totalPages: Math.ceil(totalCount / options.limit),
       currentPage: options.page,
@@ -33,13 +37,17 @@ export class RecipesService {
 
     const data = await this.recipesRepository.findTrending(4, rangeDate, userId);
 
-    return data.map((r) => this.recipesMapper.toPreviewDto(r, { isFavorite: this.isFavorite(r) }));
+    return validRecipes(data).map((r) =>
+      this.recipesMapper.toPreviewDto(r, { isFavorite: this.isFavorite(r) })
+    );
   }
 
   async getPopular(userId?: string) {
     const data = await this.recipesRepository.findPopular(4, userId);
 
-    return data.map((r) => this.recipesMapper.toPreviewDto(r, { isFavorite: this.isFavorite(r) }));
+    return validRecipes(data).map((r) =>
+      this.recipesMapper.toPreviewDto(r, { isFavorite: this.isFavorite(r) })
+    );
   }
 
   async getByAuthorId(authorId: string, options: GetAuthorRecipesQueryDto, userId?: string) {
@@ -50,7 +58,9 @@ export class RecipesService {
     );
 
     return {
-      data: data.map((r) => this.recipesMapper.toPreviewDto(r, { isFavorite: this.isFavorite(r) })),
+      data: validRecipes(data).map((r) =>
+        this.recipesMapper.toPreviewDto(r, { isFavorite: this.isFavorite(r) })
+      ),
       totalCount,
       totalPages: Math.ceil(totalCount / options.limit),
       currentPage: options.page,
@@ -61,6 +71,8 @@ export class RecipesService {
     const recipe = await this.recipesRepository.findById(id, userId);
 
     if (!recipe) throw new NotFoundException('Recipe is not found');
+
+    assertHasCurrentVersion(recipe);
 
     return this.recipesMapper.toDetailsDto(recipe, {
       isFavorite: this.isFavorite(recipe),
@@ -73,32 +85,35 @@ export class RecipesService {
 
     if (!recipe) return [];
 
+    assertHasCurrentVersion(recipe);
+
     const recipesByCategory = await this.recipesRepository.findByCategoryId(
-      recipe.categoryId,
+      recipe.currentVersion.categoryId,
       userId
     );
+    const recipesByCategorySafe = validRecipes(recipesByCategory);
 
-    const similarRecipes = this.getMostSimilar(recipe, recipesByCategory, 3);
+    const data = this.getMostSimilar(recipe, recipesByCategorySafe, 3);
 
-    return similarRecipes.map((r) =>
-      this.recipesMapper.toPreviewDto(r, { isFavorite: this.isFavorite(r) })
-    );
+    return data.map((r) => this.recipesMapper.toPreviewDto(r, { isFavorite: this.isFavorite(r) }));
   }
 
   private getMostSimilar(
-    recipe: RecipeListItem | RecipeFull,
-    recipesByCategory: RecipeListItem[],
+    recipe: RecipeListItemSafe | RecipeFullSafe,
+    recipesByCategory: RecipeListItemSafe[],
     limit: number
-  ): RecipeListItem[] {
-    const recipeTagIds = new Set(recipe.recipeTags.map((t) => t.tagId));
-    const recipeIngredientIds = new Set(recipe.recipeIngredients.map((ing) => ing.ingredientId));
+  ): RecipeListItemSafe[] {
+    const recipeTagIds = new Set(recipe.currentVersion.recipeTags.map((t) => t.tagId));
+    const recipeIngredientIds = new Set(
+      recipe.currentVersion!.recipeIngredients.map((ing) => ing.ingredientId)
+    );
 
     const result = recipesByCategory.map((r) => {
-      const tagsSimilarity = r.recipeTags.reduce(
+      const tagsSimilarity = r.currentVersion.recipeTags.reduce(
         (acc, curr) => (acc += recipeTagIds.has(curr.tagId) ? 0.5 : 0),
         0
       );
-      const ingredientsSimilarity = r.recipeIngredients.reduce(
+      const ingredientsSimilarity = r.currentVersion.recipeIngredients.reduce(
         (acc, curr) => (acc += recipeIngredientIds.has(curr.ingredientId) ? 1 : 0),
         0
       );
@@ -128,15 +143,22 @@ export class RecipesService {
     dto: UpdateRecipeRequestDto,
     previewImageFilename?: string
   ) {
-    const existedRecipe = await this.recipesRepository.findById(id);
+    const recipe = await this.recipesRepository.findById(id);
 
-    if (!existedRecipe) throw new NotFoundException('Cannot update non-existed recipe');
-    if (existedRecipe.authorId !== userId)
-      throw new ForbiddenException('Cannot update, you`re not author of this recipe');
+    if (!recipe) throw new NotFoundException('Cannot update non-existed recipe');
+    if (recipe.authorId !== userId)
+      throw new ForbiddenException('Cannot update, you`re not author of the recipe');
 
-    const recipe = await this.recipesRepository.update(id, dto, previewImageFilename);
+    assertHasCurrentVersion(recipe);
 
-    return this.recipesMapper.toDto(recipe);
+    const updatedRecipe = await this.recipesRepository.addVersionAndSetCurrent(recipe.id, {
+      ...dto,
+      previewImageFilename: previewImageFilename
+        ? previewImageFilename
+        : recipe.currentVersion.previewImage,
+    });
+
+    return this.recipesMapper.toDto(updatedRecipe);
   }
 
   async delete(id: string) {

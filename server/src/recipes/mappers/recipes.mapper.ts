@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Recipe } from 'src/generated/prisma/client';
 import { RecipeDto, RecipeDetailsResponseDto, RecipePreviewResponseDto } from '../dtos';
-import { RecipeFull, RecipeListItem } from '../recipes.types';
+import { RecipeFullSafe, RecipeListItemSafe } from '../recipes.types';
 import { transformImage } from 'src/common/utils/transform-image';
 
 @Injectable()
@@ -9,13 +9,7 @@ export class RecipesMapper {
   toDto(recipe: Recipe): RecipeDto {
     return {
       id: recipe.id,
-      title: recipe.title,
-      difficulty: recipe.difficulty,
-      cookingTime: recipe.cookingTime,
-      description: recipe.description,
       authorId: recipe.authorId,
-      categoryId: recipe.categoryId,
-      previewImage: transformImage(recipe.previewImage),
       viewsCount: recipe.viewsCount,
       ratingsCount: recipe.ratingsCount,
       ratingsAvg: Math.round(recipe.ratingsAvg * 10) / 10,
@@ -24,40 +18,38 @@ export class RecipesMapper {
   }
 
   toDetailsDto(
-    recipe: RecipeFull,
+    recipe: RecipeFullSafe,
     context: { isFavorite?: boolean; userRating?: number }
   ): RecipeDetailsResponseDto {
-    const { category, recipeSteps, recipeTags, recipeIngredients, author } = recipe;
-
     return {
       id: recipe.id,
-      title: recipe.title,
-      description: recipe.description,
-      difficulty: recipe.difficulty,
-      cookingTime: recipe.cookingTime,
-      previewImage: transformImage(recipe.previewImage),
+      title: recipe.currentVersion.title,
+      description: recipe.currentVersion.description,
+      difficulty: recipe.currentVersion.difficulty,
+      cookingTime: recipe.currentVersion.cookingTime,
+      previewImage: transformImage(recipe.currentVersion.previewImage),
       viewsCount: recipe.viewsCount,
       ratingsCount: recipe.ratingsCount,
       ratingsAvg: Math.round(recipe.ratingsAvg * 10) / 10,
       createdAt: recipe.createdAt,
       authorId: recipe.authorId,
       author: {
-        id: author.id,
-        firstname: author.firstname,
-        secondname: author.secondname,
-        avatar: transformImage(author.avatar),
+        id: recipe.author.id,
+        firstname: recipe.author.firstname,
+        secondname: recipe.author.secondname,
+        avatar: transformImage(recipe.author.avatar),
       },
-      categoryId: recipe.categoryId,
+      categoryId: recipe.currentVersion.categoryId,
       category: {
-        id: category.id,
-        name: category.name,
+        id: recipe.currentVersion.category.id,
+        name: recipe.currentVersion.category.name,
       },
-      recipeSteps: recipeSteps.map((rStep) => rStep.content),
-      recipeTags: recipeTags.map((rt) => ({
+      recipeSteps: recipe.currentVersion.recipeSteps.map((rStep) => rStep.content),
+      recipeTags: recipe.currentVersion.recipeTags.map((rt) => ({
         id: rt.tag.id,
         name: rt.tag.name,
       })),
-      recipeIngredients: recipeIngredients.map((ri) => ({
+      recipeIngredients: recipe.currentVersion.recipeIngredients.map((ri) => ({
         ingredientId: ri.ingredientId,
         name: ri.ingredient.name,
         amount: ri.amount,
@@ -68,33 +60,31 @@ export class RecipesMapper {
   }
 
   toPreviewDto(
-    recipe: RecipeListItem,
+    recipe: RecipeListItemSafe,
     context?: { isFavorite?: boolean }
   ): RecipePreviewResponseDto {
-    const { category, recipeTags, recipeIngredients } = recipe;
-
     return {
       id: recipe.id,
-      title: recipe.title,
-      description: recipe.description,
-      difficulty: recipe.difficulty,
-      cookingTime: recipe.cookingTime,
+      title: recipe.currentVersion.title,
+      description: recipe.currentVersion.description,
+      difficulty: recipe.currentVersion.difficulty,
+      cookingTime: recipe.currentVersion.cookingTime,
       authorId: recipe.authorId,
-      previewImage: transformImage(recipe.previewImage),
+      previewImage: transformImage(recipe.currentVersion.previewImage),
       viewsCount: recipe.viewsCount,
       ratingsCount: recipe.ratingsCount,
       ratingsAvg: Math.round(recipe.ratingsAvg * 10) / 10,
       createdAt: recipe.createdAt,
-      categoryId: recipe.categoryId,
+      categoryId: recipe.currentVersion.categoryId,
       category: {
-        id: category.id,
-        name: category.name,
+        id: recipe.currentVersion.category.id,
+        name: recipe.currentVersion.category.name,
       },
-      recipeTags: recipeTags.map((rt) => ({
+      recipeTags: recipe.currentVersion.recipeTags.map((rt) => ({
         id: rt.tag.id,
         name: rt.tag.name,
       })),
-      recipeIngredients: recipeIngredients.map((ri) => ({
+      recipeIngredients: recipe.currentVersion.recipeIngredients.map((ri) => ({
         ingredientId: ri.ingredientId,
         name: ri.ingredient.name,
         amount: ri.amount,

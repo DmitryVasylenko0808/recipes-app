@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { FavoriteListItem } from '../types';
+import { FavoriteListItem, FavoriteListItemSafe } from '../types';
 import { FavoriteRecipe } from 'src/generated/prisma/client';
 import { FavoriteRecipeShortDto } from '../dtos/favorite.recipe.short.dto';
 import { FavoriteRecipeDto } from '../dtos/favorite.recipe.dto';
@@ -18,7 +18,7 @@ export class FavoritesMapper {
     };
   }
 
-  toDto(favorite: FavoriteListItem): FavoriteRecipeDto {
+  toDto(favorite: FavoriteListItemSafe): FavoriteRecipeDto {
     return {
       id: favorite.id,
       userId: favorite.userId,

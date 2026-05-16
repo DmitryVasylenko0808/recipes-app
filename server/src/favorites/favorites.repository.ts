@@ -19,12 +19,16 @@ export class FavoritesRepository implements IFavoritesRepository {
         include: {
           recipe: {
             include: {
-              category: true,
-              recipeIngredients: {
-                include: { ingredient: true },
-              },
-              recipeTags: {
-                include: { tag: true },
+              currentVersion: {
+                include: {
+                  category: true,
+                  recipeIngredients: {
+                    include: { ingredient: true },
+                  },
+                  recipeTags: {
+                    include: { tag: true },
+                  },
+                },
               },
             },
           },

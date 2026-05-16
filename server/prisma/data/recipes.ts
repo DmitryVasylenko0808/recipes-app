@@ -15,7 +15,7 @@ import {
 
 const authorsIds = authors.map((a) => a.id);
 
-export const recipes: Recipe[] = Array.from({ length: 40 }).map(() => ({
+export const recipes = Array.from({ length: 40 }).map(() => ({
   id: uuidv4(),
   authorId: faker.helpers.arrayElement(authorsIds),
   viewsCount: faker.number.int({ min: 50, max: 150 }),

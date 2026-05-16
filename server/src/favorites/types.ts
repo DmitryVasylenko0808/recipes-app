@@ -4,12 +4,16 @@ const favoriteListQuery = {
   include: {
     recipe: {
       include: {
-        category: true,
-        recipeIngredients: {
-          include: { ingredient: true },
-        },
-        recipeTags: {
-          include: { tag: true },
+        currentVersion: {
+          include: {
+            category: true,
+            recipeIngredients: {
+              include: { ingredient: true },
+            },
+            recipeTags: {
+              include: { tag: true },
+            },
+          },
         },
       },
     },
@@ -20,4 +24,8 @@ export type FavoriteListItem = Prisma.FavoriteRecipeGetPayload<typeof favoriteLi
 export type FavoriteList = {
   data: FavoriteListItem[];
   totalCount: number;
+};
+
+export type FavoriteListItemSafe = FavoriteListItem & {
+  recipe: { currentVersion: NonNullable<FavoriteListItem['recipe']['currentVersion']> };
 };
