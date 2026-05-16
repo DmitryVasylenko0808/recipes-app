@@ -7,6 +7,8 @@ import {
   RecipeList,
   RecipeFull,
   AddVersionData,
+  RecipeVersionList,
+  FindVersionsOptions,
 } from '../recipes.types';
 import { Recipe } from 'src/generated/prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -300,6 +302,35 @@ export class RecipesRepository implements IRecipesRepository {
         viewsCount: { increment: 1 },
       },
     });
+  }
+
+  async findVersionsAndCount(
+    recipeId: string,
+    options: FindVersionsOptions
+  ): Promise<RecipeVersionList> {
+    const { page, limit } = options;
+
+    const [data, totalCount] = await this.prisma.$transaction([
+      this.prisma.recipeVersion.findMany({
+        where: { recipeId },
+        select: {
+          id: true,
+          recipeId: true,
+          changeDescription: true,
+          version: true,
+          createdAt: true,
+          currentRecipeOf: {
+            select: { id: true },
+          },
+        },
+        skip: limit * (page - 1),
+        take: limit,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.recipeVersion.count({ where: { recipeId } }),
+    ]);
+
+    return { data, totalCount };
   }
 
   async setVersion(recipeId: string, versionId: string): Promise<Recipe> {

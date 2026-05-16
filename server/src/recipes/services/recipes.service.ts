@@ -5,12 +5,20 @@ import {
   GetAuthorRecipesQueryDto,
   CreateRecipeRequestDto,
   UpdateRecipeRequestDto,
+  PaginationQueryDto,
 } from '../dtos';
-import { RecipeListItem, RecipeFull, RecipeFullSafe, RecipeListItemSafe } from '../recipes.types';
+import {
+  RecipeListItem,
+  RecipeFull,
+  RecipeFullSafe,
+  RecipeListItemSafe,
+  RecipeVersionListItem,
+} from '../recipes.types';
 import { getMonthRange } from '../utils/get.months.range';
 import { RecipesMapper } from '../mappers/recipes.mapper';
 import { assertHasCurrentVersion } from '../utils/assert-has-current-version';
 import { validRecipes } from '../utils/valid-recipes';
+import { paginated } from 'src/common/utils/paginated';
 
 @Injectable()
 export class RecipesService {
@@ -175,7 +183,31 @@ export class RecipesService {
     await this.recipesRepository.incrementViews(id);
   }
 
+  async getVersions(recipeId: string, options: PaginationQueryDto) {
+    const recipe = await this.recipesRepository.findById(recipeId);
+
+    if (!recipe) throw new NotFoundException('Recipe is not found');
+
+    const { data, totalCount } = await this.recipesRepository.findVersionsAndCount(
+      recipe.id,
+      options
+    );
+
+    return paginated({
+      data: data.map((rv) =>
+        this.recipesMapper.toVersionDto(rv, { isCurrent: this.isCurrentVersion(recipeId, rv) })
+      ),
+      page: options.page,
+      limit: options.limit,
+      totalCount,
+    });
+  }
+
   private isFavorite(r: RecipeListItem | RecipeFull) {
     return r.favoriteEntries && r.favoriteEntries?.length > 0;
+  }
+
+  private isCurrentVersion(recipeId: string, recipeVersion: RecipeVersionListItem) {
+    return recipeVersion.currentRecipeOf?.id === recipeId;
   }
 }

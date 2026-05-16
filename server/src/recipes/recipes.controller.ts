@@ -20,13 +20,13 @@ import { multerOptions } from 'src/common/multer.config';
 import {
   CreateRecipeRequestDto,
   GetRecipesQueryDto,
-  GetRecipesResponseDto,
   RecipeDto,
   RecipeDetailsResponseDto,
   UpdateRecipeRequestDto,
   CreateRecipeRequestMultipartDto,
   UpdateRecipeRequestMultipartDto,
   RecipePreviewResponseDto,
+  PaginationQueryDto,
 } from './dtos';
 import {
   ApiBadRequestResponse,
@@ -40,7 +40,6 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { OptionalAuthGuard } from 'src/common/optional-auth.guard';
-import { GetCommentsResponseDto } from 'src/comments/dtos/get.comments.response.dto';
 import { GetCommentsQueryDto } from 'src/comments/dtos/get.comments.query.dto';
 import { CommentShortDto } from 'src/comments/dtos/comment.short.dto';
 import { PostCommentRequestDto } from 'src/comments/dtos/post.comment.request.dto';
@@ -50,6 +49,7 @@ import { RatingsService } from './services/ratings.service';
 import { RatingDto } from './dtos/responses/rating.response.dto';
 import { ApiPaginatedResponse } from 'src/common/api-paginated-response.decorator';
 import { CommentResponseDto } from 'src/comments/dtos/comment.response.dto';
+import { RecipeVersionResponseDto } from './dtos/responses/recipe.versions.response.dto';
 
 @ApiTags('Recipes')
 @Controller('recipes')
@@ -181,5 +181,12 @@ export class RecipesController {
     @Body() dto: PostCommentRequestDto
   ) {
     return this.commentsService.postComment(id, userId, dto);
+  }
+
+  @Get(':id/versions')
+  @ApiPaginatedResponse(RecipeVersionResponseDto)
+  @ApiNotFoundResponse({ description: 'Recipe is not found' })
+  async getVersions(@Param('id') id: string, @Query() queryDto: PaginationQueryDto) {
+    return this.recipesService.getVersions(id, queryDto);
   }
 }

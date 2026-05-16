@@ -3,6 +3,7 @@ import {
   RecipeDefaultArgs,
   RecipeIngredientDefaultArgs,
   RecipeTagDefaultArgs,
+  RecipeVersionDefaultArgs,
 } from 'src/generated/prisma/models';
 import { RecipeIngredientDto } from './dtos';
 
@@ -62,6 +63,22 @@ export type RecipeFull = Prisma.RecipeGetPayload<typeof recipeFullQuery>;
 
 export type RateStats = Pick<Recipe, 'ratingsCount' | 'ratingsSum' | 'ratingsAvg'>;
 
+const recipeVersionListQuery = {
+  select: {
+    id: true,
+    version: true,
+    changeDescription: true,
+    createdAt: true,
+    recipeId: true,
+    currentRecipeOf: {
+      select: { id: true },
+    },
+  },
+} satisfies RecipeVersionDefaultArgs;
+export type RecipeVersionListItem = Prisma.RecipeVersionGetPayload<typeof recipeVersionListQuery>;
+export type RecipeVersionList = { data: RecipeVersionListItem[]; totalCount: number };
+export type FindVersionsOptions = { page: number; limit: number };
+
 export type AddVersionData = {
   readonly title: string;
   readonly categoryId: string;
@@ -80,5 +97,3 @@ export type RecipeListItemSafe = RecipeListItem & {
 export type RecipeFullSafe = RecipeFull & {
   currentVersion: NonNullable<RecipeFull['currentVersion']>;
 };
-
-const r: RecipeListItemSafe = {} as RecipeListItemSafe;

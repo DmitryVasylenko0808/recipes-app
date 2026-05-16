@@ -1,6 +1,14 @@
 import { Rating, Recipe } from 'src/generated/prisma/client';
 import { GetRecipesQueryDto, GetAuthorRecipesQueryDto, CreateRecipeRequestDto } from '../dtos';
-import { RangeDate, RateStats, RecipeListItem, RecipeList, RecipeFull } from '../recipes.types';
+import {
+  RangeDate,
+  RateStats,
+  RecipeListItem,
+  RecipeList,
+  RecipeFull,
+  RecipeVersionList,
+  FindVersionsOptions,
+} from '../recipes.types';
 
 export interface IRecipesRepository {
   findById(id: string): Promise<RecipeFull | null>;
@@ -17,6 +25,7 @@ export interface IRecipesRepository {
   updateRateStats(id: string, rateStats: Partial<RateStats>): Promise<Recipe>;
   delete(id: string): Promise<Recipe>;
   incrementViews(id: string): Promise<void>;
+  findVersionsAndCount(recipeId: string, options: FindVersionsOptions): Promise<RecipeVersionList>;
   setVersion(recipeId: string, versionId: string): Promise<Recipe>;
 }
 

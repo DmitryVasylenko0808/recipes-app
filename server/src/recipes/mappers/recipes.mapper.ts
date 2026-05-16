@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Recipe } from 'src/generated/prisma/client';
 import { RecipeDto, RecipeDetailsResponseDto, RecipePreviewResponseDto } from '../dtos';
-import { RecipeFullSafe, RecipeListItemSafe } from '../recipes.types';
+import { RecipeFullSafe, RecipeListItemSafe, RecipeVersionListItem } from '../recipes.types';
 import { transformImage } from 'src/common/utils/transform-image';
+import { RecipeVersionResponseDto } from '../dtos/responses/recipe.versions.response.dto';
 
 @Injectable()
 export class RecipesMapper {
@@ -90,6 +91,20 @@ export class RecipesMapper {
         amount: ri.amount,
         unit: ri.unit,
       })),
+      ...context,
+    };
+  }
+
+  toVersionDto(
+    recipeVersion: RecipeVersionListItem,
+    context?: { isCurrent?: boolean }
+  ): RecipeVersionResponseDto {
+    return {
+      id: recipeVersion.id,
+      createdAt: recipeVersion.createdAt,
+      recipeId: recipeVersion.recipeId,
+      version: recipeVersion.version,
+      changeDescription: recipeVersion.changeDescription,
       ...context,
     };
   }
