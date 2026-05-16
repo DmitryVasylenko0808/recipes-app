@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Put,
@@ -50,6 +51,7 @@ import { RatingDto } from './dtos/responses/rating.response.dto';
 import { ApiPaginatedResponse } from 'src/common/api-paginated-response.decorator';
 import { CommentResponseDto } from 'src/comments/dtos/comment.response.dto';
 import { RecipeVersionResponseDto } from './dtos/responses/recipe.versions.response.dto';
+import { RecipeVersionDetailsResponseDto } from './dtos/responses/recipe.versions.details.dto';
 
 @ApiTags('Recipes')
 @Controller('recipes')
@@ -188,5 +190,12 @@ export class RecipesController {
   @ApiNotFoundResponse({ description: 'Recipe is not found' })
   async getVersions(@Param('id') id: string, @Query() queryDto: PaginationQueryDto) {
     return this.recipesService.getVersions(id, queryDto);
+  }
+
+  @Get(':id/versions/:version')
+  @ApiOkResponse({ type: RecipeVersionDetailsResponseDto })
+  @ApiNotFoundResponse({ description: 'Recipe with this version is not found' })
+  async getRecipeVersion(@Param('id') id: string, @Param('version', ParseIntPipe) version: number) {
+    return this.recipesService.getRecipeVersion(id, version);
   }
 }

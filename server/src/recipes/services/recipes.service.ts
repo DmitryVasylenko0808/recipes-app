@@ -203,6 +203,14 @@ export class RecipesService {
     });
   }
 
+  async getRecipeVersion(recipeId: string, version: number) {
+    const recipeVersion = await this.recipesRepository.findVersion(recipeId, version);
+
+    if (!recipeVersion) throw new NotFoundException('Recipe with this version is not found');
+
+    return this.recipesMapper.toVersionDetailsDto(recipeVersion);
+  }
+
   private isFavorite(r: RecipeListItem | RecipeFull) {
     return r.favoriteEntries && r.favoriteEntries?.length > 0;
   }

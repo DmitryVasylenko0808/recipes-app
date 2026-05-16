@@ -9,6 +9,7 @@ import {
   AddVersionData,
   RecipeVersionList,
   FindVersionsOptions,
+  RecipeVersionFull,
 } from '../recipes.types';
 import { Recipe } from 'src/generated/prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -331,6 +332,24 @@ export class RecipesRepository implements IRecipesRepository {
     ]);
 
     return { data, totalCount };
+  }
+
+  async findVersion(recipeId: string, version: number): Promise<RecipeVersionFull | null> {
+    return this.prisma.recipeVersion.findUnique({
+      where: {
+        recipeId_version: { recipeId, version },
+      },
+      include: {
+        category: true,
+        recipeTags: {
+          include: { tag: true },
+        },
+        recipeIngredients: {
+          include: { ingredient: true },
+        },
+        recipeSteps: true,
+      },
+    });
   }
 
   async setVersion(recipeId: string, versionId: string): Promise<Recipe> {

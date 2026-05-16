@@ -8,6 +8,7 @@ import {
   RecipeFull,
   RecipeVersionList,
   FindVersionsOptions,
+  RecipeVersionFull,
 } from '../recipes.types';
 
 export interface IRecipesRepository {
@@ -26,6 +27,7 @@ export interface IRecipesRepository {
   delete(id: string): Promise<Recipe>;
   incrementViews(id: string): Promise<void>;
   findVersionsAndCount(recipeId: string, options: FindVersionsOptions): Promise<RecipeVersionList>;
+  findVersion(recipeId: string, version: number): Promise<RecipeVersionFull | null>;
   setVersion(recipeId: string, versionId: string): Promise<Recipe>;
 }
 

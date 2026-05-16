@@ -1,9 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { Recipe } from 'src/generated/prisma/client';
 import { RecipeDto, RecipeDetailsResponseDto, RecipePreviewResponseDto } from '../dtos';
-import { RecipeFullSafe, RecipeListItemSafe, RecipeVersionListItem } from '../recipes.types';
+import {
+  RecipeFullSafe,
+  RecipeListItemSafe,
+  RecipeVersionFull,
+  RecipeVersionListItem,
+} from '../recipes.types';
 import { transformImage } from 'src/common/utils/transform-image';
 import { RecipeVersionResponseDto } from '../dtos/responses/recipe.versions.response.dto';
+import { RecipeVersionDetailsResponseDto } from '../dtos/responses/recipe.versions.details.dto';
 
 @Injectable()
 export class RecipesMapper {
@@ -106,6 +112,34 @@ export class RecipesMapper {
       version: recipeVersion.version,
       changeDescription: recipeVersion.changeDescription,
       ...context,
+    };
+  }
+
+  toVersionDetailsDto(recipeVersion: RecipeVersionFull): RecipeVersionDetailsResponseDto {
+    return {
+      id: recipeVersion.id,
+      recipeId: recipeVersion.recipeId,
+      version: recipeVersion.version,
+      title: recipeVersion.title,
+      description: recipeVersion.description,
+      cookingTime: recipeVersion.cookingTime,
+      previewImage: transformImage(recipeVersion.previewImage),
+      difficulty: recipeVersion.difficulty,
+      categoryId: recipeVersion.categoryId,
+      category: {
+        id: recipeVersion.category.id,
+        name: recipeVersion.category.name,
+      },
+      createdAt: recipeVersion.createdAt,
+      recipeSteps: recipeVersion.recipeSteps.map((rs) => rs.content),
+      recipeTags: recipeVersion.recipeTags.map((rt) => ({ id: rt.tagId, name: rt.tag.name })),
+      recipeIngredients: recipeVersion.recipeIngredients.map((ri) => ({
+        ingredientId: ri.ingredientId,
+        name: ri.ingredient.name,
+        amount: ri.amount,
+        unit: ri.unit,
+      })),
+      changeDescription: recipeVersion.changeDescription,
     };
   }
 }

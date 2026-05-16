@@ -79,6 +79,20 @@ export type RecipeVersionListItem = Prisma.RecipeVersionGetPayload<typeof recipe
 export type RecipeVersionList = { data: RecipeVersionListItem[]; totalCount: number };
 export type FindVersionsOptions = { page: number; limit: number };
 
+const recipeVersionFullQuery = {
+  include: {
+    category: true,
+    recipeTags: {
+      include: { tag: true },
+    },
+    recipeIngredients: {
+      include: { ingredient: true },
+    },
+    recipeSteps: true,
+  },
+} satisfies RecipeVersionDefaultArgs;
+export type RecipeVersionFull = Prisma.RecipeVersionGetPayload<typeof recipeVersionFullQuery>;
+
 export type AddVersionData = {
   readonly title: string;
   readonly categoryId: string;
