@@ -13,13 +13,13 @@ import {
 } from '@/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
-import type { Recipe, RecipePreview } from '@/entities/recipes';
+import type { Recipe, RecipeShort } from '@/entities/recipes';
 import { updateRecipeSchema, type UpdateRecipeFormFields } from '../model/validations';
 import { useUpdateRecipe } from '../model/hooks/use-update-recipe';
 
 type UpdateRecipeFormProps = {
   recipe: Recipe;
-  onSubmit?: (data: RecipePreview) => void;
+  onSubmit?: (data: RecipeShort) => void;
 };
 
 export const UpdateRecipeForm = ({ recipe, onSubmit }: UpdateRecipeFormProps) => {
@@ -73,7 +73,6 @@ export const UpdateRecipeForm = ({ recipe, onSubmit }: UpdateRecipeFormProps) =>
 
     setValue('recipeTagIds', [...selectedTagIds, tag.id], { shouldValidate: true });
   };
-
   const handleClickAddStep = () => appendStep({ content: '' });
   const handleClickAddIngredient = () =>
     appendIngredient({ ingredientId: '', amount: 0, unit: '' });

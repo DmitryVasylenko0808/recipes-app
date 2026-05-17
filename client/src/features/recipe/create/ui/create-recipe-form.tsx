@@ -15,9 +15,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { type CreateRecipeFormFields, createRecipeSchema } from '../model/validations';
 import { useCreateRecipe } from '../model/hooks/use-create-recipe';
-import type { RecipePreview } from '@/entities/recipes';
+import type { RecipeShort } from '@/entities/recipes';
 
-type CreateRecipeFormProps = { onSubmit?: (data: RecipePreview) => void };
+type CreateRecipeFormProps = { onSubmit?: (data: RecipeShort) => void };
 
 export const CreateRecipeForm = ({ onSubmit }: CreateRecipeFormProps) => {
   const { data: categories, isLoading: isLoadingCategories } = useGetCategories();
@@ -65,7 +65,6 @@ export const CreateRecipeForm = ({ onSubmit }: CreateRecipeFormProps) => {
 
     setValue('recipeTagIds', [...selectedTagIds, tag.id], { shouldValidate: true });
   };
-
   const handleClickAddStep = () => appendStep({ content: '' });
   const handleClickAddIngredient = () =>
     appendIngredient({ ingredientId: '', amount: 0, unit: '' });

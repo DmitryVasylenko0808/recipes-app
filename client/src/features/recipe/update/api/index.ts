@@ -1,4 +1,4 @@
-import type { Difficulty, RecipePreview } from '@/entities/recipes';
+import type { Difficulty, RecipeShort } from '@/entities/recipes';
 import { apiClient, API_URL } from '@/shared';
 
 export type UpdateRecipeArgs = {
@@ -18,7 +18,7 @@ export type UpdateRecipeArgs = {
     unit: string;
   }[];
 };
-export type UpdateRecipeDto = RecipePreview;
+export type UpdateRecipeDto = RecipeShort;
 
 export const patchUpdateRecipe = async (args: UpdateRecipeArgs) => {
   const { id, cookingTime, recipeSteps, recipeTagIds, recipeIngredients, ...postData } = args;

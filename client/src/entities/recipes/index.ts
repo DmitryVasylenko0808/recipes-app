@@ -1,3 +1,4 @@
+export * from './model/types/recipe-short';
 export * from './model/types/recipe-preview';
 export * from './model/types/recipe';
 export * from './model/hooks/use-get-recipes';
