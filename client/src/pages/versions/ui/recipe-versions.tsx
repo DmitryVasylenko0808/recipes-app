@@ -1,9 +1,10 @@
 import { useGetRecipeVersions, RecipeVersionsList, RecipeVersionItem } from '@/entities/recipes';
 import { usePagination, Pagination } from '@/features/pagination';
+import { RollbackRecipeButton } from '@/features/recipe/rollback';
 import { Typograpghy, EmptyState, Loader } from '@/shared';
 import { useParams, Navigate } from 'react-router';
 
-export const INITIAL_LIMIT = 2;
+export const INITIAL_LIMIT = 10;
 
 export const RecipeVersions = () => {
   const { id } = useParams();
@@ -31,7 +32,15 @@ export const RecipeVersions = () => {
         <RecipeVersionsList
           recipeVersions={data?.data}
           isFetching={isFetching}
-          renderItem={(rv) => <RecipeVersionItem recipeVersion={rv} />}
+          renderItem={(rv) => (
+            <RecipeVersionItem
+              recipeVersion={rv}
+              key={rv.id}
+              actionsSlot={
+                !rv.isCurrent && <RollbackRecipeButton recipeId={id} version={rv.version} />
+              }
+            />
+          )}
         />
       )}
       <Pagination
