@@ -1,7 +1,7 @@
-import type { Recipe } from '@/entities/recipes';
+import { ViewHistoryRecipeMenuItem, type Recipe } from '@/entities/recipes';
 import { DeleleRecipeMenuItem, ConfirmDeleteRecipeModal } from '@/features/recipe/delete';
 import { UpdateRecipeMenuItem } from '@/features/recipe/update';
-import { useToggleMenu, useModal, Menu, Button, MenuContent, IconButton } from '@/shared';
+import { useToggleMenu, useModal, Menu, MenuContent, IconButton } from '@/shared';
 import { EllipsisVertical } from 'lucide-react';
 
 type RecipeActionsMenuProps = { recipe: Recipe };
@@ -18,6 +18,7 @@ export const RecipeActionsMenu = ({ recipe }: RecipeActionsMenuProps) => {
         }
         content={
           <MenuContent ref={ref}>
+            <ViewHistoryRecipeMenuItem recipeId={recipe.id} />
             <UpdateRecipeMenuItem recipeId={recipe.id} />
             <DeleleRecipeMenuItem onClick={handleClickOpen} />
           </MenuContent>

@@ -8,6 +8,7 @@ export const pathKeys = {
     create: `/recipes/create`,
     byId: (id?: string) => `/recipes/${id}`,
     byIdUpdate: (id?: string) => `/recipes/${id}/update`,
+    byIdRecipeVersions: (id?: string) => `/recipes/${id}/versions`,
   },
   auth: {
     signIn: `/auth/sign-in`,

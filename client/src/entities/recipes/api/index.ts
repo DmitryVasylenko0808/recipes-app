@@ -1,6 +1,7 @@
 import { API_URL, apiClient } from '@/shared';
 import type { RecipePreview } from '../model/types/recipe-preview';
 import type { Recipe } from '../model/types/recipe';
+import type { RecipeVersionPreview } from '../model/types/recipe-version-preview';
 
 export type GetRecipesArgs = {
   page: number;
@@ -71,6 +72,33 @@ export type GetAuthorRecipesArgs = {
 export const getAuthorRecipes = async (args: GetAuthorRecipesArgs) => {
   const response = await apiClient.get<GetAuthorRecipesDto>(
     `${API_URL}/authors/${args.authorId}/recipes`,
+    {
+      params: {
+        page: args.page,
+        limit: args.limit,
+      },
+    }
+  );
+
+  return response.data;
+};
+
+export type GetRecipeVersionsArgs = {
+  id?: string;
+  page: number;
+  limit: number;
+};
+
+export type GetRecipeVersionsDto = {
+  data: RecipeVersionPreview[];
+  totalCount: number;
+  totalPages: number;
+  currentPage: number;
+};
+
+export const getRecipeVersions = async (args: GetRecipeVersionsArgs) => {
+  const response = await apiClient.get<GetRecipeVersionsDto>(
+    `${API_URL}/recipes/${args.id}/versions`,
     {
       params: {
         page: args.page,
