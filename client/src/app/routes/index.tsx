@@ -15,6 +15,7 @@ const EditProfilePage = lazy(() => import('@/pages/edit-profile'));
 const SignInPage = lazy(() => import('@/pages/sign-in'));
 const RegisterPage = lazy(() => import('@/pages/register'));
 const RecipeVersionsPage = lazy(() => import('@/pages/versions'));
+const RecipeVersionPage = lazy(() => import('@/pages/recipe-version'));
 
 export const AppRoutes = () => (
   <Routes>
@@ -22,6 +23,7 @@ export const AppRoutes = () => (
       <Route index element={<MainPage />} />
       <Route path="/recipes/:id" element={<RecipePage />} />
       <Route path="/recipes/:id/versions" element={<RecipeVersionsPage />} />
+      <Route path="/recipes/:id/versions/:version" element={<RecipeVersionPage />} />
       <Route path="/authors/:id" element={<AuthorPage />} />
       <Route path="*" element={<NotFoundPage />} />
       <Route element={<AuthGuard />}>

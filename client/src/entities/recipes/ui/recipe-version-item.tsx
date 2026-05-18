@@ -1,19 +1,29 @@
-import { Badge, Card, Typograpghy } from '@/shared';
+import { Badge, Typograpghy } from '@/shared';
 import type { ReactNode } from 'react';
 import type { RecipeVersionPreview } from '../model/types/recipe-version-preview';
 import { Calendar } from 'lucide-react';
+import { cn } from '@/shared/lib/utils/cn';
 
 type RecipeVersionItemProps = {
   recipeVersion: RecipeVersionPreview;
   actionsSlot?: ReactNode;
+  accent?: boolean;
 };
 
-export const RecipeVersionItem = ({ recipeVersion, actionsSlot }: RecipeVersionItemProps) => {
+export const RecipeVersionItem = ({
+  recipeVersion,
+  actionsSlot,
+  accent,
+}: RecipeVersionItemProps) => {
   return (
-    <Card className="flex p-5">
+    <div
+      className={cn('bg-card border-ring/30 text-card-foreground flex rounded-xl border p-5', {
+        'bg-accent': accent,
+      })}
+    >
       <div className="flex-auto">
         <div className="mb-3 flex gap-2">
-          <Badge variant={recipeVersion.isCurrent ? 'primary' : 'secondary'}>
+          <Badge variant={recipeVersion.isCurrent || accent ? 'primary' : 'secondary'}>
             Version {recipeVersion.version} {recipeVersion.isCurrent && '(Current)'}
           </Badge>
           <Typograpghy tagVariant="p">{recipeVersion.changeDescription}</Typograpghy>
@@ -25,7 +35,7 @@ export const RecipeVersionItem = ({ recipeVersion, actionsSlot }: RecipeVersionI
           </Typograpghy>
         </div>
       </div>
-      <div>{actionsSlot}</div>
-    </Card>
+      <div className="flex gap-2">{actionsSlot}</div>
+    </div>
   );
 };

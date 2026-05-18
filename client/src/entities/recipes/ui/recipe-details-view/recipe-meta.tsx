@@ -6,11 +6,11 @@ import type { ComponentProps } from 'react';
 import type { Difficulty } from '../../model/types/recipe-preview';
 
 type RecipeMetaProps = {
-  category: Category;
-  difficulty: Difficulty;
-  cookingTime: number;
-  viewsCount: number;
-  tags: Tag[];
+  category?: Category;
+  difficulty?: Difficulty;
+  cookingTime?: number;
+  viewsCount?: number;
+  tags?: Tag[];
 };
 export const RecipeMeta = ({
   category,
@@ -22,46 +22,56 @@ export const RecipeMeta = ({
   return (
     <div>
       <div className="mb-6 flex gap-4">
-        <MetaBlock>
-          <Typograpghy tagVariant="span" className="text-sm">
-            Category
-          </Typograpghy>
-          <Typograpghy tagVariant="p" className="font-medium">
-            {category.name}
-          </Typograpghy>
-        </MetaBlock>
-        <MetaBlock icon={ChefHat}>
-          <Typograpghy tagVariant="span" className="text-sm">
-            Difficulty
-          </Typograpghy>
-          <Typograpghy tagVariant="p" className="font-medium">
-            {difficulty}
-          </Typograpghy>
-        </MetaBlock>
-        <MetaBlock icon={Clock}>
-          <Typograpghy tagVariant="span" className="text-sm">
-            Cooking time
-          </Typograpghy>
-          <Typograpghy tagVariant="p" className="font-medium">
-            {cookingTime} minutes
-          </Typograpghy>
-        </MetaBlock>
-        <MetaBlock icon={Eye}>
-          <Typograpghy tagVariant="span" className="text-sm">
-            Views
-          </Typograpghy>
-          <Typograpghy tagVariant="p" className="font-medium">
-            {viewsCount}
-          </Typograpghy>
-        </MetaBlock>
+        {category && (
+          <MetaBlock>
+            <Typograpghy tagVariant="span" className="text-sm">
+              Category
+            </Typograpghy>
+            <Typograpghy tagVariant="p" className="font-medium">
+              {category.name}
+            </Typograpghy>
+          </MetaBlock>
+        )}
+        {difficulty && (
+          <MetaBlock icon={ChefHat}>
+            <Typograpghy tagVariant="span" className="text-sm">
+              Difficulty
+            </Typograpghy>
+            <Typograpghy tagVariant="p" className="font-medium">
+              {difficulty}
+            </Typograpghy>
+          </MetaBlock>
+        )}
+        {cookingTime && (
+          <MetaBlock icon={Clock}>
+            <Typograpghy tagVariant="span" className="text-sm">
+              Cooking time
+            </Typograpghy>
+            <Typograpghy tagVariant="p" className="font-medium">
+              {cookingTime} minutes
+            </Typograpghy>
+          </MetaBlock>
+        )}
+        {viewsCount && (
+          <MetaBlock icon={Eye}>
+            <Typograpghy tagVariant="span" className="text-sm">
+              Views
+            </Typograpghy>
+            <Typograpghy tagVariant="p" className="font-medium">
+              {viewsCount}
+            </Typograpghy>
+          </MetaBlock>
+        )}
       </div>
-      <div className="flex gap-2">
-        {tags.map((t) => (
-          <Badge variant="secondary" key={t.id}>
-            {t.name}
-          </Badge>
-        ))}
-      </div>
+      {tags && (
+        <div className="flex gap-2">
+          {tags.map((t) => (
+            <Badge variant="secondary" key={t.id}>
+              {t.name}
+            </Badge>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

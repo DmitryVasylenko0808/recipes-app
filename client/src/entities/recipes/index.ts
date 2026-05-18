@@ -9,6 +9,7 @@ export * from './model/hooks/use-get-one-recipe';
 export * from './model/hooks/use-get-similar-recipes';
 export * from './model/hooks/use-get-author-recipes';
 export * from './model/hooks/use-get-recipe-versions';
+export * from './model/hooks/use-get-recipe-version';
 export * from './api';
 
 export * from './ui/recipe-card';
@@ -28,3 +29,4 @@ export * from './ui/recipe-card-horizontal';
 export * from './ui/view-history-recipe-menu-item';
 export * from './ui/recipe-versions-list';
 export * from './ui/recipe-version-item';
+export * from './ui/view-recipe-version-button';

@@ -1,4 +1,9 @@
-import { useGetRecipeVersions, RecipeVersionsList, RecipeVersionItem } from '@/entities/recipes';
+import {
+  useGetRecipeVersions,
+  RecipeVersionsList,
+  RecipeVersionItem,
+  ViewRecipeVersionButton,
+} from '@/entities/recipes';
 import { usePagination, Pagination } from '@/features/pagination';
 import { RollbackRecipeButton } from '@/features/recipe/rollback';
 import { Typograpghy, EmptyState, Loader } from '@/shared';
@@ -37,7 +42,10 @@ export const RecipeVersions = () => {
               recipeVersion={rv}
               key={rv.id}
               actionsSlot={
-                !rv.isCurrent && <RollbackRecipeButton recipeId={id} version={rv.version} />
+                <>
+                  <ViewRecipeVersionButton id={id} version={rv.version} isCurrent={rv.isCurrent} />
+                  {!rv.isCurrent && <RollbackRecipeButton recipeId={id} version={rv.version} />}
+                </>
               }
             />
           )}

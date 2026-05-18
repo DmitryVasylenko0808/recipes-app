@@ -2,6 +2,7 @@ import { API_URL, apiClient } from '@/shared';
 import type { RecipePreview } from '../model/types/recipe-preview';
 import type { Recipe } from '../model/types/recipe';
 import type { RecipeVersionPreview } from '../model/types/recipe-version-preview';
+import type { RecipeVersion } from '../model/types/recipe-version';
 
 export type GetRecipesArgs = {
   page: number;
@@ -105,6 +106,18 @@ export const getRecipeVersions = async (args: GetRecipeVersionsArgs) => {
         limit: args.limit,
       },
     }
+  );
+
+  return response.data;
+};
+
+export type GetRecipeVersionArgs = { id?: string; version?: number };
+
+export type GetRecipeVersionDto = RecipeVersion['version'] & RecipeVersion['recipe'];
+
+export const getRecipeversion = async (args: GetRecipeVersionArgs) => {
+  const response = await apiClient.get<GetRecipeVersionDto>(
+    `${API_URL}/recipes/${args.id}/versions/${args.version}`
   );
 
   return response.data;
