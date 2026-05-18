@@ -12,7 +12,15 @@ export * from './model/hooks/use-get-recipe-versions';
 export * from './api';
 
 export * from './ui/recipe-card';
-export * from './ui/recipe-details-view';
+export * from './ui/recipe-details-view/recipe-details-view';
+export * from './ui/recipe-details-view/recipe-author';
+export * from './ui/recipe-details-view/recipe-image';
+export * from './ui/recipe-details-view/recipe-ingredients';
+export * from './ui/recipe-details-view/recipe-meta';
+export * from './ui/recipe-details-view/recipe-rating-stats';
+export * from './ui/recipe-details-view/recipe-steps';
+export * from './ui/recipe-details-view/recipe-summary';
+
 export * from './ui/recipes-grid';
 export * from './ui/recipes-grid-skeleton';
 export * from './ui/recipe-details-skeleton';
