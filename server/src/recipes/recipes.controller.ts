@@ -188,7 +188,6 @@ export class RecipesController {
 
   @Get(':id/versions')
   @ApiPaginatedResponse(RecipeVersionResponseDto)
-  @ApiNotFoundResponse({ description: 'Recipe is not found' })
   async getVersions(@Param('id') id: string, @Query() queryDto: PaginationQueryDto) {
     return this.recipesService.getVersions(id, queryDto);
   }

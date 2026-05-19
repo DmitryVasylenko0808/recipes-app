@@ -190,12 +190,8 @@ export class RecipesService {
   }
 
   async getVersions(recipeId: string, options: PaginationQueryDto) {
-    const recipe = await this.recipesRepository.findById(recipeId);
-
-    if (!recipe) throw new NotFoundException('Recipe is not found');
-
     const { data, totalCount } = await this.recipesRepository.findVersionsAndCount(
-      recipe.id,
+      recipeId,
       options
     );
 
