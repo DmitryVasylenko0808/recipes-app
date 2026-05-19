@@ -1,12 +1,15 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getRecipeVersions, type GetRecipeVersionsArgs } from '../../api';
 
-export const useGetRecipeVersions = (args: GetRecipeVersionsArgs) => {
-  const { id, ...restArgs } = args;
+type UseGetRecipeVersionsArgs = GetRecipeVersionsArgs & { enabled?: boolean };
+
+export const useGetRecipeVersions = (args: UseGetRecipeVersionsArgs) => {
+  const { enabled = true, id, ...restArgs } = args;
 
   return useQuery({
     queryKey: ['recipes', id, 'versions', { ...restArgs }],
     queryFn: () => getRecipeVersions(args),
     placeholderData: keepPreviousData,
+    enabled,
   });
 };

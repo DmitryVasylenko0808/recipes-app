@@ -15,4 +15,5 @@ export const pathKeys = {
     signIn: `/auth/sign-in`,
     register: `/auth/register`,
   },
+  error: `*`,
 } as const;
