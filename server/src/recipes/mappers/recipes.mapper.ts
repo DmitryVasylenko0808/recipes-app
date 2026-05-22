@@ -117,29 +117,33 @@ export class RecipesMapper {
 
   toVersionDetailsDto(recipeVersion: RecipeVersionFull): RecipeVersionDetailsResponseDto {
     return {
-      id: recipeVersion.id,
-      recipeId: recipeVersion.recipeId,
-      version: recipeVersion.version,
-      title: recipeVersion.title,
-      description: recipeVersion.description,
-      cookingTime: recipeVersion.cookingTime,
-      previewImage: transformImage(recipeVersion.previewImage),
-      difficulty: recipeVersion.difficulty,
-      categoryId: recipeVersion.categoryId,
-      category: {
-        id: recipeVersion.category.id,
-        name: recipeVersion.category.name,
+      version: {
+        id: recipeVersion.id,
+        recipeId: recipeVersion.recipeId,
+        version: recipeVersion.version,
+        createdAt: recipeVersion.createdAt,
+        changeDescription: recipeVersion.changeDescription,
       },
-      createdAt: recipeVersion.createdAt,
-      recipeSteps: recipeVersion.recipeSteps.map((rs) => rs.content),
-      recipeTags: recipeVersion.recipeTags.map((rt) => ({ id: rt.tagId, name: rt.tag.name })),
-      recipeIngredients: recipeVersion.recipeIngredients.map((ri) => ({
-        ingredientId: ri.ingredientId,
-        name: ri.ingredient.name,
-        amount: ri.amount,
-        unit: ri.unit,
-      })),
-      changeDescription: recipeVersion.changeDescription,
+      recipe: {
+        title: recipeVersion.title,
+        description: recipeVersion.description,
+        cookingTime: recipeVersion.cookingTime,
+        previewImage: transformImage(recipeVersion.previewImage),
+        difficulty: recipeVersion.difficulty,
+        categoryId: recipeVersion.categoryId,
+        category: {
+          id: recipeVersion.category.id,
+          name: recipeVersion.category.name,
+        },
+        recipeSteps: recipeVersion.recipeSteps.map((rs) => rs.content),
+        recipeTags: recipeVersion.recipeTags.map((rt) => ({ id: rt.tagId, name: rt.tag.name })),
+        recipeIngredients: recipeVersion.recipeIngredients.map((ri) => ({
+          ingredientId: ri.ingredientId,
+          name: ri.ingredient.name,
+          amount: ri.amount,
+          unit: ri.unit,
+        })),
+      },
     };
   }
 }
