@@ -193,6 +193,13 @@ export class RecipesController {
     return this.recipesService.getVersions(id, queryDto);
   }
 
+  @Get(':id/versions/:version')
+  @ApiOkResponse({ type: RecipeVersionDetailsResponseDto })
+  @ApiNotFoundResponse({ description: 'Recipe with this version is not found' })
+  async getRecipeVersion(@Param('id') id: string, @Param('version', ParseIntPipe) version: number) {
+    return this.recipesService.getRecipeVersion(id, version);
+  }
+
   @Patch(':id/current-version')
   @UseGuards(PrivateAuthGuard)
   @ApiBearerAuth()
@@ -207,12 +214,5 @@ export class RecipesController {
     @Body() dto: RollbackRecipeVersionRequestDto
   ) {
     return this.recipesService.rollbackRecipeVersion(id, userId, dto);
-  }
-
-  @Get(':id/versions/:version')
-  @ApiOkResponse({ type: RecipeVersionDetailsResponseDto })
-  @ApiNotFoundResponse({ description: 'Recipe with this version is not found' })
-  async getRecipeVersion(@Param('id') id: string, @Param('version', ParseIntPipe) version: number) {
-    return this.recipesService.getRecipeVersion(id, version);
   }
 }
