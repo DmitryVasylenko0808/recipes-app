@@ -10,7 +10,7 @@ export type PatchRollbackRecipeDto = RecipeShort;
 
 export const patchRollbackRecipe = async (args: PatchRollbackRecipeArgs) => {
   const response = await apiClient.patch<PatchRollbackRecipeDto>(
-    `${API_URL}/recipes/${args.id}/versions/rollback`,
+    `${API_URL}/recipes/${args.id}/current-version`,
     {
       version: args.version,
     }
