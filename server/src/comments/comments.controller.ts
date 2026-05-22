@@ -18,6 +18,7 @@ import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiConflictResponse,
+  ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiUnauthorizedResponse,
@@ -33,6 +34,7 @@ export class CommentsController {
   @ApiBearerAuth()
   @ApiOkResponse({ type: CommentShortDto })
   @ApiUnauthorizedResponse({ description: 'Unathorized' })
+  @ApiForbiddenResponse({ description: 'Cannot update, you are not author the comment' })
   @ApiNotFoundResponse({ description: 'Comment is not found' })
   async updateComment(
     @Param('id') id: string,
@@ -47,9 +49,10 @@ export class CommentsController {
   @ApiBearerAuth()
   @ApiOkResponse({ type: CommentShortDto })
   @ApiUnauthorizedResponse({ description: 'Unathorized' })
+  @ApiForbiddenResponse({ description: 'Cannot delete, you are not author the comment' })
   @ApiNotFoundResponse({ description: 'Comment is not found' })
-  async deleteComment(@Param('id') id: string) {
-    return this.commentsService.deleteComment(id);
+  async deleteComment(@Param('id') id: string, @CurrentUser('id') userId: string) {
+    return this.commentsService.deleteComment(id, userId);
   }
 
   @Post(':id/likes')

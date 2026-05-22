@@ -46,8 +46,8 @@ export class AuthorsService {
     });
   }
 
-  async updateAuthor(authorId: string, data: UpdateAuthorRequestDto, avatarFilename?: string) {
-    const author = await this.authorsRepository.update(authorId, {
+  async updateAuthor(userId: string, data: UpdateAuthorRequestDto, avatarFilename?: string) {
+    const author = await this.authorsRepository.update(userId, {
       ...data,
       avatar: avatarFilename,
     });

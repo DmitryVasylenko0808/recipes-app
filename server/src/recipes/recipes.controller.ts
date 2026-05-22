@@ -131,9 +131,10 @@ export class RecipesController {
   @UseGuards(PrivateAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: RecipeDto })
+  @ApiForbiddenResponse({ description: 'Cannot delete, you are not author of the recipe' })
   @ApiNotFoundResponse({ description: 'Cannot delete non-existed recipe' })
-  async deleteRecipe(@Param('id') id: string) {
-    return this.recipesService.delete(id);
+  async deleteRecipe(@Param('id') id: string, @CurrentUser('id') userId: string) {
+    return this.recipesService.delete(id, userId);
   }
 
   @Patch(':id/views')

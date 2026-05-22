@@ -175,14 +175,16 @@ export class RecipesService {
     return this.recipesMapper.toDto(updatedRecipe);
   }
 
-  async delete(id: string) {
-    const existedRecipe = await this.recipesRepository.findById(id);
+  async delete(id: string, userId: string) {
+    const recipe = await this.recipesRepository.findById(id);
 
-    if (!existedRecipe) throw new NotFoundException('Cannot delete non-existed recipe');
+    if (!recipe) throw new NotFoundException('Cannot delete non-existed recipe');
+    if (recipe.authorId !== userId)
+      throw new ForbiddenException('Cannot delete, you are not author of the recipe');
 
-    const recipe = await this.recipesRepository.delete(id);
+    const deletedRecipe = await this.recipesRepository.delete(id);
 
-    return this.recipesMapper.toDto(recipe);
+    return this.recipesMapper.toDto(deletedRecipe);
   }
 
   async incrementViews(id: string) {

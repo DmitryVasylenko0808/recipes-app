@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -46,16 +47,20 @@ export class CommentsService {
     const comment = await this.commentsRepository.findOneById(id);
 
     if (!comment) throw new NotFoundException('Comment is not found');
+    if (comment.userId !== userId)
+      throw new ForbiddenException('Cannot update, you are not author the comment');
 
     const data = await this.commentsRepository.update(id, { userId, ...dto });
 
     return this.commentsMapper.toShortDto(data);
   }
 
-  async deleteComment(id: string) {
+  async deleteComment(id: string, userId: string) {
     const comment = await this.commentsRepository.findOneById(id);
 
     if (!comment) throw new NotFoundException('Comment is not found');
+    if (comment.userId !== userId)
+      throw new ForbiddenException('Cannot delete, you are not author the comment');
 
     const data = await this.commentsRepository.delete(id);
 
