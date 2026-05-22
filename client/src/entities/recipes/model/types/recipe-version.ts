@@ -13,5 +13,6 @@ export type RecipeVersion = {
     | 'ratingsCount'
     | 'userRating'
     | 'viewsCount'
+    | 'createdAt'
   >;
 };

@@ -23,29 +23,23 @@ export const RecipeVersionView = () => {
       <div className="mx-auto max-w-4xl px-4 py-8">
         <RecipeDetailsView>
           <RecipeVersionItem
-            recipeVersion={{
-              id: data.id,
-              version: data.version,
-              createdAt: data.createdAt,
-              changeDescription: data.changeDescription,
-              recipeId: data.recipeId,
-            }}
+            recipeVersion={data.version}
             actionsSlot={
-              <Button as="link" to={pathKeys.recipes.byId(data.recipeId)} variant="primary">
+              <Button as="link" to={pathKeys.recipes.byId(data.version.recipeId)} variant="primary">
                 View Current Version
               </Button>
             }
             accent
           />
-          <RecipeImage image={data.previewImage} />
-          <RecipeSummary title={data.title} description={data.description} />
+          <RecipeImage image={data.recipe.previewImage} />
+          <RecipeSummary title={data.recipe.title} description={data.recipe.description} />
           <RecipeMeta
-            category={data.category}
-            difficulty={data.difficulty}
-            cookingTime={data.cookingTime}
+            category={data.recipe.category}
+            difficulty={data.recipe.difficulty}
+            cookingTime={data.recipe.cookingTime}
           />
-          <RecipeIngredients ingredients={data.recipeIngredients} />
-          <RecipeSteps steps={data.recipeSteps} />
+          <RecipeIngredients ingredients={data.recipe.recipeIngredients} />
+          <RecipeSteps steps={data.recipe.recipeSteps} />
         </RecipeDetailsView>
       </div>
     )

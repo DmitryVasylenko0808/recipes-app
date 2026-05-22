@@ -113,7 +113,7 @@ export const getRecipeVersions = async (args: GetRecipeVersionsArgs) => {
 
 export type GetRecipeVersionArgs = { id?: string; version?: number };
 
-export type GetRecipeVersionDto = RecipeVersion['version'] & RecipeVersion['recipe'];
+export type GetRecipeVersionDto = RecipeVersion;
 
 export const getRecipeversion = async (args: GetRecipeVersionArgs) => {
   const response = await apiClient.get<GetRecipeVersionDto>(
