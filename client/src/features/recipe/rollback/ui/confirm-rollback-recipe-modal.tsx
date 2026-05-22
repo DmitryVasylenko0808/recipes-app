@@ -15,7 +15,7 @@ export const ConfirmRollbackRecipeModal = ({
 
   const handleClickRollback = () => {
     mutateAsync({ id: recipeId, version })
-      .then(() => alert(`Recipe reverted to version ${version}`))
+      .then(() => alert(`Recipe restored to version ${version}`))
       .catch((err) => alert(err.message));
   };
 
