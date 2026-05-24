@@ -166,8 +166,29 @@ export class RecipesService {
     assertHasCurrentVersion(recipe);
 
     const updatedRecipe = await this.recipesRepository.addVersionAndSetCurrent(recipe.id, {
-      ...dto,
-      previewImageFilename: previewImageFilename
+      title: dto.title || recipe.currentVersion.title,
+      categoryId: dto.categoryId || recipe.currentVersion.categoryId,
+      cookingTime: dto.cookingTime || recipe.currentVersion.cookingTime,
+      description: dto.description || recipe.currentVersion.description,
+      difficulty: dto.difficulty || recipe.currentVersion.difficulty,
+      recipeIngredients: dto.recipeIngredients
+        ? dto.recipeIngredients.map((ri) => ({
+            ingredientId: ri.ingredientId,
+            amount: ri.amount,
+            unit: ri.unit,
+          }))
+        : recipe.currentVersion.recipeIngredients.map((ri) => ({
+            ingredientId: ri.ingredientId,
+            amount: ri.amount,
+            unit: ri.unit,
+          })),
+      recipeSteps: dto.recipeSteps
+        ? dto.recipeSteps.map((rs) => ({ content: rs }))
+        : recipe.currentVersion.recipeSteps.map((rs) => ({ content: rs.content })),
+      recipeTagIds: dto.recipeTagIds
+        ? dto.recipeTagIds.map((rtId) => ({ tagId: rtId }))
+        : recipe.currentVersion.recipeTags.map((rt) => ({ tagId: rt.tagId })),
+      previewImage: previewImageFilename
         ? previewImageFilename
         : recipe.currentVersion.previewImage,
     });

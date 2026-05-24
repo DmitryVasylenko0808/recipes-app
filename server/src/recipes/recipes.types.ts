@@ -1,11 +1,17 @@
-import { Recipe, Prisma, Difficulty } from 'src/generated/prisma/client';
+import {
+  Recipe,
+  Prisma,
+  Difficulty,
+  RecipeStep,
+  RecipeTag,
+  RecipeIngredient,
+} from 'src/generated/prisma/client';
 import {
   RecipeDefaultArgs,
   RecipeIngredientDefaultArgs,
   RecipeTagDefaultArgs,
   RecipeVersionDefaultArgs,
 } from 'src/generated/prisma/models';
-import { RecipeIngredientDto } from './dtos';
 
 export type RangeDate = { from: Date; to: Date };
 
@@ -99,10 +105,10 @@ export type AddVersionData = {
   readonly description: string;
   readonly cookingTime: number;
   readonly difficulty: Difficulty;
-  readonly previewImageFilename: string;
-  readonly recipeSteps: string[];
-  readonly recipeTagIds: string[];
-  readonly recipeIngredients: RecipeIngredientDto[];
+  readonly previewImage: string;
+  readonly recipeSteps: Array<Pick<RecipeStep, 'content'>>;
+  readonly recipeTagIds: Array<Pick<RecipeTag, 'tagId'>>;
+  readonly recipeIngredients: Array<Pick<RecipeIngredient, 'ingredientId' | 'amount' | 'unit'>>;
 };
 
 export type RecipeListItemSafe = RecipeListItem & {

@@ -360,8 +360,7 @@ export class RecipesRepository implements IRecipesRepository {
   }
 
   async addVersionAndSetCurrent(recipeId: string, data: AddVersionData) {
-    const { recipeSteps, recipeTagIds, recipeIngredients, previewImageFilename, ...restData } =
-      data;
+    const { recipeSteps, recipeTagIds, recipeIngredients, ...restData } = data;
 
     return this.prisma.$transaction(async (tx) => {
       const lastVersion = await tx.recipeVersion.findFirst({
@@ -374,9 +373,8 @@ export class RecipesRepository implements IRecipesRepository {
         data: {
           recipeId,
           version: lastVersion ? lastVersion.version + 1 : 1,
-          previewImage: previewImageFilename,
-          recipeSteps: { create: recipeSteps.map((rs) => ({ content: rs })) },
-          recipeTags: { create: recipeTagIds.map((id) => ({ tagId: id })) },
+          recipeSteps: { create: recipeSteps },
+          recipeTags: { create: recipeTagIds },
           recipeIngredients: { create: recipeIngredients },
           ...restData,
         },
